@@ -1,0 +1,29 @@
+html,body, #root{
+  height: 100%;
+}
+/* Colors */
+:root.darkMode {
+  --primary: #000000;
+  --secondary: #121212;
+  --outline: #262626;
+  --text: #B3B3B3;
+  --like: #ED4756;
+  --link: #3898F3;
+}
+:root {
+  --primary: #FFFFFF;
+  --secondary: #FAFAFA;
+  --outline: #B3B3B3;
+  --text: #262626;
+  --like: #ED4756;
+  --link: #3898F3;
+}
+/* Reset CSS */
+* { box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+
+}
+
+@import "./sass/pages/loginPage";
+@import "./sass/pages/homePage";
