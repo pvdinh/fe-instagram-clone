@@ -1,5 +1,6 @@
 import React, {useEffect} from "react";
 import PostComponent from "./PostComponent";
+import UserProfileComponent from "./UserProfileComponent";
 function HomeComponent() {
     useEffect(()=>{
         // Elements
@@ -246,20 +247,7 @@ function HomeComponent() {
                         <PostComponent />
                     </div>
                     <div className="sidebar">
-                        <div className="user-profile">
-                            <div className="avatar">
-                                <img
-                                    src="https://res.cloudinary.com/dinhpv/image/upload/v1624981802/instagram-clone/test_zmmdlh.jpg"
-                                    alt="User"
-                                />
-                            </div>
-                            <div className="desc">
-                                <a href="https://github.com/leocosta1" target="_blank">
-                                    leocosta1
-                                </a>
-                                <span>Always learning!</span>
-                            </div>
-                        </div>
+                        <UserProfileComponent />
                         <div className="suggestions">
                             <h3>Suggestions for you</h3>
                             <div className="profiles">
