@@ -18,7 +18,6 @@ function LoginComponent() {
     const onChangePassword = (e) =>{
         setPassword(e.target.value)
     }
-
     return (
         <div className='instagram-login-page-wrap'>
             <section className="section-all">
