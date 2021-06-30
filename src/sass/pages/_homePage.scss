@@ -309,6 +309,20 @@
     flex-wrap: wrap;
 
     margin-bottom: 8px;
+    .home-heart:active{
+      -ms-transform: scale(1.5); /* IE 9 */
+      -webkit-transform: scale(1.5); /* Safari 3-8 */
+      transform: scale(1.5);
+    }
+    .red{
+      transition: all 0.2s ease;
+      svg{
+        fill: var(--like);
+      }
+    }
+    .black{
+      transition: all 0.2s ease;
+    }
   }
 
   .content .post .post-bottom .buttons > div > button:not(:last-child) {
