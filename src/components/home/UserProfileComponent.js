@@ -1,21 +1,41 @@
-import React from "react";
+import React, {useEffect} from "react";
+import {connect} from "react-redux";
+import homeActions from "../../redux/actions/homeActions";
 
-function UserProfileComponent() {
-    return(
+function UserProfileComponent(props) {
+    useEffect(()=>{
+        props.getUserAccountProfile()
+    },[])
+    return (
         <div className="user-profile">
             <div className="avatar">
                 <img
-                    src="https://res.cloudinary.com/dinhpv/image/upload/v1624981802/instagram-clone/test_zmmdlh.jpg"
+                    src={props.userAccountProfile.profilePhoto}
                     alt="User"
                 />
             </div>
             <div className="desc">
                 <a href="https://github.com/leocosta1" target="_blank">
-                    username
+                    {props.userAccountProfile.username}
                 </a>
-                <span>display name</span>
+                <span>{props.userAccountProfile.displayName}</span>
             </div>
         </div>
     )
 }
-export default UserProfileComponent
+
+function mapStateToProps(state) {
+    return {
+        userAccountProfile: state.home.userAccountProfile,
+    }
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        getUserAccountProfile: () => {
+          dispatch(homeActions.action.getUserAccountProfile())
+        },
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(UserProfileComponent)

@@ -1,9 +1,6 @@
 import React, {useEffect} from "react";
 
 function Layout(props) {
-    useEffect(()=>{
-        console.log(props)
-    })
     return(
         <div className='instagram-home-page-wrap'>
             <header className="header">
