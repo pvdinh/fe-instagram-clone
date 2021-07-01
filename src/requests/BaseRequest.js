@@ -7,7 +7,7 @@ export default class BaseRequest {
     async get(url, params = {}) {
         try {
             const response =await axiosJwt.get(`${BASE_URL}/${this.version}/${url}`,{params:params})
-            this._responseHandle(response)
+            return this._responseHandle(response)
         } catch (e) {
             this._errorHandle(e)
         }
@@ -16,7 +16,8 @@ export default class BaseRequest {
     async post(url, data = {}) {
         try {
             const response = await axiosJwt.post(`${BASE_URL}/${this.version}/${url}`,{...data})
-            this._responseHandle(response)
+            console.log(response)
+            return this._responseHandle(response)
         } catch (e) {
             this._errorHandle(e)
         }
@@ -25,6 +26,7 @@ export default class BaseRequest {
     async put(url, data = {}) {
         try {
             const response = await axiosJwt.put(`${BASE_URL}/${this.version}/${url}`,{...data})
+            return this._responseHandle(response)
         } catch (e) {
             this._errorHandle(e)
         }
@@ -33,14 +35,14 @@ export default class BaseRequest {
     async delete(url, params = {}) {
         try {
             const response=await axiosJwt.delete(`${BASE_URL}/${this.version}/${url}`,{params:params})
-            this._responseHandle(response)
+            return this._responseHandle(response)
         } catch (e) {
             this._errorHandle(e)
         }
     }
 
     _responseHandle(response) {
-        return response.statusCode === 200 ?
+        return response.data.statusCode === 200 ?
             {
                 statusCode: response.data.statusCode,
                 data: response.data.data,
