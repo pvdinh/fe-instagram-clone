@@ -11,7 +11,7 @@ function PostComponent(props) {
         <div>
             {
                 props.listPostOfFollowing.map((item,key) =>(
-                    <PostItemComponent key={key} post={item.post} userAccountSetting={item.userAccountSetting} />
+                    <PostItemComponent key={key} post={item.post} likes={item.likes} userAccountSetting={item.userAccountSetting} />
                 ))
             }
         </div>

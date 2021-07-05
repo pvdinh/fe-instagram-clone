@@ -26,6 +26,30 @@ function PostItemComponent(props) {
                 break;
         }
     }
+    const displayLikes = (likes) =>{
+        switch (true) {
+            case likes.length === 1:
+                return (
+                    <span className="likes">
+              Liked by <a href="#">{likes[0]}</a>
+                    </span>
+                )
+            case likes.length === 2:
+                return (
+                    <span className="likes">
+              Liked by <a href="#">{likes[0]}</a> and <a href="#">{likes[1]}</a>
+                    </span>
+                )
+            case likes.length > 2:
+                return (
+                    <span className="likes">
+              Liked by <a href="#">{likes[0]}</a>, <a href="#">{likes[1]}</a> and <strong>{likes.length - 2} others</strong>
+            </span>
+                )
+            default:
+                return (<div></div>)
+        }
+    }
 
     return (
         <div className="post">
@@ -130,9 +154,7 @@ function PostItemComponent(props) {
                         </svg>
                     </button>
                 </div>
-                <span className="likes">
-              Liked by <a href="#">user__</a> and <strong>73 others</strong>
-            </span>
+                {displayLikes(props.likes)}
                 <p className="desc">
                     <a href="https://github.com/leocosta1" target="_blank">
                         leocosta1
