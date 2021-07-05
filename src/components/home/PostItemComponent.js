@@ -1,4 +1,5 @@
 import React, {useState} from "react";
+import LazyLoad from 'react-lazyload'
 
 function PostItemComponent(props) {
     const [like, setLike] = useState(true)
@@ -82,10 +83,12 @@ function PostItemComponent(props) {
                 </button>
             </div>
             <div className="post-media">
-                <img
-                    src={props.post.imagePath}
-                    alt="Post"
-                />
+                <LazyLoad>
+                    <img
+                        src={props.post.imagePath}
+                        alt="Post"
+                    />
+                </LazyLoad>
             </div>
             <div className="post-bottom">
                 <div className="buttons">
