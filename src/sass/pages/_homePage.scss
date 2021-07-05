@@ -262,6 +262,7 @@
   .content .post .post-top .profile .avatar img {
     width: 100%;
     height: 100%;
+    object-fit: cover;
   }
 
   .content .post .post-top .profile a:link, .content .post .post-top .profile a:visited {
