@@ -1,40 +1,46 @@
 import React, {useEffect, useState} from "react";
 import LazyLoad from 'react-lazyload'
-import { Instagram } from 'react-content-loader'
+import {Instagram} from 'react-content-loader'
+import postActions from "../../redux/actions/postActions";
+import {connect} from "react-redux";
+
 function PostItemComponent(props) {
     const [like, setLike] = useState(true)
-    const [contentLoader,setContentLoader]= useState(false)
+    const [contentLoader, setContentLoader] = useState(false)
 
-    useEffect(()=>{
-        const setTimeOut = setTimeout(()=>{
+    useEffect(() => {
+        const setTimeOut = setTimeout(() => {
             setContentLoader(true)
-        },2000)
-    },[])
+        }, 2000)
+    }, [])
+
+    useEffect(() => {
+        props.likes.includes(props.userAccountProfile.displayName) ? setLike(true) : setLike(false)
+    }, [props.likes])
 
     const onClickLike = () => {
-        setLike(!like)
+        like ? props.unLikePost(props.post.id) : props.likePost(props.post.id)
     }
     const calculatorDayCreated = (timeCreated) => {
-        let distance =Math.round((new Date().getTime() - timeCreated) /(1000))
+        let distance = Math.round((new Date().getTime() - timeCreated) / (1000))
         switch (true) {
             case distance <= 1:
                 return "JUST NOW"
-            case 2<= distance && distance <= 5:
+            case 2 <= distance && distance <= 5:
                 return "A FEW SECONDS"
-            case 6<= distance && distance <= 59:
+            case 6 <= distance && distance <= 59:
                 return distance + " SECONDS AGO"
-            case 60<= distance && distance < 3600:
-                return Math.round(distance/60) + " MINUTES AGO"
-            case 3600<= distance && distance < (3600 * 24):
-                return Math.round(distance/(60*60)) + " HOURS AGO"
-            case 3600*24<= distance :
-                return Math.round((distance/(60*60*24))) + " DAYS AGO"
+            case 60 <= distance && distance < 3600:
+                return Math.round(distance / 60) + " MINUTES AGO"
+            case 3600 <= distance && distance < (3600 * 24):
+                return Math.round(distance / (60 * 60)) + " HOURS AGO"
+            case 3600 * 24 <= distance :
+                return Math.round((distance / (60 * 60 * 24))) + " DAYS AGO"
             default:
-                console.log("EEEEEEEE")
                 break;
         }
     }
-    const displayLikes = (likes) =>{
+    const displayLikes = (likes) => {
         switch (true) {
             case likes.length === 1:
                 return (
@@ -51,7 +57,8 @@ function PostItemComponent(props) {
             case likes.length > 2:
                 return (
                     <span className="likes">
-              Liked by <a href="#">{likes[0]}</a>, <a href="#">{likes[1]}</a> and <strong>{likes.length - 2} others</strong>
+              Liked by <a href="#">{likes[0]}</a>, <a
+                        href="#">{likes[1]}</a> and <strong>{likes.length - 2} others</strong>
             </span>
                 )
             default:
@@ -70,7 +77,6 @@ function PostItemComponent(props) {
                                     <img
                                         src={props.userAccountSetting.profilePhoto}
                                         alt="User"
-                                        onLoad={()=>{setContentLoader(true)}}
                                     />
                                 </div>
                                 <a href="https://github.com/leocosta1" target="_blank">
@@ -98,7 +104,6 @@ function PostItemComponent(props) {
                                 <img
                                     src={props.post.imagePath}
                                     alt="Post"
-                                    onLoad={()=>{setContentLoader(true)}}
                                 />
                             </LazyLoad>
                         </div>
@@ -180,10 +185,27 @@ function PostItemComponent(props) {
                             <span className="time">{calculatorDayCreated(props.post.dateCreated)}</span>
                         </div>
                     </div>
-                    : <Instagram />
+                    : <Instagram/>
             }
         </div>
     )
 }
 
-export default PostItemComponent
+function mapStateToProps(state) {
+    return {
+        userAccountProfile: state.home.userAccountProfile,
+    }
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        likePost:(pId) =>{
+            dispatch(postActions.action.likePost(pId))
+        },
+        unLikePost:(pId) =>{
+            dispatch(postActions.action.unLikePost(pId))
+        },
+    }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(PostItemComponent)
