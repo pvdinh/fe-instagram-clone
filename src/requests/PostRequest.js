@@ -13,5 +13,13 @@ class PostRequest extends BaseRequest{
         let url = `post/${pId}/unlike`
         return this.post(url)
     }
+    commentPost(data){
+        let url = 'post/comment'
+        return this.post(url,data)
+    }
+    getCommentPost(pId){
+        let url = `post/${pId}/comment`
+        return this.get(url)
+    }
 }
 export default PostRequest

@@ -1,6 +1,12 @@
 import {all, takeEvery, call, put} from "@redux-saga/core/effects";
 import postActions from "../actions/postActions";
-import {getAllPostInformationFollowing, likePost, unLikePost} from "../../services/PostApiService";
+import {
+    commentPost,
+    getAllPostInformationFollowing,
+    getCommentPost,
+    likePost,
+    unLikePost
+} from "../../services/PostApiService";
 
 function* saga_getAllPostOfFollowing() {
     try {
@@ -28,11 +34,29 @@ function* saga_likePost(action) {
         console.log("err", e)
     }
 }
+function *saga_commentPost(action) {
+    try{
+        const response = yield call(commentPost,action.payload.data)
+        action.callback(response.data)
+    }catch (e) {
+        console.log("err",e)
+    }
+}
+function *saga_getCommentPost(action) {
+    try{
+        const response = yield call(getCommentPost,action.id)
+        action.callback(response.data)
+    }catch (e) {
+        console.log("err",e)
+    }
+}
 
 function* listen() {
     yield takeEvery(postActions.type.GET_ALL_POST_OF_FOLLOWING, saga_getAllPostOfFollowing)
     yield takeEvery(postActions.type.LIKE_POST, saga_likePost)
     yield takeEvery(postActions.type.UNLIKE_POST, saga_unLikePost)
+    yield takeEvery(postActions.type.COMMENT_POST, saga_commentPost)
+    yield takeEvery(postActions.type.GET_COMMENT_POST, saga_getCommentPost)
 }
 
 function* postSaga() {

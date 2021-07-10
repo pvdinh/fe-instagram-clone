@@ -6,7 +6,10 @@ import {connect} from "react-redux";
 
 function PostItemComponent(props) {
     const [like, setLike] = useState(true)
+    const [listComment, setListComment] = useState(true)
+    const [isActivePost, setIsActivePost] = useState(false)
     const [contentLoader, setContentLoader] = useState(false)
+    const [contentComment,setContentComment] = useState('')
 
     useEffect(() => {
         const setTimeOut = setTimeout(() => {
@@ -18,8 +21,32 @@ function PostItemComponent(props) {
         props.likes.includes(props.userAccountProfile.displayName) ? setLike(true) : setLike(false)
     }, [props.likes])
 
+    useEffect(()=>{
+        props.getCommentPost(props.post.id,(data)=>{
+            setListComment(data)
+        })
+    },[contentComment])
+
+    useEffect(()=>{
+        contentComment.split(" ").join("") === "" ? setIsActivePost(false) : setIsActivePost(true)
+    },[contentComment])
+
     const onClickLike = () => {
         like ? props.unLikePost(props.post.id) : props.likePost(props.post.id)
+    }
+    const changeCommentPost = (e) =>{
+        setContentComment(e.target.value)
+    }
+    const postComment = () =>{
+        let comment = {
+            id:"",
+            content:contentComment,
+            idPost:props.post.id,
+            idUser:props.userAccountProfile.id,
+            dateCommented:new Date().getTime(),
+        }
+        setContentComment("")
+        props.commentPost(comment,(data)=>{})
     }
     const calculatorDayCreated = (timeCreated) => {
         let distance = Math.round((new Date().getTime() - timeCreated) / (1000))
@@ -182,7 +209,28 @@ function PostItemComponent(props) {
                                 Responsive clone of Instagram UI. Made with love, for study
                                 purposes. ❤
                             </p>
+                            {
+                                listComment.length > 3 ?
+                                    <p className="view-all-comment">
+                                        View all {listComment.length} comments
+                                    </p>
+                                    : <div></div>
+                            }
+                            {
+                                listComment.slice(listComment.length-3,listComment.length).map((item,index)=>(
+                                    <div className="comment">
+                                        <span style={{fontWeight: "600"}} >{item.userAccountSetting.displayName}</span> <span> {item.comment.content}</span>
+                                    </div>
+                                ))
+                            }
                             <span className="time">{calculatorDayCreated(props.post.dateCreated)}</span>
+                        </div>
+                        <hr className='post-hr' />
+                        <div className='post-comment'>
+                            <input className='input-comment' value={contentComment} onChange={(e)=>{changeCommentPost(e)}} placeholder={'Add a comment...'}/>
+                            {
+                                isActivePost ? <button className='button-comment' onClick={()=>{postComment()}}>Post</button> : <button className='button-comment-disabled'>Post</button>
+                            }
                         </div>
                     </div>
                     : <Instagram/>
@@ -204,6 +252,12 @@ function mapDispatchToProps(dispatch) {
         },
         unLikePost:(pId) =>{
             dispatch(postActions.action.unLikePost(pId))
+        },
+        commentPost:(data,callback)=>{
+            dispatch(postActions.action.commentPost(data,callback))
+        },
+        getCommentPost:(pId,callback)=>{
+            dispatch(postActions.action.getCommentPost(pId,callback))
         },
     }
 }

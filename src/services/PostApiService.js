@@ -12,3 +12,11 @@ export const unLikePost = (pId) =>{
     const postRequest = new PostRequest()
     return postRequest.unLikePost(pId)
 }
+export const commentPost = (data) =>{
+    const postRequest = new PostRequest()
+    return postRequest.commentPost(data)
+}
+export const getCommentPost = (pId) =>{
+    const postRequest = new PostRequest()
+    return postRequest.getCommentPost(pId)
+}

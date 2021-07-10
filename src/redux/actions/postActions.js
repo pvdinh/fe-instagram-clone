@@ -5,6 +5,9 @@ const type = {
     UNLIKE_POST:"UNLIKE_POST",
     LIKE_POST_SUCCESS:"LIKE_POST_SUCCESS",
     UNLIKE_POST_SUCCESS:"UNLIKE_POST_SUCCESS",
+    COMMENT_POST:"COMMENT_POST",
+    GET_COMMENT_POST:"GET_COMMENT_POST",
+    GET_COMMENT_POST_SUCCESS:"GET_COMMENT_POST_SUCCESS",
 }
 const action = {
     getAllPostOfFollowing: () => {
@@ -22,6 +25,22 @@ const action = {
         return{
             type:type.UNLIKE_POST,
             id:pId,
+        }
+    },
+    commentPost:(data,callback) =>{
+        return{
+            type:type.COMMENT_POST,
+            payload:{
+                data:data,
+            },
+            callback,
+        }
+    },
+    getCommentPost:(pId,callback) =>{
+        return{
+            type:type.GET_COMMENT_POST,
+            id:pId,
+            callback,
         }
     },
 }
