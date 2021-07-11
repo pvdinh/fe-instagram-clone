@@ -1,23 +1,37 @@
 html,body, #root{
   height: 100%;
 }
-/* Colors */
-:root.darkMode {
-  --primary: #000000;
-  --secondary: #121212;
-  --outline: #262626;
-  --text: #B3B3B3;
-  --like: #ED4756;
-  --link: #3898F3;
-}
+/* Vars */
 :root {
-  --primary: #FFFFFF;
-  --secondary: #FAFAFA;
-  --outline: #dbdbdb;
-  --text: #262626;
-  --like: #ED4756;
-  --link: #3898F3;
+  --primary: hsl(0, 0%, 100%);
+  --secondary: hsl(0, 0%, 98%);
+  --border: hsl(0, 0%, 86%);
+
+  --story-border: hsl(0, 0%, 78%);
+  --img-border: hsla(0, 0%, 0%, 0.1);
+
+  --text-dark: hsl(0, 0%, 15%);
+  --text-light: hsl(0, 0%, 60%);
+
+  --like: hsl(355, 82%, 61%);
+  --link: hsl(204, 100%, 48%);
 }
+:root.darkTheme {
+  --primary: hsl(0, 0%, 0%);
+  --secondary: hsl(0, 0%, 2%);
+  --border: hsl(0, 0%, 15%);
+
+  --story-border: hsl(0, 0%, 44%);
+  --img-border: hsla(0, 0%, 100%, 0.1);
+
+  --text-dark: hsl(0, 0%, 98%);
+  --text-light: hsl(0, 0%, 60%);
+
+  --like: hsl(355, 82%, 61%);
+  --link: hsl(204, 100%, 48%);
+}
+
+/* -------------------------------------------------- */
 /* Reset CSS */
 * { box-sizing: border-box;
   margin: 0;
