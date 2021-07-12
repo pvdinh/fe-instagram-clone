@@ -1,6 +1,7 @@
 import React, {useEffect} from "react";
 import PostComponent from "./PostComponent";
 import UserProfileComponent from "./UserProfileComponent";
+import SuggestionsToFollow from "./SuggestionsToFollow";
 function HomeComponent() {
     useEffect(()=>{
         // Getting the scrollbar width to adjust the header alignment
@@ -151,64 +152,7 @@ function HomeComponent() {
                     <section className="side-menu">
                         <UserProfileComponent />
 
-                        <div className="side-menu__suggestions-section">
-                            <div className="side-menu__suggestions-header">
-                                <h2>Suggestions for You</h2>
-                                <button>See All</button>
-                            </div>
-                            <div className="side-menu__suggestions-content">
-                                <div className="side-menu__suggestion">
-                                    <a href="#" className="side-menu__suggestion-avatar">
-                                        <img src="https://res.cloudinary.com/dinhpv/image/upload/v1624981802/instagram-clone/test_zmmdlh.jpg" alt="User Picture"/>
-                                    </a>
-                                    <div className="side-menu__suggestion-info">
-                                        <a href="#">usernick16</a>
-                                        <span>Followed by user1, user2 and 9 others</span>
-                                    </div>
-                                    <button className="side-menu__suggestion-button">Follow</button>
-                                </div>
-                                <div className="side-menu__suggestion">
-                                    <a href="#" className="side-menu__suggestion-avatar">
-                                        <img src="https://res.cloudinary.com/dinhpv/image/upload/v1624981802/instagram-clone/test_zmmdlh.jpg" alt="User Picture"/>
-                                    </a>
-                                    <div className="side-menu__suggestion-info">
-                                        <a href="#">usernick17</a>
-                                        <span>Followed by user1, user2 and 3 others</span>
-                                    </div>
-                                    <button className="side-menu__suggestion-button">Follow</button>
-                                </div>
-                                <div className="side-menu__suggestion">
-                                    <a href="#" className="side-menu__suggestion-avatar">
-                                        <img src="https://res.cloudinary.com/dinhpv/image/upload/v1624981802/instagram-clone/test_zmmdlh.jpg" alt="User Picture"/>
-                                    </a>
-                                    <div className="side-menu__suggestion-info">
-                                        <a href="#">usernick18</a>
-                                        <span>Followed by user1 and 9 others</span>
-                                    </div>
-                                    <button className="side-menu__suggestion-button">Follow</button>
-                                </div>
-                                <div className="side-menu__suggestion">
-                                    <a href="#" className="side-menu__suggestion-avatar">
-                                        <img src="https://res.cloudinary.com/dinhpv/image/upload/v1624981802/instagram-clone/test_zmmdlh.jpg" alt="User Picture"/>
-                                    </a>
-                                    <div className="side-menu__suggestion-info">
-                                        <a href="#">usernick19</a>
-                                        <span>Followed by user1 and 3 others</span>
-                                    </div>
-                                    <button className="side-menu__suggestion-button">Follow</button>
-                                </div>
-                                <div className="side-menu__suggestion">
-                                    <a href="#" className="side-menu__suggestion-avatar">
-                                        <img src="https://res.cloudinary.com/dinhpv/image/upload/v1624981802/instagram-clone/test_zmmdlh.jpg" alt="User Picture"/>
-                                    </a>
-                                    <div className="side-menu__suggestion-info">
-                                        <a href="#">usernick20</a>
-                                        <span>Followed by user1 and 6 others</span>
-                                    </div>
-                                    <button className="side-menu__suggestion-button">Follow</button>
-                                </div>
-                            </div>
-                        </div>
+                        <SuggestionsToFollow />
 
                         <div className="side-menu__footer">
                             <div className="side-menu__footer-links">

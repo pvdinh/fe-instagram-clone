@@ -4,6 +4,7 @@ import {Instagram} from 'react-content-loader'
 import postActions from "../../redux/actions/postActions";
 import {connect} from "react-redux";
 import CommentComponent from "./CommentComponent";
+import MoreActionInPost from "./MoreActionInPost";
 
 function PostItemComponent1(props) {
     const [like, setLike] = useState(true)
@@ -23,7 +24,7 @@ function PostItemComponent1(props) {
 
     useEffect(()=>{
         props.getCommentPost(props.post.id,(data)=>{
-            setListComment(data)
+            setListComment([...data])
         })
     },[reLoad])
 
@@ -101,14 +102,7 @@ function PostItemComponent1(props) {
                                    className="post__user">{props.userAccountSetting.displayName}</a>
                             </div>
 
-                            <button className="post__more-options">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                     xmlns="http://www.w3.org/2000/svg">
-                                    <circle cx="6.5" cy="11.5" r="1.5" fill="var(--text-dark)"/>
-                                    <circle cx="12" cy="11.5" r="1.5" fill="var(--text-dark)"/>
-                                    <circle cx="17.5" cy="11.5" r="1.5" fill="var(--text-dark)"/>
-                                </svg>
-                            </button>
+                            <MoreActionInPost userAccountFollowing={props.userAccountSetting} />
                         </div>
 
                         <div className="post__content">
@@ -188,13 +182,13 @@ function PostItemComponent1(props) {
                                     </span>
                                 </div>
                                 {
-                                    listComment.length > 3 ?
+                                    listComment.length > 2 ?
                                         <>
                                             <p className="view-all-comment">
                                                 View all {listComment.length} comments
                                             </p>
                                             {
-                                                listComment.slice(listComment.length-3,listComment.length).map((item,index)=>(
+                                                listComment.slice(listComment.length-2,listComment.length).map((item,index)=>(
                                                     <div className="comment">
                                                         <span style={{fontWeight: "600"}} >{item.userAccountSetting.displayName}</span> <span> {item.comment.content}</span>
                                                     </div>
