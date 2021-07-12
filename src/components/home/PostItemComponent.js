@@ -1,40 +1,73 @@
 import React, {useEffect, useState} from "react";
 import LazyLoad from 'react-lazyload'
-import { Instagram } from 'react-content-loader'
+import {Instagram} from 'react-content-loader'
+import postActions from "../../redux/actions/postActions";
+import {connect} from "react-redux";
+
 function PostItemComponent(props) {
     const [like, setLike] = useState(true)
-    const [contentLoader,setContentLoader]= useState(false)
+    const [listComment, setListComment] = useState(true)
+    const [isActivePost, setIsActivePost] = useState(false)
+    const [contentLoader, setContentLoader] = useState(false)
+    const [contentComment,setContentComment] = useState('')
+
+    useEffect(() => {
+        const setTimeOut = setTimeout(() => {
+            setContentLoader(true)
+        }, 2000)
+    }, [])
+
+    useEffect(() => {
+        props.likes.includes(props.userAccountProfile.displayName) ? setLike(true) : setLike(false)
+    }, [props.likes])
 
     useEffect(()=>{
-        const setTimeOut = setTimeout(()=>{
-            setContentLoader(true)
-        },2000)
-    },[])
+        props.getCommentPost(props.post.id,(data)=>{
+            setListComment(data)
+        })
+    },[contentComment])
+
+    useEffect(()=>{
+        contentComment.split(" ").join("") === "" ? setIsActivePost(false) : setIsActivePost(true)
+    },[contentComment])
 
     const onClickLike = () => {
-        setLike(!like)
+        like ? props.unLikePost(props.post.id) : props.likePost(props.post.id)
+    }
+    const changeCommentPost = (e) =>{
+        setContentComment(e.target.value)
+    }
+    const postComment = () =>{
+        let comment = {
+            id:"",
+            content:contentComment,
+            idPost:props.post.id,
+            idUser:props.userAccountProfile.id,
+            dateCommented:new Date().getTime(),
+        }
+        setContentComment("")
+        props.commentPost(comment,(data)=>{})
     }
     const calculatorDayCreated = (timeCreated) => {
-        let distance =Math.round((new Date().getTime() - timeCreated) /(1000))
+        let distance = Math.round((new Date().getTime() - timeCreated) / (1000))
         switch (true) {
             case distance <= 1:
                 return "JUST NOW"
-            case 2<= distance && distance <= 5:
+            case 2 <= distance && distance <= 5:
                 return "A FEW SECONDS"
-            case 6<= distance && distance <= 59:
+            case 6 <= distance && distance <= 59:
                 return distance + " SECONDS AGO"
-            case 60<= distance && distance < 3600:
-                return Math.round(distance/60) + " MINUTES AGO"
-            case 3600<= distance && distance < (3600 * 24):
-                return Math.round(distance/(60*60)) + " HOURS AGO"
-            case 3600*24<= distance :
-                return Math.round((distance/(60*60*24))) + " DAYS AGO"
+            case 60 <= distance && distance < 3600:
+                return Math.round(distance / 60) + " MINUTES AGO"
+            case 3600 <= distance && distance < (3600 * 24):
+                return Math.round(distance / (60 * 60)) + " HOURS AGO"
+            case 3600 * 24 <= distance :
+                return Math.round((distance / (60 * 60 * 24))) + " DAYS AGO"
             default:
-                console.log("EEEEEEEE")
                 break;
         }
     }
-    const displayLikes = (likes) =>{
+    const displayLikes = (likes) => {
         switch (true) {
             case likes.length === 1:
                 return (
@@ -51,7 +84,8 @@ function PostItemComponent(props) {
             case likes.length > 2:
                 return (
                     <span className="likes">
-              Liked by <a href="#">{likes[0]}</a>, <a href="#">{likes[1]}</a> and <strong>{likes.length - 2} others</strong>
+              Liked by <a href="#">{likes[0]}</a>, <a
+                        href="#">{likes[1]}</a> and <strong>{likes.length - 2} others</strong>
             </span>
                 )
             default:
@@ -70,7 +104,6 @@ function PostItemComponent(props) {
                                     <img
                                         src={props.userAccountSetting.profilePhoto}
                                         alt="User"
-                                        onLoad={()=>{setContentLoader(true)}}
                                     />
                                 </div>
                                 <a href="https://github.com/leocosta1" target="_blank">
@@ -98,7 +131,6 @@ function PostItemComponent(props) {
                                 <img
                                     src={props.post.imagePath}
                                     alt="Post"
-                                    onLoad={()=>{setContentLoader(true)}}
                                 />
                             </LazyLoad>
                         </div>
@@ -177,13 +209,57 @@ function PostItemComponent(props) {
                                 Responsive clone of Instagram UI. Made with love, for study
                                 purposes. ❤
                             </p>
+                            {
+                                listComment.length > 3 ?
+                                    <p className="view-all-comment">
+                                        View all {listComment.length} comments
+                                    </p>
+                                    : <div></div>
+                            }
+                            {
+                                listComment.slice(listComment.length-3,listComment.length).map((item,index)=>(
+                                    <div className="comment">
+                                        <span style={{fontWeight: "600"}} >{item.userAccountSetting.displayName}</span> <span> {item.comment.content}</span>
+                                    </div>
+                                ))
+                            }
                             <span className="time">{calculatorDayCreated(props.post.dateCreated)}</span>
                         </div>
+                        <hr className='post-hr' />
+                        <div className='post-comment'>
+                            <input className='input-comment' value={contentComment} onChange={(e)=>{changeCommentPost(e)}} placeholder={'Add a comment...'}/>
+                            {
+                                isActivePost ? <button className='button-comment' onClick={()=>{postComment()}}>Post</button> : <button className='button-comment-disabled'>Post</button>
+                            }
+                        </div>
                     </div>
-                    : <Instagram />
+                    : <Instagram/>
             }
         </div>
     )
 }
 
-export default PostItemComponent
+function mapStateToProps(state) {
+    return {
+        userAccountProfile: state.home.userAccountProfile,
+    }
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        likePost:(pId) =>{
+            dispatch(postActions.action.likePost(pId))
+        },
+        unLikePost:(pId) =>{
+            dispatch(postActions.action.unLikePost(pId))
+        },
+        commentPost:(data,callback)=>{
+            dispatch(postActions.action.commentPost(data,callback))
+        },
+        getCommentPost:(pId,callback)=>{
+            dispatch(postActions.action.getCommentPost(pId,callback))
+        },
+    }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(PostItemComponent)

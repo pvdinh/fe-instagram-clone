@@ -7,20 +7,16 @@ function UserProfileComponent(props) {
         props.getUserAccountProfile()
     },[])
     return (
-        <div className="user-profile">
-            <div className="avatar">
-                <img
-                    src={props.userAccountProfile.profilePhoto}
-                    alt="User"
-                />
-            </div>
-            <div className="desc">
-                <a href="https://github.com/leocosta1" target="_blank">
-                    {props.userAccountProfile.username}
-                </a>
-                <span>{props.userAccountProfile.displayName}</span>
-            </div>
+    <div className="side-menu__user-profile">
+        <a href="https://github.com/leocosta1" target="_blank" className="side-menu__user-avatar">
+            <img src={props.userAccountProfile.profilePhoto} alt="User Picture"/>
+        </a>
+        <div className="side-menu__user-info">
+            <a href="https://github.com/leocosta1" target="_blank">{props.userAccountProfile.username}</a>
+            <span>{props.userAccountProfile.username}</span>
         </div>
+        <button className="side-menu__user-button">Switch</button>
+    </div>
     )
 }
 
