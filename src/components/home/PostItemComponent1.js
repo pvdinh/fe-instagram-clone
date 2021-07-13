@@ -5,12 +5,14 @@ import postActions from "../../redux/actions/postActions";
 import {connect} from "react-redux";
 import CommentComponent from "./CommentComponent";
 import MoreActionInPost from "./MoreActionInPost";
+import dbLike from '../../assets/homePage/posts/red_heart.svg';
 
 function PostItemComponent1(props) {
     const [like, setLike] = useState(true)
     const [listComment, setListComment] = useState([])
     const [contentLoader, setContentLoader] = useState(false)
-    const [reLoad,setReLoad] = useState(true)
+    const [reLoad, setReLoad] = useState(true)
+    const [classdbClick, setClassdbClick] = useState("pop")
 
     useEffect(() => {
         const setTimeOut = setTimeout(() => {
@@ -22,26 +24,35 @@ function PostItemComponent1(props) {
         props.likes.includes(props.userAccountProfile.displayName) ? setLike(true) : setLike(false)
     }, [props.likes])
 
-    useEffect(()=>{
-        props.getCommentPost(props.post.id,(data)=>{
+    useEffect(() => {
+        props.getCommentPost(props.post.id, (data) => {
             setListComment([...data])
         })
-    },[reLoad])
+    }, [reLoad])
 
     const onClickLike = () => {
         like ? props.unLikePost(props.post.id) : props.likePost(props.post.id)
     }
 
-    const postComment = (cmt) =>{
+    const onDoubleClick = () => {
+        if(!like) props.likePost(props.post.id)
+        setClassdbClick(classdbClick + " dbClick")
+        setTimeout(() => {
+            setClassdbClick("pop")
+        }, 1000)
+    }
+
+    const postComment = (cmt) => {
         let comment = {
-            id:"",
-            content:cmt,
-            idPost:props.post.id,
-            idUser:props.userAccountProfile.id,
-            dateCommented:new Date().getTime(),
+            id: "",
+            content: cmt,
+            idPost: props.post.id,
+            idUser: props.userAccountProfile.id,
+            dateCommented: new Date().getTime(),
         }
         setReLoad(!reLoad)
-        props.commentPost(comment,(data)=>{})
+        props.commentPost(comment, (data) => {
+        })
     }
     const calculatorDayCreated = (timeCreated) => {
         let distance = Math.round((new Date().getTime() - timeCreated) / (1000))
@@ -73,13 +84,15 @@ function PostItemComponent1(props) {
             case likes.length === 2:
                 return (
                     <span className="likes">
-              Liked by <a className='post__name--underline' href="#">{likes[0]}</a> and <a className='post__name--underline' href="#">{likes[1]}</a>
+              Liked by <a className='post__name--underline' href="#">{likes[0]}</a> and <a
+                        className='post__name--underline' href="#">{likes[1]}</a>
                     </span>
                 )
             case likes.length > 2:
                 return (
                     <span className="likes">
-              Liked by <a className='post__name--underline' href="#">{likes[0]}</a>, <a className='post__name--underline'
+              Liked by <a className='post__name--underline' href="#">{likes[0]}</a>, <a
+                        className='post__name--underline'
                         href="#">{likes[1]}</a> and <strong>{likes.length - 2} others</strong>
             </span>
                 )
@@ -102,14 +115,17 @@ function PostItemComponent1(props) {
                                    className="post__user">{props.userAccountSetting.displayName}</a>
                             </div>
 
-                            <MoreActionInPost userAccountFollowing={props.userAccountSetting} />
+                            <MoreActionInPost userAccountFollowing={props.userAccountSetting}/>
                         </div>
 
                         <div className="post__content">
                             <div className="post__medias">
                                 <LazyLoad>
-                                    <img className="post__media" src={props.post.imagePath} alt="Post Content"/>
+                                    <img className="post__media" src={props.post.imagePath} onDoubleClick={() => {
+                                        onDoubleClick()
+                                    }} alt="Post Content"/>
                                 </LazyLoad>
+                                <img src={dbLike} className={classdbClick}/>
                             </div>
                         </div>
 
@@ -124,7 +140,8 @@ function PostItemComponent1(props) {
                                                  xmlns="http://www.w3.org/2000/svg">
                                                 <path
                                                     d="M11.4995 21.2609C11.1062 21.2609 10.7307 21.1362 10.4133 20.9001C8.2588 19.3012 3.10938 15.3239 1.81755 12.9143C0.127895 9.76543 1.14258 5.72131 4.07489 3.89968C5.02253 3.31177 6.09533 3 7.18601 3C8.81755 3 10.3508 3.66808 11.4995 4.85726C12.6483 3.66808 14.1815 3 15.8131 3C16.9038 3 17.9766 3.31177 18.9242 3.89968C21.8565 5.72131 22.8712 9.76543 21.186 12.9143C19.8942 15.3239 14.7448 19.3012 12.5902 20.9001C12.2684 21.1362 11.8929 21.2609 11.4995 21.2609ZM7.18601 4.33616C6.34565 4.33616 5.5187 4.57667 4.78562 5.03096C2.43888 6.49183 1.63428 9.74316 2.99763 12.2819C4.19558 14.5177 9.58639 18.6242 11.209 19.8267C11.3789 19.9514 11.6158 19.9514 11.7856 19.8267C13.4082 18.6197 18.799 14.5133 19.997 12.2819C21.3603 9.74316 20.5557 6.48738 18.209 5.03096C17.4804 4.57667 16.6534 4.33616 15.8131 4.33616C14.3425 4.33616 12.9657 5.04878 12.0359 6.28696L11.4995 7.00848L10.9631 6.28696C10.0334 5.04878 8.6611 4.33616 7.18601 4.33616Z"
-                                                    fill="var(--text-dark)" stroke="var(--text-dark)" stroke-width="0.6"/>
+                                                    fill="var(--text-dark)" stroke="var(--text-dark)"
+                                                    stroke-width="0.6"/>
                                             </svg>
                                         </button>
                                         :
@@ -188,27 +205,34 @@ function PostItemComponent1(props) {
                                                 View all {listComment.length} comments
                                             </p>
                                             {
-                                                listComment.slice(listComment.length-2,listComment.length).map((item,index)=>(
+                                                listComment.slice(listComment.length - 2, listComment.length).map((item, index) => (
                                                     <div className="comment">
-                                                        <span style={{fontWeight: "600"}} >{item.userAccountSetting.displayName}</span> <span> {item.comment.content}</span>
+                                                            <span
+                                                                style={{fontWeight: "600"}}>{item.userAccountSetting.displayName}</span>
+                                                        <span> {item.comment.content}</span>
                                                     </div>
                                                 ))
                                             }
                                         </>
                                         : <>
                                             {
-                                                listComment.map((item,index)=>(
+                                                listComment.map((item, index) => (
                                                     <div className="comment">
-                                                        <span style={{fontWeight: "600"}} >{item.userAccountSetting.displayName}</span> <span> {item.comment.content}</span>
+                                                            <span
+                                                                style={{fontWeight: "600"}}>{item.userAccountSetting.displayName}</span>
+                                                        <span> {item.comment.content}</span>
                                                     </div>
                                                 ))
                                             }
                                         </>
                                 }
-                                <span className="post__date-time">{calculatorDayCreated(props.post.dateCreated)}</span>
+                                <span
+                                    className="post__date-time">{calculatorDayCreated(props.post.dateCreated)}</span>
                             </div>
-                            <hr className='post-hr' />
-                            <CommentComponent postComment={(cmt)=>{postComment(cmt)}} />
+                            <hr className='post-hr'/>
+                            <CommentComponent postComment={(cmt) => {
+                                postComment(cmt)
+                            }}/>
                         </div>
                     </article>
                     : <Instagram/>
@@ -225,19 +249,19 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        likePost:(pId) =>{
+        likePost: (pId) => {
             dispatch(postActions.action.likePost(pId))
         },
-        unLikePost:(pId) =>{
+        unLikePost: (pId) => {
             dispatch(postActions.action.unLikePost(pId))
         },
-        commentPost:(data,callback)=>{
-            dispatch(postActions.action.commentPost(data,callback))
+        commentPost: (data, callback) => {
+            dispatch(postActions.action.commentPost(data, callback))
         },
-        getCommentPost:(pId,callback)=>{
-            dispatch(postActions.action.getCommentPost(pId,callback))
+        getCommentPost: (pId, callback) => {
+            dispatch(postActions.action.getCommentPost(pId, callback))
         },
     }
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(PostItemComponent1)
+export default connect(mapStateToProps, mapDispatchToProps)(PostItemComponent1)

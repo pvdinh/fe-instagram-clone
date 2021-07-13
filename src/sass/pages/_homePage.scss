@@ -436,6 +436,22 @@
     scroll-snap-type: x mandatory;
     scroll-behavior: smooth;
     scrollbar-width: none;
+    .pop{
+      position: absolute;
+      top:50%;
+      left: 50%;
+      transform: translate(-50% , -50%);
+      width:0px;
+      height: 0px;
+      filter: drop-shadow(.5rem .5rem 1rem black);
+      transition: all 0.2s ease;
+
+    }
+    .dbClick{
+      width: 100px;
+      height: 100px;
+      transition: all 0.2s ease;
+    }
   }
 
   .post__medias::-webkit-scrollbar {
