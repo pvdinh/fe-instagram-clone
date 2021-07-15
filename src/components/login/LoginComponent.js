@@ -1,4 +1,6 @@
 import React, {useEffect, useState} from "react";
+import {FaFacebookF} from "react-icons/all";
+import {API_BASE_URL, FACEBOOK_AUTH_URL} from "../../constants";
 
 function LoginComponent(props) {
 
@@ -73,6 +75,9 @@ function LoginComponent(props) {
                                 <div className="login-box">
                                     <p className="text">Don't have an account?<a href="#">Sign up</a></p>
                                 </div>
+                                <a href={`${FACEBOOK_AUTH_URL}`} className="fb btn-login-fb">
+                                    <FaFacebookF /> &nbsp; Login with Facebook
+                                </a>
                                 {/* Signup-box end */}
                                 <div className="app">
                                     <p>Get the app.</p>

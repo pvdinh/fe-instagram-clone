@@ -4,6 +4,7 @@ import LoginPage from "../screens/LoginPage";
 import HomePage from "../screens/HomePage";
 import ProtectedRoute from "./ProtectedRoute";
 import Layout from "./layout/Layout";
+import Oauth2Redirect from "./oauth2Redirect/Oath2Redirect";
 
 function AppRouter() {
     return (
@@ -11,6 +12,9 @@ function AppRouter() {
             <Switch>
                 <Route path={"/login"} exact render={()=>{
                     return localStorage.getItem("sessionToken") ? <Redirect to={"/"} /> : <LoginPage />
+                }}></Route>
+                <Route path={"/oauth2/redirect/:token"} exact render={(props)=>{
+                    return <Oauth2Redirect {...props} />
                 }}></Route>
                 <Route>
                     <Layout>
