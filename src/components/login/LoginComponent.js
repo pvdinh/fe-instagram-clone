@@ -1,24 +1,29 @@
 import React, {useEffect, useState} from "react";
+import {FaFacebookF} from "react-icons/all";
+import {API_BASE_URL, FACEBOOK_AUTH_URL} from "../../constants";
 
-function LoginComponent() {
+function LoginComponent(props) {
 
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
     const [checkLogin, setCheckLogin] = useState(false)
 
-    useEffect(()=>{
-        if(username !== "" && username !== "" && username.split(" ").join("") !== "" && password.split(" ").join("") !== ""){
+    useEffect(() => {
+        if (username !== "" && username !== "" && username.split(" ").join("") !== "" && password.split(" ").join("") !== "") {
             setCheckLogin(true)
-        }else setCheckLogin(false)
-    },[username,password])
+        } else setCheckLogin(false)
+    }, [username, password])
 
-    const onChangeUsername = (e) =>{
+    const onSubmit = () => {
+        props.login(username,password)
+    }
+
+    const onChangeUsername = (e) => {
         setUsername(e.target.value)
     }
-    const onChangePassword = (e) =>{
+    const onChangePassword = (e) => {
         setPassword(e.target.value)
     }
-
     return (
         <div className='instagram-login-page-wrap'>
             <section className="section-all">
@@ -38,14 +43,18 @@ function LoginComponent() {
                                         <form className="form">
                                             <div className="input-box">
                                                 <input type="text" id="name" value={username} aria-describedby
-                                                       onChange={(e)=>{onChangeUsername(e)}}
+                                                       onChange={(e) => {
+                                                           onChangeUsername(e)
+                                                       }}
                                                        placeholder="Phone number, username, or email"
                                                        aria-required="true" maxLength={30} autoCapitalize="off"
                                                        autoCorrect="off" name="username" required/>
                                             </div>
                                             <div className="input-box">
                                                 <input type="password" name="password" value={password} id="password"
-                                                       onChange={(e)=>{onChangePassword(e)}}
+                                                       onChange={(e) => {
+                                                           onChangePassword(e)
+                                                       }}
                                                        placeholder="Password" aria-describedby maxLength={30}
                                                        aria-required="true" autoCapitalize="off" autoCorrect="off"
                                                        required/>
@@ -53,8 +62,8 @@ function LoginComponent() {
                                             <span className="button-box">
                           {
                               checkLogin ?
-                                  <button className="btn" type="submit" name="submit">Log in</button> :
-                                  <button className="btn-disabled" disabled type="submit" name="submit">Log in</button>
+                                  <button className="btn" type="button" name="submit" onClick={()=>{onSubmit()}}>Log in</button> :
+                                  <button className="btn-disabled" disabled type="button" name="submit">Log in</button>
                           }
                         </span>
                                             <a className="forgot" href>Forgot password?</a>
@@ -66,6 +75,9 @@ function LoginComponent() {
                                 <div className="login-box">
                                     <p className="text">Don't have an account?<a href="#">Sign up</a></p>
                                 </div>
+                                <a href={`${FACEBOOK_AUTH_URL}`} className="fb btn-login-fb">
+                                    <FaFacebookF /> &nbsp; Login with Facebook
+                                </a>
                                 {/* Signup-box end */}
                                 <div className="app">
                                     <p>Get the app.</p>
