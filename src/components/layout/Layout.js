@@ -1,4 +1,5 @@
 import React, {useEffect} from "react";
+import PostPostComponent from "./PostPostComponent";
 
 function Layout(props) {
     return(
@@ -230,6 +231,7 @@ function Layout(props) {
                             />
                         </svg>
                     </a>
+                    <PostPostComponent/>
                     <button className="profile-button">
                         <div className="profile-button__border" />
                         <div className="profile-button__picture">

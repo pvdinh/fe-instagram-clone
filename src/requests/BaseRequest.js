@@ -1,5 +1,6 @@
 import {axiosJwt} from "../axios/axiosConfig";
 import {BASE_URL} from "../url";
+import axios from "axios";
 
 export default class BaseRequest {
     version = 'api/v1';
@@ -16,8 +17,18 @@ export default class BaseRequest {
     async post(url, data = {}) {
         try {
             const response = await axiosJwt.post(`${BASE_URL}/${this.version}/${url}`, {...data})
-            console.log(response)
             return this._responseHandle(response)
+        } catch (e) {
+            this._errorHandle(e)
+        }
+    }
+    async postImageToCloud(url, data = {}) {
+        try {
+            const formData = new FormData();
+            formData.append("file", data.file);
+            formData.append("upload_preset", "instagram-clone");
+            const response = await axios.post(`${url}`, formData)
+            return response
         } catch (e) {
             this._errorHandle(e)
         }

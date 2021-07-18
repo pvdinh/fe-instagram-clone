@@ -1,4 +1,5 @@
 import BaseRequest from "./BaseRequest";
+import {API_CLOUDINARY_BASE_URL} from "../url";
 
 class PostRequest extends BaseRequest{
     getAllPostOfFollowing(){
@@ -20,6 +21,14 @@ class PostRequest extends BaseRequest{
     getCommentPost(pId){
         let url = `post/${pId}/comment`
         return this.get(url)
+    }
+    postImageToCloudinary(data){
+        let url = API_CLOUDINARY_BASE_URL
+        return this.postImageToCloud(url,data)
+    }
+    postNewPost(data){
+        let url = `post`
+        return this.post(url,data)
     }
 }
 export default PostRequest
