@@ -4,7 +4,7 @@ import {
     commentPost,
     getAllPostInformationFollowing,
     getCommentPost,
-    likePost,
+    likePost, postImageToCloudinary, postNewPost,
     unLikePost
 } from "../../services/PostApiService";
 
@@ -50,6 +50,23 @@ function *saga_getCommentPost(action) {
         console.log("err",e)
     }
 }
+function *saga_postNewPost(action) {
+    try{
+        const res = yield call(postNewPost,action.payload.data)
+        const response = yield call(getAllPostInformationFollowing)
+        yield put({type:postActions.type.GET_ALL_POST_OF_FOLLOWING_SUCCESS,data:response.data})
+    }catch (e) {
+        console.log("err",e)
+    }
+}
+function *saga_postImageToCloudinary(action) {
+    try{
+        const response = yield call(postImageToCloudinary,action.payload.data)
+        action.callback(response.data)
+    }catch (e) {
+        console.log("err",e)
+    }
+}
 
 function* listen() {
     yield takeEvery(postActions.type.GET_ALL_POST_OF_FOLLOWING, saga_getAllPostOfFollowing)
@@ -57,6 +74,8 @@ function* listen() {
     yield takeEvery(postActions.type.UNLIKE_POST, saga_unLikePost)
     yield takeEvery(postActions.type.COMMENT_POST, saga_commentPost)
     yield takeEvery(postActions.type.GET_COMMENT_POST, saga_getCommentPost)
+    yield takeEvery(postActions.type.POST_NEW_POST, saga_postNewPost)
+    yield takeEvery(postActions.type.POST_IMAGE_TO_CLOUDINARY, saga_postImageToCloudinary)
 }
 
 function* postSaga() {

@@ -8,11 +8,32 @@ const type = {
     COMMENT_POST:"COMMENT_POST",
     GET_COMMENT_POST:"GET_COMMENT_POST",
     GET_COMMENT_POST_SUCCESS:"GET_COMMENT_POST_SUCCESS",
+    POST_NEW_POST:"POST_NEW_POST",
+    POST_NEW_POST_SUCCESS:"POST_NEW_POST_SUCCESS",
+    POST_IMAGE_TO_CLOUDINARY:"POST_IMAGE_TO_CLOUDINARY",
 }
 const action = {
     getAllPostOfFollowing: () => {
         return {
             type: type.GET_ALL_POST_OF_FOLLOWING
+        }
+    },
+    postImageToCloudinary: (data,callback) => {
+        return {
+            type: type.POST_IMAGE_TO_CLOUDINARY,
+            payload:{
+                data,
+            },
+            callback,
+        }
+    },
+    postNewPost: (data,callback) => {
+        return {
+            type: type.POST_NEW_POST,
+            payload:{
+                data,
+            },
+            callback,
         }
     },
     likePost:(pId) =>{

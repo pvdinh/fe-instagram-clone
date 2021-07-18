@@ -2,13 +2,23 @@ import React, {useState} from "react";
 import {Modal} from "antd";
 import {Avatar, Image} from 'antd';
 import {AiOutlineClose, BiArrowBack} from "react-icons/all";
+import postActions from "../../redux/actions/postActions";
+import {connect} from "react-redux";
+
+import { Spin } from 'antd';
+import { LoadingOutlined } from '@ant-design/icons';
+
+const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
 
-function PostPostComponent() {
+function PostPostComponent(props) {
     const [pathUrl, setPathUrl] = useState("")
+    const [imageUpload, setImageUpload] = useState("")
+    const [caption, setCaption] = useState("")
+    const [post, setPost] = useState({})
+    const [loadingUpload, setLoadingUpload] = useState(false)
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [isModalShareVisible, setIsModalShareVisible] = useState(false);
-
 
     const showModal = () => {
         setIsModalVisible(true);
@@ -33,9 +43,35 @@ function PostPostComponent() {
         setIsModalShareVisible(false);
     };
 
+    const onChangeCaption = (e) => {
+        setCaption(e.target.value)
+    };
+
+    const doSharePost = () => {
+        setLoadingUpload(true)
+        let data={
+            "file":imageUpload,
+            "upload_preset":"instagram-clone",
+        }
+        props.postImageToCloudinary(data,(data)=>{
+            let post={
+                id:'',
+                caption: caption,
+                imagePath: data.url,
+                tags: '',
+                dateCreated: new Date().getTime(),
+            }
+            props.postNewPost(post)
+            setIsModalShareVisible(false);
+            setLoadingUpload(false)
+            setCaption("")
+        })
+    };
+
     const onChangeUploadImage = (e) => {
         if (e.target.files[0]) {
             setPathUrl(URL.createObjectURL(e.target.files[0]))
+            setImageUpload(e.target.files[0])
             setIsModalVisible(true)
         } else {
             setIsModalVisible(true)
@@ -112,14 +148,16 @@ function PostPostComponent() {
                     <BiArrowBack/>
                 </div>
                 <div className="title-div">New Post</div>
-                <div className="next-div">Share</div>
+                {
+                    loadingUpload ? <div className="next-div"><Spin indicator={antIcon} /></div> : <div className="next-div" onClick={()=>{doSharePost()}}>Share</div>
+                }
             </div>)}
                    closable={false}>
                 <div className="content-new-post">
                     <div className="avatar-user"><Avatar
-                        src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"/></div>
+                        src={props.userAccountProfile.profilePhoto}/></div>
                     <div className="description-post">
-                        <textarea className="description-text" placeholder="Write a caption ..."></textarea>
+                        <textarea className="description-text" placeholder="Write a caption ..." onChange={(e)=>{onChangeCaption(e)}}></textarea>
                     </div>
                     <div className="image-post"><img src={pathUrl} style={{width: "100%"}}/>
                     </div>
@@ -128,5 +166,20 @@ function PostPostComponent() {
         </div>
     )
 }
+function mapStateToProps(state) {
+    return {
+        userAccountProfile: state.home.userAccountProfile,
+    }
+}
 
-export default PostPostComponent
+function mapDispatchToProps(dispatch) {
+    return {
+        postNewPost: (data,callback) => {
+            dispatch(postActions.action.postNewPost(data,callback))
+        },
+        postImageToCloudinary: (data,callback) => {
+            dispatch(postActions.action.postImageToCloudinary(data,callback))
+        },
+    }
+}
+export default connect(mapStateToProps,mapDispatchToProps)(PostPostComponent)

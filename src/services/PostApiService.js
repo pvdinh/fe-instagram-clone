@@ -20,3 +20,11 @@ export const getCommentPost = (pId) =>{
     const postRequest = new PostRequest()
     return postRequest.getCommentPost(pId)
 }
+export const postNewPost = (data) =>{
+    const postRequest = new PostRequest()
+    return postRequest.postNewPost(data)
+}
+export const postImageToCloudinary = (data) =>{
+    const postRequest = new PostRequest()
+    return postRequest.postImageToCloudinary(data)
+}
