@@ -1,105 +1,160 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {Avatar, Modal} from "antd";
 import MoreActionInPost from "./MoreActionInPost";
 import CommentComponent from "./CommentComponent";
+import postActions from "../../redux/actions/postActions";
+import {connect} from "react-redux";
 
 function PostDetailComponent(props) {
+    const [like, setLike] = useState(true)
+    const [listCmt, setListCmt] = useState([])
+
+    useEffect(() => {
+        props.likes.includes(props.userAccountProfile.displayName) ? setLike(true) : setLike(false)
+    }, [props.likes])
+
+    useEffect(()=>{
+        setListCmt([...props.listComment].reverse())
+    },[props.listComment])
+
+    const onClickLike = () => {
+        like ? props.unLikePost(props.post.id) : props.likePost(props.post.id)
+    }
+    const postComment = (cmt) => {
+        let comment = {
+            id: "",
+            content: cmt,
+            idPost: props.post.id,
+            idUser: props.userAccountProfile.id,
+            dateCommented: new Date().getTime(),
+        }
+        props.commentPost(comment, (data) => {
+        })
+        props.reload()
+    }
+
+    const calculatorDayCreated = (timeCreated) => {
+        let distance = Math.round((new Date().getTime() - timeCreated) / (1000))
+        switch (true) {
+            case distance <= 1:
+                return "JUST NOW"
+            case 2 <= distance && distance <= 5:
+                return "A FEW SECONDS"
+            case 6 <= distance && distance <= 59:
+                return distance + " SECONDS AGO"
+            case 60 <= distance && distance < 3600:
+                return Math.round(distance / 60) + " MINUTES AGO"
+            case 3600 <= distance && distance < (3600 * 24):
+                return Math.round(distance / (60 * 60)) + " HOURS AGO"
+            case 3600 * 24 <= distance :
+                return Math.round((distance / (60 * 60 * 24))) + " DAYS AGO"
+            default:
+                break;
+        }
+    }
+    const calculatorDayCommented = (timeComment) => {
+        let distance = Math.round((new Date().getTime() - timeComment) / (1000))
+        switch (true) {
+            case 0 <= distance && distance <= 59:
+                return distance + "s"
+            case 60 <= distance && distance < 3600:
+                return Math.round(distance / 60) + "m"
+            case 3600 <= distance && distance < (3600 * 24):
+                return Math.round(distance / (60 * 60)) + "h"
+            case 3600 * 24 <= distance :
+                return Math.round((distance / (60 * 60 * 24))) + "d"
+            default:
+                break;
+        }
+    }
+    const displayLikes = (likes) => {
+        switch (true) {
+            case likes.length === 1:
+                return (
+                    <span className="likes">
+              Liked by <a className='post__name--underline' href="#">{likes[0]}</a>
+                    </span>
+                )
+            case likes.length === 2:
+                return (
+                    <span className="likes">
+              Liked by <a className='post__name--underline' href="#">{likes[0]}</a> and <a
+                        className='post__name--underline' href="#">{likes[1]}</a>
+                    </span>
+                )
+            case likes.length > 2:
+                return (
+                    <span className="likes">
+              Liked by <a className='post__name--underline' href="#">{likes[0]}</a>, <a
+                        className='post__name--underline'
+                        href="#">{likes[1]}</a> and <strong>{likes.length - 2} others</strong>
+            </span>
+                )
+            default:
+                return (<div></div>)
+        }
+    }
     return(
         <Modal className="wrap-home-post-detail" closable={false} footer={null} visible={props.visible} onCancel={()=>{props.setVisible()}} centered >
             <div className="wrap-post-detail">
                 <div className="wrap-image-post-detail">
-                    <img className="image-post-detail" alt="picture" src="https://res.cloudinary.com/dinhpv/image/upload/v1626604741/instargram-clone/eqvxdyttoeqqrdqyx2rp.png" />
+                    <img className="image-post-detail" alt="picture" src={props.post.imagePath} />
                 </div>
                 <div>
                     <div className="post__header">
                         <div className="post__profile">
                             <a href="https://github.com/leocosta1" target="_blank" className="post__avatar">
-                                <Avatar src="https://res.cloudinary.com/dinhpv/image/upload/v1626604741/instargram-clone/eqvxdyttoeqqrdqyx2rp.png" alt="picture"></Avatar>
+                                <Avatar src={props.userAccountSetting.profilePhoto} alt="picture"></Avatar>
                             </a>
                             <a href="https://github.com/leocosta1" target="_blank"
-                               className="post__user">displayName</a>
+                               className="post__user">{props.userAccountSetting.displayName}</a>
                         </div>
 
                         <MoreActionInPost userAccountFollowing={props.userAccountSetting}/>
                     </div>
                     <div className="post-detail-body-comment">
-                        <div className="comment">
-                            <div className="avatar-user">
-                                <Avatar src="https://res.cloudinary.com/dinhpv/image/upload/v1626604741/instargram-clone/eqvxdyttoeqqrdqyx2rp.png" alt="picture"></Avatar>
-                            </div>
-                            <div className="content-comment">
-                                <a className="displayname-user">displayName</a>
-                                <span>Sports & Study @nntrang.trr
-                    Fl: @nntrang.trr for more
-                    Source: 陈大莹ChiChilli
-                            </span>
-                                <div className="time-commented">3m</div>
-                            </div>
-                        </div>
-                        <div className="comment">
-                            <div className="avatar-user">
-                                <Avatar src="https://res.cloudinary.com/dinhpv/image/upload/v1626604741/instargram-clone/eqvxdyttoeqqrdqyx2rp.png" alt="picture"></Avatar>
-                            </div>
-                            <div className="content-comment">
-                                <a className="displayname-user">displayName</a>
-                                <span>Sports & Study @nntrang.trr
-                    Fl: @nntrang.trr for more
-                    Source: 陈大莹ChiChilli
-                            </span>
-                                <div className="time-commented">3m</div>
-                            </div>
-                        </div>
-                        <div className="comment">
-                            <div className="avatar-user">
-                                <Avatar src="https://res.cloudinary.com/dinhpv/image/upload/v1626604741/instargram-clone/eqvxdyttoeqqrdqyx2rp.png" alt="picture"></Avatar>
-                            </div>
-                            <div className="content-comment">
-                                <a className="displayname-user">displayName</a>
-                                <span>Sports & Study @nntrang.trr
-                    Fl: @nntrang.trr for more
-                    Source: 陈大莹ChiChilli
-                            </span>
-                                <div className="time-commented">3m</div>
-                            </div>
-                        </div>
-                        <div className="comment">
-                            <div className="avatar-user">
-                                <Avatar src="https://res.cloudinary.com/dinhpv/image/upload/v1626604741/instargram-clone/eqvxdyttoeqqrdqyx2rp.png" alt="picture"></Avatar>
-                            </div>
-                            <div className="content-comment">
-                                <a className="displayname-user">displayName</a>
-                                <span>Sports & Study @nntrang.trr
-                    Fl: @nntrang.trr for more
-                    Source: 陈大莹ChiChilli
-                            </span>
-                                <div className="time-commented">3m</div>
-                            </div>
-                        </div>
-                        <div className="comment">
-                            <div className="avatar-user">
-                                <Avatar src="https://res.cloudinary.com/dinhpv/image/upload/v1626604741/instargram-clone/eqvxdyttoeqqrdqyx2rp.png" alt="picture"></Avatar>
-                            </div>
-                            <div className="content-comment">
-                                <a className="displayname-user">displayName</a>
-                                <span>Sports & Study @nntrang.trr
-                    Fl: @nntrang.trr for more
-                    Source: 陈大莹ChiChilli
-                            </span>
-                                <div className="time-commented">3m</div>
-                            </div>
-                        </div>
+                        {
+                            listCmt.map((value,index)=>(
+                                <div className="comment">
+                                    <div className="avatar-user">
+                                        <Avatar src={value.userAccountSetting.profilePhoto} alt="picture"></Avatar>
+                                    </div>
+                                    <div className="content-comment">
+                                        <a className="displayname-user">{value.userAccountSetting.displayName}</a>
+                                        <span>{value.comment.content}</span>
+                                        <div className="time-commented">{calculatorDayCommented(value.comment.dateCommented)}</div>
+                                    </div>
+                                </div>
+                            ))
+                        }
                     </div>
                     <div className="post-detail-footer-comment">
                         <div style={{padding:"10px 16px"}}>
                             <div className="post__buttons">
-                                <button className="post__button">
-                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                         xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M11.4995 21.2609C11.1062 21.2609 10.7307 21.1362 10.4133 20.9001C8.2588 19.3012 3.10938 15.3239 1.81755 12.9143C0.127895 9.76543 1.14258 5.72131 4.07489 3.89968C5.02253 3.31177 6.09533 3 7.18601 3C8.81755 3 10.3508 3.66808 11.4995 4.85726C12.6483 3.66808 14.1815 3 15.8131 3C16.9038 3 17.9766 3.31177 18.9242 3.89968C21.8565 5.72131 22.8712 9.76543 21.186 12.9143C19.8942 15.3239 14.7448 19.3012 12.5902 20.9001C12.2684 21.1362 11.8929 21.2609 11.4995 21.2609ZM7.18601 4.33616C6.34565 4.33616 5.5187 4.57667 4.78562 5.03096C2.43888 6.49183 1.63428 9.74316 2.99763 12.2819C4.19558 14.5177 9.58639 18.6242 11.209 19.8267C11.3789 19.9514 11.6158 19.9514 11.7856 19.8267C13.4082 18.6197 18.799 14.5133 19.997 12.2819C21.3603 9.74316 20.5557 6.48738 18.209 5.03096C17.4804 4.57667 16.6534 4.33616 15.8131 4.33616C14.3425 4.33616 12.9657 5.04878 12.0359 6.28696L11.4995 7.00848L10.9631 6.28696C10.0334 5.04878 8.6611 4.33616 7.18601 4.33616Z"
-                                            fill="var(--text-dark)" stroke="var(--text-dark)" stroke-width="0.6"/>
-                                    </svg>
-                                </button>
+                                {
+                                    !like ?
+                                        <button className="post__button black" onClick={() => {
+                                            onClickLike()
+                                        }}>
+                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                 xmlns="http://www.w3.org/2000/svg">
+                                                <path
+                                                    d="M11.4995 21.2609C11.1062 21.2609 10.7307 21.1362 10.4133 20.9001C8.2588 19.3012 3.10938 15.3239 1.81755 12.9143C0.127895 9.76543 1.14258 5.72131 4.07489 3.89968C5.02253 3.31177 6.09533 3 7.18601 3C8.81755 3 10.3508 3.66808 11.4995 4.85726C12.6483 3.66808 14.1815 3 15.8131 3C16.9038 3 17.9766 3.31177 18.9242 3.89968C21.8565 5.72131 22.8712 9.76543 21.186 12.9143C19.8942 15.3239 14.7448 19.3012 12.5902 20.9001C12.2684 21.1362 11.8929 21.2609 11.4995 21.2609ZM7.18601 4.33616C6.34565 4.33616 5.5187 4.57667 4.78562 5.03096C2.43888 6.49183 1.63428 9.74316 2.99763 12.2819C4.19558 14.5177 9.58639 18.6242 11.209 19.8267C11.3789 19.9514 11.6158 19.9514 11.7856 19.8267C13.4082 18.6197 18.799 14.5133 19.997 12.2819C21.3603 9.74316 20.5557 6.48738 18.209 5.03096C17.4804 4.57667 16.6534 4.33616 15.8131 4.33616C14.3425 4.33616 12.9657 5.04878 12.0359 6.28696L11.4995 7.00848L10.9631 6.28696C10.0334 5.04878 8.6611 4.33616 7.18601 4.33616Z"
+                                                    fill="var(--text-dark)" stroke="var(--text-dark)"
+                                                    stroke-width="0.6"/>
+                                            </svg>
+                                        </button>
+                                        :
+                                        <button className="post__button red" onClick={() => {
+                                            onClickLike()
+                                        }}>
+                                            <svg className="_8-yf5 " height="24"
+                                                 viewBox="0 0 48 48" width="24">
+                                                <path
+                                                    d="M34.6 3.1c-4.5 0-7.9 1.8-10.6 5.6-2.7-3.7-6.1-5.5-10.6-5.5C6 3.1 0 9.6 0 17.6c0 7.3 5.4 12 10.6 16.5.6.5 1.3 1.1 1.9 1.7l2.3 2c4.4 3.9 6.6 5.9 7.6 6.5.5.3 1.1.5 1.6.5s1.1-.2 1.6-.5c1-.6 2.8-2.2 7.8-6.8l2-1.8c.7-.6 1.3-1.2 2-1.7C42.7 29.6 48 25 48 17.6c0-8-6-14.5-13.4-14.5z"></path>
+                                            </svg>
+                                        </button>
+                                }
                                 <button className="post__button">
                                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
                                          xmlns="http://www.w3.org/2000/svg">
@@ -130,20 +185,44 @@ function PostDetailComponent(props) {
                             </div>
                             <div className="post__infos">
                                 <div className="post__likes">
-                                 <span className="likes">
-              Liked by <a className='post__name--underline' href="#">jack</a>
-                    </span>
+                                    {
+                                        displayLikes(props.likes)
+                                    }
                                 </div>
                                 <span
-                                    className="post__date-time">3 days ago</span>
+                                    className="post__date-time">{calculatorDayCreated(props.post.dateCreated)}</span>
                             </div>
                         </div>
                         <hr className='post-hr'/>
-                        <CommentComponent />
+                        <CommentComponent postComment={(cmt) => {
+                            postComment(cmt)
+                        }} />
                     </div>
                 </div>
             </div>
         </Modal>
     )
 }
-export default PostDetailComponent
+function mapStateToProps(state) {
+    return {
+        userAccountProfile: state.home.userAccountProfile,
+    }
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        likePost: (pId) => {
+            dispatch(postActions.action.likePost(pId))
+        },
+        unLikePost: (pId) => {
+            dispatch(postActions.action.unLikePost(pId))
+        },
+        commentPost: (data, callback) => {
+            dispatch(postActions.action.commentPost(data, callback))
+        },
+        getCommentPost: (pId, callback) => {
+            dispatch(postActions.action.getCommentPost(pId, callback))
+        },
+    }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(PostDetailComponent)

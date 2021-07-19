@@ -6,9 +6,11 @@ import {connect} from "react-redux";
 import CommentComponent from "./CommentComponent";
 import MoreActionInPost from "./MoreActionInPost";
 import dbLike from '../../assets/homePage/posts/red_heart.svg';
+import PostDetailComponent from "./PostDetailComponent";
 
 function PostItemComponent1(props) {
     const [like, setLike] = useState(true)
+    const [isVisiblePostDetail, setIsVisiblePostDetail] = useState(false)
     const [listComment, setListComment] = useState([])
     const [contentLoader, setContentLoader] = useState(false)
     const [reLoad, setReLoad] = useState(true)
@@ -201,7 +203,7 @@ function PostItemComponent1(props) {
                                 {
                                     listComment.length > 2 ?
                                         <>
-                                            <p className="view-all-comment">
+                                            <p className="view-all-comment" onClick={()=>{setIsVisiblePostDetail(true)}}>
                                                 View all {listComment.length} comments
                                             </p>
                                             {
@@ -237,6 +239,7 @@ function PostItemComponent1(props) {
                     </article>
                     : <Instagram/>
             }
+            <PostDetailComponent reload={()=>{setReLoad(!reLoad)}} post={props.post} likes={props.likes} listComment={listComment} userAccountSetting={props.userAccountSetting} visible={isVisiblePostDetail} setVisible={()=>{setIsVisiblePostDetail(!isVisiblePostDetail)}} />
         </div>
     )
 }
