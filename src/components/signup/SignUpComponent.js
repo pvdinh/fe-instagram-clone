@@ -18,7 +18,22 @@ function SignUpComponent(props) {
     }, [username, password,phoneOrEmail,fullname])
 
     const onSubmit = () => {
-
+        let data;
+        phoneOrEmail.includes("@") ? data = {
+            fullname: fullname,
+            username: username,
+            password: password,
+            email: phoneOrEmail,
+            phoneNumber: ""
+        } : data = {
+            fullname: fullname,
+            username: username,
+            password: password,
+            email: "",
+            phoneNumber: phoneOrEmail
+        }
+        console.log(data)
+        props.register(data)
     }
 
     const onChangeUsername = (e) => {

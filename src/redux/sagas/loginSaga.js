@@ -1,6 +1,6 @@
 import {all, takeLatest, call} from "@redux-saga/core/effects";
 import loginActions from "../actions/loginActions";
-import {loginAPI} from "../../services/LoginApiService";
+import {loginAPI, registerAPI} from "../../services/LoginApiService";
 
 function* saga_login(action) {
     try {
@@ -34,8 +34,22 @@ function* saga_logout() {
     }
 }
 
+function* saga_register(action) {
+    try {
+        const response = yield call(registerAPI, action.payload.data)
+        if (response.statusCode === 200) {
+            window.location.href = "/login"
+        } else {
+            window.location.href = "/signup"
+        }
+    } catch (e) {
+        console.log('err', e)
+    }
+}
+
 function* listen() {
     yield takeLatest(loginActions.type.LOGIN, saga_login)
+    yield takeLatest(loginActions.type.REGISTER, saga_register)
     yield takeLatest(loginActions.type.LOGIN_FACEBOOK, saga_loginFacebook)
     yield takeLatest(loginActions.type.LOGOUT, saga_logout)
 }
