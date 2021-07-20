@@ -1,4 +1,4 @@
-.instagram-login-page-wrap{
+.instagram-signup-page-wrap{
   height: 100%;
   font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
   /* Universal Selectors */
@@ -110,6 +110,40 @@
     margin:0 0 10px;
     padding: 10px 0;
     /* align-items: center; */
+    .text-below-logo{
+      color: #8e8e8e;
+      font-size: 17px;
+      font-weight: 600;
+      line-height: 20px;
+      margin: 0 40px 10px;
+      text-align: center;
+    }
+    .wrap-text-or{
+      margin: 10px 40px 18px;
+      display: flex;
+      flex-direction:row;
+      overflow: hidden;
+      .left-text{
+        width: 108px;
+        background-color: #dbdbdb;
+        height: 1px;
+        position: relative;
+        top: .6em;
+      }
+      .text-or{
+        padding: 0px 18px;
+        color: #8e8e8e;
+        font-size: 13px;
+        font-weight: 600;
+      }
+      .right-text{
+        width: 108px;
+        background-color: #dbdbdb;
+        height: 1px;
+        position: relative;
+        top: .6em;
+      }
+    }
   }
 
   .header {
@@ -193,8 +227,13 @@
     font-size:12px;
     margin-top:12px;
     text-align: center;
-    color:#003569;
+    color:#8e8e8e;
     line-height: 14px!important;
+    padding: 0px 40px;
+    a{
+      color: #8e8e8e;
+      font-weight: 600;
+    }
   }
 
   .text {
@@ -390,11 +429,10 @@
     color: white;
   }
   .btn-login-fb {
-    width: 100%;
     padding: 12px;
+    margin: 10px 40px;
     border: none;
     border-radius: 4px;
-    margin: 5px 0;
     opacity: 0.85;
     display: inline-block;
     font-size: 14px;
@@ -407,59 +445,5 @@
   }
   .btn-login-fb:hover {
     opacity: 1;
-  }
-}
-.wrap-modal-new-post .ant-modal-content{
-  .ant-modal-header{
-    padding: 10px 20px!important;
-  }
-}
-.wrap-modal-new-post{
-  .wrap-header-new-post{
-    display: flex;
-    align-items: center;
-    .icon-close{
-      color:#262626;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      width: calc(100%/3);
-      user-select: none;
-    }
-    .title-div{
-      width: calc(100%/3);
-      text-align: center;
-      font-size: 14px;
-      user-select: none;
-    }
-    .next-div{
-      width: calc(100%/3);
-      text-align: end;
-      font-size: 14px;
-      cursor: pointer;
-      user-select: none;
-      color: #0095f6;
-      font-weight: 500;
-    }
-  }
-  .content-new-post{
-    display: flex;
-    //align-items: center;
-    .avatar-user{
-      width: 10%;
-    }
-    .description-post{
-      width: 65%;
-      .description-text{
-        resize: none;
-        border: none;
-        font-size: 14px;
-        width: 100%;
-        outline: none;
-      }
-    }
-    .image-post{
-      width: 30%;
-    }
   }
 }

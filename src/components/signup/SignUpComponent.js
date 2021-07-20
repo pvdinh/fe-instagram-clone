@@ -1,21 +1,24 @@
 import React, {useEffect, useState} from "react";
 import {FaFacebookF} from "react-icons/all";
 import {API_BASE_URL, FACEBOOK_AUTH_URL} from "../../constants";
+import {full} from "@cloudinary/base/qualifiers/fontHinting";
 
-function LoginComponent(props) {
+function SignUpComponent(props) {
 
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
+    const [phoneOrEmail, setPhoneOrEmail] = useState("")
+    const [fullname, setFullname] = useState("")
     const [checkLogin, setCheckLogin] = useState(false)
 
     useEffect(() => {
         if (username !== "" && username !== "" && username.split(" ").join("") !== "" && password.split(" ").join("") !== "") {
             setCheckLogin(true)
         } else setCheckLogin(false)
-    }, [username, password])
+    }, [username, password,phoneOrEmail,fullname])
 
     const onSubmit = () => {
-        props.login(username,password)
+
     }
 
     const onChangeUsername = (e) => {
@@ -24,8 +27,14 @@ function LoginComponent(props) {
     const onChangePassword = (e) => {
         setPassword(e.target.value)
     }
+    const onChangeFullname = (e) => {
+        setFullname(e.target.value)
+    }
+    const onChangePhoneOrEmail = (e) => {
+        setPhoneOrEmail(e.target.value)
+    }
     return (
-        <div className='instagram-login-page-wrap'>
+        <div className='instagram-signup-page-wrap'>
             <section className="section-all">
                 {/* 1-Role Main */}
                 <main className="main" role="main">
@@ -38,18 +47,45 @@ function LoginComponent(props) {
                                              src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Instagram_logo.svg/1200px-Instagram_logo.svg.png"
                                              alt="Instagram"/>
                                     </div>
+                                    <h2 className="text-below-logo">Sign up to see photos and videos from your friends.</h2>
+                                    <a href={`${FACEBOOK_AUTH_URL}`} className="fb btn-login-fb">
+                                        <FaFacebookF /> &nbsp; Login with Facebook
+                                    </a>
+                                    <div className="wrap-text-or">
+                                        <div className="left-text"></div>
+                                        <div className="text-or">OR</div>
+                                        <div className="right-text"></div>
+                                    </div>
                                     {/* Header end */}
                                     <div className="form-wrap">
                                         <form className="form">
                                             <div className="input-box">
-                                                <input type="text" id="name" value={username} aria-describedby
+                                                <input type="text" id="phoneOrEmail" value={phoneOrEmail} aria-describedby
+                                                       onChange={(e) => {
+                                                           onChangePhoneOrEmail(e)
+                                                       }}
+                                                       placeholder="Mobile Number or Email"
+                                                       aria-required="true" maxLength={30} autoCapitalize="off"
+                                                       autoCorrect="off" name="phoneOrEmail" required/>
+                                            </div>
+                                            <div className="input-box">
+                                                <input type="text" name="fullname" value={fullname} id="fullname"
+                                                       onChange={(e) => {
+                                                           onChangeFullname(e)
+                                                       }}
+                                                       placeholder="Full Name" aria-describedby maxLength={30}
+                                                       aria-required="true" autoCapitalize="off" autoCorrect="off" />
+                                            </div>
+
+                                            <div className="input-box">
+                                                <input type="text" name="username" value={username} id="username"
                                                        onChange={(e) => {
                                                            onChangeUsername(e)
                                                        }}
-                                                       placeholder="Phone number, username, or email"
-                                                       aria-required="true" maxLength={30} autoCapitalize="off"
-                                                       autoCorrect="off" name="username" required/>
+                                                       placeholder="Username" aria-describedby maxLength={30}
+                                                       aria-required="true" autoCapitalize="off" autoCorrect="off"/>
                                             </div>
+
                                             <div className="input-box">
                                                 <input type="password" name="password" value={password} id="password"
                                                        onChange={(e) => {
@@ -62,22 +98,29 @@ function LoginComponent(props) {
                                             <span className="button-box">
                           {
                               checkLogin ?
-                                  <button className="btn" type="button" name="submit" onClick={()=>{onSubmit()}}>Log in</button> :
-                                  <button className="btn-disabled" disabled type="button" name="submit">Log in</button>
+                                  <button className="btn" type="button" name="submit" onClick={()=>{onSubmit()}}>Sign up</button> :
+                                  <button className="btn-disabled" disabled type="button" name="submit">Sign up</button>
                           }
                         </span>
-                                            <a className="forgot" href>Forgot password?</a>
+                                            <a className="forgot">
+                                                <p>By signing up, you agree to our <a target="_blank"
+                                                                                      href="https://help.instagram.com/581066165581870"
+                                                                                      tabIndex="0">Terms</a> , <a
+                                                    target="_blank" href="https://help.instagram.com/519522125107875"
+                                                    tabIndex="0">Data Policy</a> and
+                                                    <a target="_blank"
+                                                       href="/legal/cookies/"
+                                                       tabIndex="0">Cookies
+                                                        Policy</a> .</p>
+                                            </a>
                                         </form>
                                     </div>
                                     {/* Form-wrap end */}
                                 </div>
                                 {/* Login-box end */}
                                 <div className="login-box">
-                                    <p className="text">Don't have an account?<a href="/signup">Sign up</a></p>
+                                    <p className="text">Don't have an account?<a href="#">Sign up</a></p>
                                 </div>
-                                <a href={`${FACEBOOK_AUTH_URL}`} className="fb btn-login-fb">
-                                    <FaFacebookF /> &nbsp; Login with Facebook
-                                </a>
                                 {/* Signup-box end */}
                                 <div className="app">
                                     <p>Get the app.</p>
@@ -133,4 +176,4 @@ function LoginComponent(props) {
     )
 }
 
-export default LoginComponent
+export default SignUpComponent
