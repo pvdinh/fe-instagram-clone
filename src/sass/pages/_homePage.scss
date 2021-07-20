@@ -1286,4 +1286,52 @@
     background: transparent; /* make scrollbar transparent */
   }
 }
+.wrap-page-home-in-header{
+  border-radius: 6px!important;
+  width: 230px;
+  background: var(--bg-dropdown)!important;
+  .ant-dropdown-menu-title-content{
+    align-items: center;
+    display: flex;
+    height: 28px;
+    .wrap-icon{
+      display: flex;
+      align-items: center;
+      color: var(--text-dark);
+      .icon{
+        display: flex;
+        margin-right: 10px;
+        color: var(--text-dark);
+      }
+    }
+    .wrap-icon:hover{
+      color: var(--text-light);
+      path{
+        fill:var(--text-light);
+        stroke:var(--text-light);
+      }
+    }
+  }
+  .wrap-logout{
+    border-top: 2px solid var(--img-border);
+    .logout{
+      color: var(--text-dark);
+      width: 100%;
+    }
+    .logout:hover{
+      color: var(--text-light);
+      path{
+        fill:var(--text-light);
+        stroke:var(--text-light);
+      }
+    }
+  }
+  .wrap-logout:hover{
+    border-color: var(--text-light);
+  }
+}
+.ant-dropdown-arrow{
+  background: var(--bg-dropdown) !important;
+  border-style: none!important;
+}
 
