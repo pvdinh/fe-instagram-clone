@@ -1,5 +1,7 @@
 const type = {
     LOGIN: 'LOGIN',
+    LOGOUT: 'LOGOUT',
+    REGISTER: 'REGISTER',
     LOGIN_FACEBOOK: 'LOGIN_FACEBOOK',
 }
 const action = {
@@ -16,6 +18,19 @@ const action = {
         return{
             type:type.LOGIN_FACEBOOK,
             token:token,
+        }
+    },
+    logout:()=>{
+        return{
+            type:type.LOGOUT,
+        }
+    },
+    register:(data)=>{
+        return{
+            type:type.REGISTER,
+            payload:{
+                data:data,
+            },
         }
     },
 }
