@@ -38,7 +38,7 @@ function HomeComponent() {
         });
     })
     return(
-        <div>
+        <div className="wrap-home-page-body">
             <main className="main-container">
                 <section className="content-container">
                     <div className="content">

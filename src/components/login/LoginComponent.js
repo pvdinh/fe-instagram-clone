@@ -73,7 +73,7 @@ function LoginComponent(props) {
                                 </div>
                                 {/* Login-box end */}
                                 <div className="login-box">
-                                    <p className="text">Don't have an account?<a href="#">Sign up</a></p>
+                                    <p className="text">Don't have an account?<a href="/signup">Sign up</a></p>
                                 </div>
                                 <a href={`${FACEBOOK_AUTH_URL}`} className="fb btn-login-fb">
                                     <FaFacebookF /> &nbsp; Login with Facebook

@@ -22,6 +22,14 @@ export default class BaseRequest {
             this._errorHandle(e)
         }
     }
+    async postRegister(url, data = {}) {
+        try {
+            const response = await axios.post(`${BASE_URL}/${this.version}/${url}`, {...data})
+            return this._responseHandle(response)
+        } catch (e) {
+            this._errorHandle(e)
+        }
+    }
     async postImageToCloud(url, data = {}) {
         try {
             const formData = new FormData();
