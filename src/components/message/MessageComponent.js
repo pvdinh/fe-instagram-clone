@@ -1,6 +1,6 @@
 import React, {useEffect} from "react";
 
-function MessageComponent() {
+function MessageComponent(props) {
     useEffect(()=>{
         //scroll to the bottom of "#chats-body"
         let myDiv = document.getElementById("chats-body");
