@@ -68,7 +68,7 @@ function HeaderButtonsDesktopComponent(props) {
     );
     return(
         <div className="header__buttons header__buttons--desktop">
-            <a href="#">
+            <a href="/">
                 <svg
                     width={24}
                     height={24}
@@ -83,7 +83,7 @@ function HeaderButtonsDesktopComponent(props) {
                     />
                 </svg>
             </a>
-            <a href="#">
+            <a href="/message">
                 <svg
                     width={24}
                     height={24}

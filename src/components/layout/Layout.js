@@ -2,6 +2,8 @@ import React, {useEffect} from "react";
 import PostPostComponent from "./PostPostComponent";
 import { Menu, Dropdown, Button, Space } from 'antd';
 import HeaderButtonsDesktopComponent from "./HeaderButtonsDesktopComponent";
+import homeActions from "../../redux/actions/homeActions";
+import {connect} from "react-redux";
 
 function Layout(props) {
     useEffect(()=>{
@@ -30,6 +32,9 @@ function Layout(props) {
             }
         });
     })
+    useEffect(()=>{
+        props.getUserAccountProfile()
+    },[])
     return(
         <div className='instagram-home-page-wrap'>
             <header className="header">
@@ -176,4 +181,17 @@ function Layout(props) {
         </div>
     )
 }
-export default Layout
+function mapStateToProps(state) {
+    return {
+        userAccountProfile: state.home.userAccountProfile,
+    }
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        getUserAccountProfile: () => {
+            dispatch(homeActions.action.getUserAccountProfile())
+        },
+    }
+}
+export default connect(mapStateToProps,mapDispatchToProps)(Layout)
