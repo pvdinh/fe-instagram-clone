@@ -2,8 +2,39 @@ import React, {useEffect} from "react";
 import PostPostComponent from "./PostPostComponent";
 import { Menu, Dropdown, Button, Space } from 'antd';
 import HeaderButtonsDesktopComponent from "./HeaderButtonsDesktopComponent";
+import homeActions from "../../redux/actions/homeActions";
+import {connect} from "react-redux";
 
 function Layout(props) {
+    useEffect(()=>{
+        const toggleThemeBtn = document.querySelector('.header__theme-button');
+        document.onload = setInitialTheme(localStorage.getItem('theme'));
+        function setInitialTheme(themeKey) {
+            if(themeKey === 'dark') {
+                document.documentElement.classList.add('darkTheme');
+            }
+            else {
+                document.documentElement.classList.remove('darkTheme');
+            }
+        }
+
+// Toggle theme button
+        toggleThemeBtn.addEventListener('click', () => {
+            // Toggle root class
+            document.documentElement.classList.toggle('darkTheme');
+
+            // Saving current theme on LocalStorage
+            if(document.documentElement.classList.contains('darkTheme')) {
+                localStorage.setItem('theme', 'dark');
+            }
+            else {
+                localStorage.setItem('theme', 'light');
+            }
+        });
+    })
+    useEffect(()=>{
+        props.getUserAccountProfile()
+    },[])
     return(
         <div className='instagram-home-page-wrap'>
             <header className="header">
@@ -150,4 +181,17 @@ function Layout(props) {
         </div>
     )
 }
-export default Layout
+function mapStateToProps(state) {
+    return {
+        userAccountProfile: state.home.userAccountProfile,
+    }
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        getUserAccountProfile: () => {
+            dispatch(homeActions.action.getUserAccountProfile())
+        },
+    }
+}
+export default connect(mapStateToProps,mapDispatchToProps)(Layout)

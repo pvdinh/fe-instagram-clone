@@ -14,8 +14,17 @@ function PostDetailComponent(props) {
     }, [props.likes])
 
     useEffect(()=>{
-        setListCmt([...props.listComment].reverse())
+        setListCmt([...props.listComment])
     },[props.listComment])
+
+    useEffect(()=>{
+        if(props.visible === true)
+        {
+            //scroll to the bottom of "#chats-body"
+            let myDiv = document.getElementById("chats-body");
+            myDiv.scrollTop = myDiv.scrollHeight;
+        }
+    })
 
     const onClickLike = () => {
         like ? props.unLikePost(props.post.id) : props.likePost(props.post.id)
@@ -112,9 +121,9 @@ function PostDetailComponent(props) {
 
                         <MoreActionInPost userAccountFollowing={props.userAccountSetting}/>
                     </div>
-                    <div className="post-detail-body-comment">
+                    <div className="post-detail-body-comment" id="chats-body">
                         {
-                            listCmt.map((value,index)=>(
+                            props.listComment.map((value,index)=>(
                                 <div className="comment">
                                     <div className="avatar-user">
                                         <Avatar src={value.userAccountSetting.profilePhoto} alt="picture"></Avatar>

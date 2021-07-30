@@ -53,6 +53,7 @@ function PostPostComponent(props) {
             "file":imageUpload,
             "upload_preset":"instagram-clone",
         }
+        console.log(imageUpload.name)
         props.postImageToCloudinary(data,(data)=>{
             let post={
                 id:'',

@@ -6,6 +6,7 @@ import ProtectedRoute from "./ProtectedRoute";
 import Layout from "./layout/Layout";
 import Oauth2Redirect from "./oauth2Redirect/Oath2Redirect";
 import SignupPage from "../screens/SignupPage";
+import MessagePage from "../screens/MessagePage";
 
 function AppRouter() {
     return (
@@ -24,6 +25,7 @@ function AppRouter() {
                     <Layout>
                         <Switch>
                             <ProtectedRoute path={"/"} exact render={()=>{return <HomePage />}}></ProtectedRoute>
+                            <ProtectedRoute path={"/message"} exact render={()=>{return <MessagePage />}}></ProtectedRoute>
                         </Switch>
                     </Layout>
                 </Route>
