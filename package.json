@@ -24,6 +24,8 @@
     "redux": "^4.1.0",
     "redux-saga": "^1.1.3",
     "sass": "^1.35.1",
+    "sockjs-client": "^1.5.1",
+    "stompjs": "^2.3.3",
     "web-vitals": "^1.1.2"
   },
   "scripts": {

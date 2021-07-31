@@ -12,10 +12,11 @@ const action={
             type:type.FIND_ALL_MESSAGE_BY_SENDER,
         }
     },
-    findAllBySenderAndReceiver:(receiver)=>{
+    findAllBySenderAndReceiver:(receiver,callback)=>{
         return{
             type:type.FIND_ALL_MESSAGE_BY_SENDER_AND_RECEIVER,
             id:receiver,
+            callback,
         }
     },
     postMessage:(message,callback)=>{

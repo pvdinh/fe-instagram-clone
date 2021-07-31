@@ -15,8 +15,8 @@ function mapDispatchToProps(dispatch) {
         findAllBySender:()=>{
             dispatch(messageActions.action.findAllBySender())
         },
-        findAllBySenderAndReceiver:(receiver)=>{
-            dispatch(messageActions.action.findAllBySenderAndReceiver(receiver))
+        findAllBySenderAndReceiver:(receiver,callback)=>{
+            dispatch(messageActions.action.findAllBySenderAndReceiver(receiver,callback))
         },
         postMessage:(message,callback)=>{
             dispatch(messageActions.action.postMessage(message,callback))
