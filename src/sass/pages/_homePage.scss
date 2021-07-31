@@ -85,14 +85,6 @@
     display: unset;
   }
 
-  :root.darkTheme .header__theme-button-sun {
-    display: unset;
-  }
-
-  :root.darkTheme .header__theme-button-moon {
-    display: none;
-  }
-
   .header__search {
     width: 216px;
     height: 28px;
@@ -1335,3 +1327,10 @@
   border-style: none!important;
 }
 
+:root.darkTheme .header__theme-button-sun {
+  display: unset;
+}
+
+:root.darkTheme .header__theme-button-moon {
+  display: none;
+}
