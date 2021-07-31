@@ -17,21 +17,18 @@ function Layout(props) {
                 document.documentElement.classList.remove('darkTheme');
             }
         }
-
-// Toggle theme button
-        toggleThemeBtn.addEventListener('click', () => {
-            // Toggle root class
-            document.documentElement.classList.toggle('darkTheme');
-
-            // Saving current theme on LocalStorage
-            if(document.documentElement.classList.contains('darkTheme')) {
-                localStorage.setItem('theme', 'dark');
-            }
-            else {
-                localStorage.setItem('theme', 'light');
-            }
-        });
     })
+    const changeTheme = () =>{
+        document.documentElement.classList.toggle('darkTheme');
+
+        // Saving current theme on LocalStorage
+        if(document.documentElement.classList.contains('darkTheme')) {
+            localStorage.setItem('theme', 'dark');
+        }
+        else {
+            localStorage.setItem('theme', 'light');
+        }
+    }
     useEffect(()=>{
         props.getUserAccountProfile()
     },[])
@@ -40,7 +37,7 @@ function Layout(props) {
             <header className="header">
             <nav className="header__content">
                 <div className="header__buttons">
-                    <a href="index.html" className="header__home">
+                    <a href="/" className="header__home">
                         <svg
                             width={104}
                             height={30}
@@ -56,7 +53,7 @@ function Layout(props) {
                             />
                         </svg>
                     </a>
-                    <button className="header__theme-button" title="Toggle Theme">
+                    <button className="header__theme-button" title="Toggle Theme" onClick={() =>{changeTheme()}}>
                         <svg
                             className="header__theme-button-moon"
                             xmlns="http://www.w3.org/2000/svg"

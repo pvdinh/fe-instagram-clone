@@ -1,5 +1,8 @@
 import React, {useEffect, useState} from "react";
-
+import {BASE_URL, BASE_URL_WEBSOCKET} from "../../url";
+import SockJS from "sockjs-client"
+import Stomp from "stompjs"
+let stompClient=null
 function MessageComponent(props) {
     const [message,setMessage] = useState("")
 
@@ -28,15 +31,45 @@ function MessageComponent(props) {
             message:message,
             emotion:"",
         }
-        console.log(data)
-        props.postMessage(data,()=>{
-            props.findAllBySenderAndReceiver(props.listMessageOfSenderAndReceiver.userAccountSettingReceiver.id)
-        })
+        stompClient.send("/app/chat.sendMessage",{},JSON.stringify(data))
+
+        // props.postMessage(data,()=>{
+        //     props.findAllBySenderAndReceiver(props.listMessageOfSenderAndReceiver.userAccountSettingReceiver.id)
+        // })
         setMessage("")
+    }
+    const onConnect = (receiver)=>{
+        // Subscribe to the Public Topic
+        stompClient.subscribe('/inbox/public', ()=>{receive(receiver)});
+    }
+    const onError = ()=>{
+        console.log("error connect web socket!")
+    }
+    const receive = (receiver)=>{
+        props.findAllBySenderAndReceiver(receiver)
+        props.findAllBySender()
     }
 
     const onChangeMessage = (e) =>{
         setMessage(e.target.value)
+    }
+
+    //dùng các thư viện : npm i sockjs-client stompjs
+    //khi click vaò inbox thì sẽ connect đến WebSocket
+    //phải xác nhận JWT ở headers để xác thực người dùng
+    //stompClient.connect khi connect thành công, truyền vào id receiver để thực hiện lắng nghe tin nhắn
+    const openInboxCurrentReceiver = (id) => {
+        props.findAllBySenderAndReceiver(id,(data)=>{
+            console.log(data)
+            let sockjs = new SockJS(BASE_URL_WEBSOCKET+"/ws")
+            let headers = {
+                'Authorization': localStorage.getItem('sessionToken') ? 'Bearer ' + localStorage.getItem('sessionToken') : 'Bearer ',
+                'Content-Type': 'application/json',
+            }
+            stompClient =Stomp.over(sockjs)
+            stompClient.connect(headers,()=>{onConnect(data.userAccountSettingReceiver.id)},onError)
+            stompClient.debug = null
+        })
     }
 
     return(
@@ -50,7 +83,7 @@ function MessageComponent(props) {
             <span id="pic-div">
               <img id="pic" src={value.userAccountSettingReceiver.profilePhoto} />
             </span>
-                                <div id="chat-username" onClick={()=>{props.findAllBySenderAndReceiver(value.userAccountSettingReceiver.id)}}>
+                                <div id="chat-username" onClick={()=>{openInboxCurrentReceiver(value.userAccountSettingReceiver.id)}}>
                                     <span id="name">{value.userAccountSettingReceiver.displayName}</span>
                                     <span id="msg">{value.messages[value.messages.length-1].message}</span>
                                 </div>

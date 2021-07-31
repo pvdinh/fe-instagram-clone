@@ -15,6 +15,7 @@ function* findAllBySenderAndReceiver_saga(action) {
     try {
         const response = yield call(findAllBySenderAndReceiver,action.id)
         yield put({type:messageActions.type.FIND_ALL_MESSAGE_BY_SENDER_AND_RECEIVER_SUCCESS,data:response.data})
+        yield action.callback(response.data)
     } catch (e) {
         console.log('err', e)
     }
