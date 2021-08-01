@@ -141,7 +141,7 @@ function MessageComponent(props) {
                         </div>
                 }
             </main>
-            <ModalSelectReceiverComponent isVisible={isVisible} setIsVisible={()=>{setIsVisible(!isVisible)}} />
+            <ModalSelectReceiverComponent receiverExisting={props.listMessageOfSender} isVisible={isVisible} setIsVisible={()=>{setIsVisible(!isVisible)}} />
         </div>
     )
 }

@@ -271,6 +271,7 @@
 }
 .wrap-modal-select-receiver{
   width: auto!important;
+  user-select: none;
   .body-modal-select-receiver{
     height: 100%;
     .selected{
@@ -314,6 +315,8 @@
           .name{
             color: #0095f6;
             margin-right: 10px;
+            overflow: auto;
+            width: 44px;
           }
           .remove{
             display: flex;
@@ -341,6 +344,7 @@
           align-items: center;
           padding: 8px 16px;
           cursor: pointer;
+          user-select: none;
           .side-menu__user-avatar {
             width: 56px;
             height: 56px;
@@ -399,16 +403,19 @@
             width: 30px;
             height: 30px;
             fill: #0095f6;
-            background: var(--primary);
+            background: transparent;
             cursor: pointer;
           }
           .unCheck{
             width: 30px;
             height: 30px;
             fill: var(--border);
-            background: var(--primary);
+            background: transparent;
             cursor: pointer;
           }
+        }
+        .side-menu__user-profile:hover{
+          background: #EEE9E9;
         }
       }
     }

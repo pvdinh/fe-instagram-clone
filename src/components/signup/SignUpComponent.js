@@ -41,7 +41,7 @@ function SignUpComponent(props) {
     const onSubmit = () => {
         if(checkSignup()){
             let data = {
-                fullname: fullname,
+                displayName: fullname,
                 username: username,
                 password: password,
                 email: email,
