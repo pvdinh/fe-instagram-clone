@@ -103,6 +103,14 @@ function MessageComponent(props) {
         })
     }
 
+    const convertTimeStampToDate = (timeStamp) => {
+        let time = new Date(timeStamp)
+        let months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+        let minute = time.getMinutes() < 10  ? "0"+time.getMinutes() : time.getMinutes()
+        return time.getDate()+" "+months[time.getMonth()]+" "+time.getFullYear()+" "+time.getHours()+":"+minute
+    }
+
+
     return(
         <div className="wrap-body-page-message">
             <main>
@@ -163,9 +171,15 @@ function MessageComponent(props) {
                                         <div>
                                             {
                                                 value.sender !== props.userAccountProfile.id ?
-                                                    <div className="sender">{value.message}</div>
+                                                    <div className="wrap-sender">
+                                                        <div className="sender">{value.message}</div>
+                                                        <div className="dateMessaged">{convertTimeStampToDate(value.dateSendMessage)}</div>
+                                                    </div>
                                                     :
-                                                    <div className="receiver">{value.message}</div>
+                                                    <div className="wrap-receiver">
+                                                        <div className="dateMessaged">{convertTimeStampToDate(value.dateSendMessage)}</div>
+                                                        <div className="receiver">{value.message}</div>
+                                                    </div>
 
                                             }
                                             <div id="heart">❤️</div>
