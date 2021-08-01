@@ -4,7 +4,7 @@ import homeActions from "../../redux/actions/homeActions";
 
 function UserProfileComponent(props) {
     useEffect(()=>{
-        props.getUserAccountProfile()
+        props.getUserAccountProfile(()=>{})
     },[])
     return (
     <div className="side-menu__user-profile">
@@ -28,8 +28,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        getUserAccountProfile: () => {
-          dispatch(homeActions.action.getUserAccountProfile())
+        getUserAccountProfile: (callback) => {
+          dispatch(homeActions.action.getUserAccountProfile(callback))
         },
     }
 }

@@ -7,10 +7,11 @@ import {
     getUserAccountProfile
 } from "../../services/HomeApiService";
 
-function* saga_getUserAccountProfile() {
+function* saga_getUserAccountProfile(action) {
     try {
         const response = yield call(getUserAccountProfile)
         yield put({type: homeActions.type.GET_USER_ACCOUNT_PROFILE_SUCCESS, data: response.data})
+        yield action.callback(response.data)
     } catch (e) {
         console.log('err', e)
     }

@@ -1,6 +1,7 @@
 import {connect} from "react-redux";
 import MessageComponent from "../components/message/MessageComponent";
 import messageActions from "../redux/actions/messageActions";
+import homeActions from "../redux/actions/homeActions";
 
 function mapStateToProps(state) {
     return {
@@ -20,6 +21,9 @@ function mapDispatchToProps(dispatch) {
         },
         postMessage:(message,callback)=>{
             dispatch(messageActions.action.postMessage(message,callback))
+        },
+        getUserAccountProfile: (callback) => {
+            dispatch(homeActions.action.getUserAccountProfile(callback))
         },
     }
 }

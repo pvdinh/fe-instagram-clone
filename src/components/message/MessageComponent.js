@@ -10,14 +10,16 @@ function MessageComponent(props) {
     const [isVisible,setIsVisible] = useState(false)
 
     useEffect(()=>{
-        let sockjs = new SockJS(BASE_URL_WEBSOCKET+"/ws")
-        let headers = {
-            'Authorization': localStorage.getItem('sessionToken') ? 'Bearer ' + localStorage.getItem('sessionToken') : 'Bearer ',
-            'Content-Type': 'application/json',
-        }
-        stompClientAllInbox= Stomp.over(sockjs)
-        stompClientAllInbox.connect(headers,()=>{onConnectAllInbox()},()=>{onError()})
-        stompClientAllInbox.debug=null
+        props.getUserAccountProfile((data)=>{
+            let sockjs = new SockJS(BASE_URL_WEBSOCKET+"/ws")
+            let headers = {
+                'Authorization': localStorage.getItem('sessionToken') ? 'Bearer ' + localStorage.getItem('sessionToken') : 'Bearer ',
+                'Content-Type': 'application/json',
+            }
+            stompClientAllInbox= Stomp.over(sockjs)
+            stompClientAllInbox.connect(headers,()=>{onConnectAllInbox(data.id)},()=>{onError()})
+            stompClientAllInbox.debug=null
+        })
     },[])
 
     useEffect(()=>{
@@ -57,9 +59,9 @@ function MessageComponent(props) {
         // Subscribe to the Public Topic
         stompClient.subscribe('/inbox/public', ()=>{receive(receiver)});
     }
-    const onConnectAllInbox = ()=>{
+    const onConnectAllInbox = (idCurrentUser)=>{
         // Subscribe to the Public Topic
-        stompClientAllInbox.subscribe('/inbox/allInbox', ()=>{receiveAllInbox()});
+        stompClientAllInbox.subscribe('/inbox/allInbox', (payload)=>{receiveAllInbox(payload,idCurrentUser)});
     }
     const onError = ()=>{
         console.log("error connect web socket!")
@@ -68,8 +70,12 @@ function MessageComponent(props) {
         props.findAllBySenderAndReceiver(receiver)
         props.findAllBySender()
     }
-    const receiveAllInbox = ()=>{
-        props.findAllBySender()
+    //chỉ có những người là receiver hoặc sender mới phải reload lại
+    const receiveAllInbox = (payload,idCurrentUser)=>{
+        let mess = JSON.parse(payload.body)
+        if(idCurrentUser === mess.sender || idCurrentUser === mess.receiver){
+            props.findAllBySender()
+        }
     }
 
     const onChangeMessage = (e) =>{
