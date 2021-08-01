@@ -13,7 +13,7 @@ function UserProfileComponent(props) {
         </a>
         <div className="side-menu__user-info">
             <a href="https://github.com/leocosta1" target="_blank">{props.userAccountProfile.username}</a>
-            <span>{props.userAccountProfile.username}</span>
+            <span>{props.userAccountProfile.displayName}</span>
         </div>
         <button className="side-menu__user-button">Switch</button>
     </div>

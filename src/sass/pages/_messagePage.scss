@@ -28,6 +28,38 @@
     height: 100%;
     width: 40%;
     border-right: 1px solid var(--border);
+    .wrap-user-name{
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      .new-chat{
+        width: calc(100%/2);
+        display: flex;
+        justify-content: flex-end;
+        padding-right: 15px;
+        cursor: pointer;
+      }
+      #user-name {
+        width: calc(100%/2);
+        color: var(--text-dark);
+        min-height: 60px;
+        display: flex;
+        align-items: center;
+        font-weight: 400;
+        font-size: 1.5em;
+        display: flex;
+        justify-content: flex-end;
+        .u1{
+          display: flex;
+          align-items: center;
+        }
+      }
+      #user-name i {
+        font-size: 1em;
+        padding-left: 5px;
+      }
+    }
   }
   .preview>div {
     display: flex;
@@ -95,20 +127,6 @@
   }
   .chat-banner>div {
     padding: 10px;
-  }
-  #user-name {
-    color: var(--text-dark);
-    min-height: 60px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-weight: 400;
-    font-size: 1.5em;
-    border-bottom: 1px solid var(--border);
-  }
-  #user-name i {
-    font-size: 1em;
-    padding-left: 5px;
   }
   #pic-div, #pic, #chat-pic {
     height: 50px;
@@ -262,6 +280,202 @@
     }
     .receiver, .user-input {
       margin-left: 70vw;
+    }
+  }
+  ::-webkit-scrollbar {
+    width: 0px;
+    background: transparent; /* make scrollbar transparent */
+  }
+}
+.wrap-modal-select-receiver{
+  width: 400px!important;
+  user-select: none;
+  .body-modal-select-receiver{
+    height: 100%;
+    .selected{
+      min-height: 55px;
+      max-height: 90px;
+      display: flex;
+      align-items: center;
+      border-bottom: 1px solid var(--border);
+      overflow: auto;
+      .s1{
+        padding-right: 15px;
+        padding-top: 15px;
+        padding-bottom: 15px;
+        padding-left: 24px;
+        h4{
+          margin-bottom: 0px;
+        }
+      }
+      .s2{
+        padding-left: 20px;
+        display: flex;
+        flex-wrap: wrap;
+        width: 100%;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        max-height: 90px;
+        .s21{
+          border: none;
+          outline: none;
+          padding: 10px;
+        }
+        .item-selected{
+          margin: 5px 0px;
+          display: flex;
+          align-items: center;
+          background: #e0f1ff;
+          padding: 8px 15px;
+          border-radius: 5px;
+          margin-right: 10px;
+          width: calc(100%/3 - 10px);
+          .name{
+            color: #0095f6;
+            margin-right: 10px;
+            overflow: auto;
+            width: 44px;
+          }
+          .remove{
+            display: flex;
+            align-items: center;
+            color: #0095f6;
+            cursor: pointer;
+          }
+        }
+      }
+    }
+    .suggested{
+      height: 465px;
+      overflow: auto;
+      background: white;
+      border-radius: 12px;
+      .s1{
+        padding: 16px;
+        font-weight: 600;
+        font-size: 14px;
+        color: var(--text-dark);
+      }
+      .s2{
+        .side-menu__user-profile{
+          display: flex;
+          align-items: center;
+          padding: 8px 16px;
+          cursor: pointer;
+          user-select: none;
+          .side-menu__user-avatar {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+
+            margin-right: 12px;
+            flex-shrink: 0;
+
+            overflow: hidden;
+            position: relative;
+          }
+          .side-menu__user-avatar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+
+            border: 1px solid var(--img-border);
+            border-radius: 50%;
+          }
+          .side-menu__user-info {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            flex: 1;
+            gap: 4px;
+          }
+          .side-menu__user-info a {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-dark);
+            text-decoration: none;
+            text-transform: lowercase;
+
+            max-width: 180px;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+          }
+          .side-menu__user-info span {
+            font-size: 14px;
+            font-weight: 400;
+            color: var(--text-light);
+
+            max-width: 180px;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+          }
+          img{
+            max-width: 100%;
+          }
+          .check{
+            width: 30px;
+            height: 30px;
+            fill: #0095f6;
+            background: transparent;
+            cursor: pointer;
+          }
+          .unCheck{
+            width: 30px;
+            height: 30px;
+            fill: var(--border);
+            background: transparent;
+            cursor: pointer;
+          }
+        }
+        .side-menu__user-profile:hover{
+          background: #EEE9E9;
+        }
+      }
+    }
+  }
+  .ant-modal-content{
+    //width: 400px;
+    height: 575px;
+    border-radius: 12px;
+    .ant-modal-body{
+      height: 520px;
+      padding: 0px!important;
+    }
+  }
+  .ant-modal-header{
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    .wrap-header-new-post{
+      display: flex;
+      align-items: center;
+      .icon-close{
+        color:#262626;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        width: calc(100%/3);
+        user-select: none;
+      }
+      .title-div{
+        width: calc(100%/3);
+        text-align: center;
+        font-size: 14px;
+        user-select: none;
+      }
+      .next-div{
+        width: calc(100%/3);
+        text-align: end;
+        font-size: 14px;
+        cursor: pointer;
+        user-select: none;
+        color: #0095f6;
+        font-weight: 500;
+      }
     }
   }
   ::-webkit-scrollbar {

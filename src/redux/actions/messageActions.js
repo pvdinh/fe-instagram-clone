@@ -5,6 +5,8 @@ const type={
     FIND_ALL_MESSAGE_BY_SENDER_SUCCESS:"FIND_ALL_MESSAGE_BY_SENDER_SUCCESS",
     FIND_ALL_MESSAGE_BY_SENDER_AND_RECEIVER_SUCCESS:"FIND_ALL_MESSAGE_BY_SENDER_AND_RECEIVER_SUCCESS",
     POST_MESSAGE_SUCCESS:"POST_MESSAGE_SUCCESS",
+    FIND_RECEIVER_BY_USERNAME:"FIND_RECEIVER_BY_USERNAME",
+    FIND_RECEIVER_BY_USERNAME_SUCCESS:"FIND_RECEIVER_BY_USERNAME_SUCCESS",
 }
 const action={
     findAllBySender:()=>{
@@ -26,6 +28,12 @@ const action={
                 data:message,
             },
             callback,
+        }
+    },
+    findReceiverByUsername:(search)=>{
+        return{
+            type:type.FIND_RECEIVER_BY_USERNAME,
+            search:search,
         }
     },
 }

@@ -12,3 +12,7 @@ export const postMessage = (message) =>{
     let messageRequest = new MessageRequest()
     return messageRequest.postMessage(message)
 }
+export const findReceiverByUsername = (search) =>{
+    let messageRequest = new MessageRequest()
+    return messageRequest.findReceiverByUsername(search)
+}

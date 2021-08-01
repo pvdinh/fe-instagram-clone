@@ -18,7 +18,7 @@ function PostItemComponent(props) {
     }, [])
 
     useEffect(() => {
-        props.likes.includes(props.userAccountProfile.displayName) ? setLike(true) : setLike(false)
+        props.likes.includes(props.userAccountProfile.username) ? setLike(true) : setLike(false)
     }, [props.likes])
 
     useEffect(()=>{
