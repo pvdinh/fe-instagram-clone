@@ -2,9 +2,11 @@ import React, {useEffect, useState} from "react";
 import {BASE_URL, BASE_URL_WEBSOCKET} from "../../url";
 import SockJS from "sockjs-client"
 import Stomp from "stompjs"
+import ModalSelectReceiverComponent from "./ModalSelectReceiverComponent";
 let stompClient=null
 function MessageComponent(props) {
     const [message,setMessage] = useState("")
+    const [isVisible,setIsVisible] = useState(false)
 
     useEffect(()=>{
         if(props.listMessageOfSenderAndReceiver.userAccountSettingReceiver){
@@ -133,12 +135,13 @@ function MessageComponent(props) {
                                 <div className="m1">Your Messages</div>
                                 <div className="m2">Send private photos and messages to a friend or group.</div>
                                 <div className="m3">
-                                    <button className="m31" >Send Message</button>
+                                    <button className="m31" onClick={()=>{setIsVisible(true)}}>Send Message</button>
                                 </div>
                             </div>
                         </div>
                 }
             </main>
+            <ModalSelectReceiverComponent isVisible={isVisible} setIsVisible={()=>{setIsVisible(!isVisible)}} />
         </div>
     )
 }
