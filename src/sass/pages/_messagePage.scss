@@ -78,6 +78,22 @@
     .chats-body{
       overflow-y: auto;
       height: 680px;
+      width: 100%;
+      .wrap-sender{
+        align-items: center;
+        display: flex;
+        .dateMessaged{
+          color: var(--text-dark);
+        }
+      }
+      .wrap-receiver{
+        align-items: center;
+        display: flex;
+        justify-content: flex-end;
+        .dateMessaged{
+          color: var(--text-dark);
+        }
+      }
     }
   }
   .no-chats{
@@ -168,6 +184,8 @@
   #msg {
     color:var(--text-dark);
     font-size: 13px;
+    overflow: hidden;
+    height: 18px!important;
   }
   .sender, .receiver, .user-input {
     margin: 0.8em;
@@ -184,7 +202,7 @@
     background-color: pink;
     cursor: pointer;
   }
-  .receiver, .user-input {
+  .user-input {
     margin-left: 22vw;
     background-color: var(--border);
   }
@@ -249,12 +267,13 @@
 
   @media screen and (min-width: 900px)
   {
-    .receiver, .user-input {
+    .user-input {
       margin-left: 28vw;
     }
     .sender, .receiver, .user-input {
       min-width: 140px;
       width: auto;
+      max-width: 300px;
     }
   }
   @media screen and (max-width: 600px)
@@ -278,7 +297,7 @@
         overflow-y: auto;
       }
     }
-    .receiver, .user-input {
+    .user-input {
       margin-left: 70vw;
     }
   }
