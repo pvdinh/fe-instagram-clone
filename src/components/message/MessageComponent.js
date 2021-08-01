@@ -4,9 +4,21 @@ import SockJS from "sockjs-client"
 import Stomp from "stompjs"
 import ModalSelectReceiverComponent from "./ModalSelectReceiverComponent";
 let stompClient=null
+let stompClientAllInbox=null
 function MessageComponent(props) {
     const [message,setMessage] = useState("")
     const [isVisible,setIsVisible] = useState(false)
+
+    useEffect(()=>{
+        let sockjs = new SockJS(BASE_URL_WEBSOCKET+"/ws")
+        let headers = {
+            'Authorization': localStorage.getItem('sessionToken') ? 'Bearer ' + localStorage.getItem('sessionToken') : 'Bearer ',
+            'Content-Type': 'application/json',
+        }
+        stompClientAllInbox= Stomp.over(sockjs)
+        stompClientAllInbox.connect(headers,()=>{onConnectAllInbox()},()=>{onError()})
+        stompClientAllInbox.debug=null
+    },[])
 
     useEffect(()=>{
         if(props.listMessageOfSenderAndReceiver.userAccountSettingReceiver){
@@ -34,6 +46,7 @@ function MessageComponent(props) {
             emotion:"",
         }
         stompClient.send("/app/chat.sendMessage",{},JSON.stringify(data))
+        stompClientAllInbox.send("/app/chat.sendMessageToAll",{},JSON.stringify(data))
 
         // props.postMessage(data,()=>{
         //     props.findAllBySenderAndReceiver(props.listMessageOfSenderAndReceiver.userAccountSettingReceiver.id)
@@ -44,11 +57,18 @@ function MessageComponent(props) {
         // Subscribe to the Public Topic
         stompClient.subscribe('/inbox/public', ()=>{receive(receiver)});
     }
+    const onConnectAllInbox = ()=>{
+        // Subscribe to the Public Topic
+        stompClientAllInbox.subscribe('/inbox/allInbox', ()=>{receiveAllInbox()});
+    }
     const onError = ()=>{
         console.log("error connect web socket!")
     }
     const receive = (receiver)=>{
         props.findAllBySenderAndReceiver(receiver)
+        props.findAllBySender()
+    }
+    const receiveAllInbox = ()=>{
         props.findAllBySender()
     }
 
