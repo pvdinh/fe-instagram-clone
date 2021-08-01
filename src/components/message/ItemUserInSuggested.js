@@ -5,15 +5,15 @@ function ItemUserInSuggested(props) {
     const [selected,setSelected] = useState(false)
 
     useEffect(()=>{
-        props.listSelected.indexOf(props.item.userAccountSettingReceiver.username) > -1 ? setSelected(true) : setSelected(false)
+        props.listSelected.indexOf(props.item) > -1 ? setSelected(true) : setSelected(false)
     },[props.listSelected])
 
     const onSelectReceiver = () =>{
         if(selected){
-            props.onRemoveReceiver(props.item.userAccountSettingReceiver.username)
+            props.onRemoveReceiver(props.item)
             setSelected(false)
         }else {
-            props.onSelectReceiver(props.item.userAccountSettingReceiver.username)
+            props.onSelectReceiver(props.item)
             setSelected(true)
         }
     }
@@ -21,11 +21,11 @@ function ItemUserInSuggested(props) {
     return(
         <div className="side-menu__user-profile" onClick={()=>{onSelectReceiver()}}>
             <a target="_blank" className="side-menu__user-avatar">
-                <img src={props.item.userAccountSettingReceiver.profilePhoto} alt="User Picture"/>
+                <img src={props.item.profilePhoto} alt="User Picture"/>
             </a>
             <div className="side-menu__user-info">
-                <a target="_blank">{props.item.userAccountSettingReceiver.username}</a>
-                <span>{props.item.userAccountSettingReceiver.displayName}</span>
+                <a target="_blank">{props.item.username}</a>
+                <span>{props.item.displayName}</span>
             </div>
             {
                 selected ?

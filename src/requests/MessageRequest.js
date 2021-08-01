@@ -13,4 +13,8 @@ export default class MessageRequest extends BaseRequest{
         let url = 'message'
         return this.post(url,message)
     }
+    findReceiverByUsername(search){
+        let url = `message/${search}/suggested`
+        return this.post(url)
+    }
 }

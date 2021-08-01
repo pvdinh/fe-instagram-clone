@@ -28,6 +28,38 @@
     height: 100%;
     width: 40%;
     border-right: 1px solid var(--border);
+    .wrap-user-name{
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      .new-chat{
+        width: calc(100%/2);
+        display: flex;
+        justify-content: flex-end;
+        padding-right: 15px;
+        cursor: pointer;
+      }
+      #user-name {
+        width: calc(100%/2);
+        color: var(--text-dark);
+        min-height: 60px;
+        display: flex;
+        align-items: center;
+        font-weight: 400;
+        font-size: 1.5em;
+        display: flex;
+        justify-content: flex-end;
+        .u1{
+          display: flex;
+          align-items: center;
+        }
+      }
+      #user-name i {
+        font-size: 1em;
+        padding-left: 5px;
+      }
+    }
   }
   .preview>div {
     display: flex;
@@ -95,20 +127,6 @@
   }
   .chat-banner>div {
     padding: 10px;
-  }
-  #user-name {
-    color: var(--text-dark);
-    min-height: 60px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-weight: 400;
-    font-size: 1.5em;
-    border-bottom: 1px solid var(--border);
-  }
-  #user-name i {
-    font-size: 1em;
-    padding-left: 5px;
   }
   #pic-div, #pic, #chat-pic {
     height: 50px;
@@ -270,7 +288,7 @@
   }
 }
 .wrap-modal-select-receiver{
-  width: auto!important;
+  width: 400px!important;
   user-select: none;
   .body-modal-select-receiver{
     height: 100%;
@@ -421,7 +439,7 @@
     }
   }
   .ant-modal-content{
-    width: 400px;
+    //width: 400px;
     height: 575px;
     border-radius: 12px;
     .ant-modal-body{
