@@ -54,7 +54,12 @@ function ModalSelectReceiverComponent(props) {
                        <AiOutlineClose/>
                    </div>
                    <div className="title-div">New Message</div>
-                   <div className="next-div" onClick={()=>{onClickBeginChat()}}>Next</div>
+                   {
+                       receiver.length > 0 ?
+                           <div className="next-div" onClick={()=>{onClickBeginChat()}}>Next</div>
+                           :
+                           <div className="next-div-disable" onClick={()=>{onClickBeginChat()}}>Next</div>
+                   }
                </div>)}
         >
             <div className="body-modal-select-receiver">
