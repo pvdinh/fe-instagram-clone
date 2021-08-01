@@ -7,9 +7,10 @@ const type = {
     END_FOLLOWING:"END_FOLLOWING",
 }
 const action = {
-    getUserAccountProfile: () => {
+    getUserAccountProfile: (callback) => {
         return {
             type: type.GET_USER_ACCOUNT_PROFILE,
+            callback,
         }
     },
     getSuggestionsToFollow: () => {

@@ -30,7 +30,7 @@ function Layout(props) {
         }
     }
     useEffect(()=>{
-        props.getUserAccountProfile()
+        props.getUserAccountProfile(()=>{})
     },[])
     return(
         <div className='instagram-home-page-wrap'>
@@ -186,8 +186,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        getUserAccountProfile: () => {
-            dispatch(homeActions.action.getUserAccountProfile())
+        getUserAccountProfile: (callback) => {
+            dispatch(homeActions.action.getUserAccountProfile(callback))
         },
     }
 }
