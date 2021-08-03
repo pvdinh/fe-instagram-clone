@@ -28,3 +28,7 @@ export const postImageToCloudinary = (data) =>{
     const postRequest = new PostRequest()
     return postRequest.postImageToCloudinary(data)
 }
+export const getPostInformationFromPId = (pId) =>{
+    const postRequest = new PostRequest()
+    return postRequest.getPostInformationFromPId(pId)
+}

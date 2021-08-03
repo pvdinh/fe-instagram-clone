@@ -3,13 +3,16 @@ import {Dropdown, Menu} from "antd";
 import React from "react";
 import loginActions from "../../redux/actions/loginActions";
 import {connect} from "react-redux";
+import {useHistory} from "react-router";
 
 function HeaderButtonsDesktopComponent(props) {
+    let history = useHistory()
+
     const menu = (
         <Menu className="wrap-page-home-in-header">
             <Menu.Item>
-                <a className="wrap-icon" target="_blank" rel="noopener noreferrer" href="#">
-                    <div className="icon">
+                <a className="wrap-icon" target="_blank" rel="noopener noreferrer" onClick={()=>{history.replace(`/${props.userAccountProfile.username}`)}}>
+                <div className="icon">
                         <svg aria-label="Profile" className="_8-yf5 " fill="#262626" height="16" role="img"
                              viewBox="0 0 32 32" width="16">
                             <path fill="var(--text-dark)"

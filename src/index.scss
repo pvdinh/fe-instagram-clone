@@ -17,6 +17,7 @@ html,body, #root{
   --link: hsl(204, 100%, 48%);
 
   --bg-dropdown: hsl(0, 0%, 100%);
+  --bg-profile-page:#fafafa;
 }
 :root.darkTheme {
   --primary: hsl(0, 0%, 0%);
@@ -33,6 +34,7 @@ html,body, #root{
   --link: hsl(204, 100%, 48%);
 
   --bg-dropdown: #222222;
+  --bg-profile-page: #222222;
 }
 
 /* -------------------------------------------------- */
@@ -48,3 +50,4 @@ html,body, #root{
 @import "./sass/pages/homePage";
 @import "./sass/pages/loadingPage";
 @import "./sass/pages/messagePage";
+@import "./sass/pages/profilePage";
