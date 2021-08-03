@@ -38,8 +38,8 @@ function PostDetailComponent(props) {
             dateCommented: new Date().getTime(),
         }
         props.commentPost(comment, (data) => {
+            props.reload()
         })
-        props.reload()
     }
 
     const calculatorDayCreated = (timeCreated) => {
@@ -112,11 +112,11 @@ function PostDetailComponent(props) {
                 <div>
                     <div className="post__header">
                         <div className="post__profile">
-                            <a href="https://github.com/leocosta1" target="_blank" className="post__avatar">
+                            <a href={`/${props.userAccountSetting.username}`} className="post__avatar">
                                 <Avatar src={props.userAccountSetting.profilePhoto} alt="picture"></Avatar>
                             </a>
-                            <a href="https://github.com/leocosta1" target="_blank"
-                               className="post__user">{props.userAccountSetting.displayName}</a>
+                            <a href={`/${props.userAccountSetting.username}`}
+                               className="post__user">{props.userAccountSetting.username}</a>
                         </div>
 
                         <MoreActionInPost userAccountFollowing={props.userAccountSetting}/>
@@ -129,7 +129,7 @@ function PostDetailComponent(props) {
                                         <Avatar src={value.userAccountSetting.profilePhoto} alt="picture"></Avatar>
                                     </div>
                                     <div className="content-comment">
-                                        <a className="displayname-user">{value.userAccountSetting.displayName}</a>
+                                        <a href={`/${value.userAccountSetting.displayName}`} className="displayname-user">{value.userAccountSetting.displayName}</a>
                                         <span>{value.comment.content}</span>
                                         <div className="time-commented">{calculatorDayCommented(value.comment.dateCommented)}</div>
                                     </div>

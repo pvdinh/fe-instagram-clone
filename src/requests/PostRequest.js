@@ -30,5 +30,9 @@ class PostRequest extends BaseRequest{
         let url = `post`
         return this.post(url,data)
     }
+    getPostInformationFromPId(pId){
+        let url = `post/${pId}/get`
+        return this.get(url)
+    }
 }
 export default PostRequest

@@ -1,64 +1,75 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {BsFillHeartFill, FaComment} from "react-icons/all";
+import {connect} from "react-redux";
+import PostDetailModal from "./PostDetailModal";
+import profileAction from "../../redux/actions/profileAction";
 
-function HavePostsComponents() {
+
+function HavePostsComponents(props) {
+    const [isVisiblePostDetail, setIsVisiblePostDetail] = useState(false)
+    const [post, setPost] = useState({})
+
+    useEffect(()=>{
+        props.getUserProfile(props.currentUserAccountSetting.username,()=>{})
+    },[isVisiblePostDetail])
+
+    const onClickPost = (p) =>{
+        console.log(p.post)
+        setPost(p)
+        setIsVisiblePostDetail(true)
+    }
+
+    const showModal = () =>{
+        if(post.post !== undefined){
+            return(
+                <PostDetailModal postId={post.post.id} visible={isVisiblePostDetail} setVisible={()=>{setIsVisiblePostDetail(!isVisiblePostDetail)}} />
+            )
+        }
+    }
+
     return(
         <div className="tabbed-pane__posts">
-            <div className="wrap-post">
-                <a className="i1" href><img className="i11" src="https://res.cloudinary.com/dinhpv/image/upload/v1626754954/instargram-clone/g4zeburu88al3c9neeuu.jpg" alt="bill murray post picture" /></a>
-                <div className="wrap-post-info">
-                    <div className="post-info">
-                        <div className="likes">
-                            <div className="L1L">
-                                <BsFillHeartFill />
+            {
+                props.listPostDetails.map((value,index)=>(
+                    <div className="wrap-post">
+                        <a className="i1" href><img className="i11" src={value.post.imagePath} alt="bill murray post picture" /></a>
+                        <div className="wrap-post-info" onClick={()=>{onClickPost(value)}}>
+                            <div className="post-info">
+                                <div className="likes">
+                                    <div className="L1L">
+                                        <BsFillHeartFill />
+                                    </div>
+                                    {
+                                        value.likes.length
+                                    }
+                                </div>
+                                <div className="comments">
+                                    <div className="C1C">
+                                        <FaComment />
+                                    </div>
+                                    {
+                                        value.numberOfComments
+                                    }
+                                </div>
                             </div>
-                            66
-                        </div>
-                        <div className="comments">
-                            <div className="C1C">
-                                <FaComment />
-                            </div>
-                            66
                         </div>
                     </div>
-                </div>
-            </div>
-            <div className="wrap-post">
-                <a className="i1" href><img className="i11" src="https://res.cloudinary.com/dinhpv/image/upload/v1626754954/instargram-clone/g4zeburu88al3c9neeuu.jpg" alt="bacon post picture" /></a>
-                <div className="wrap-post-info">
-                </div>
-            </div>
-            <div className="wrap-post">
-                <a className="i1" href><img className="i11" src="https://res.cloudinary.com/dinhpv/image/upload/v1626590593/instargram-clone/ctwepinwq4a0izywpujy.jpg" alt="bill murray post picture" /></a>
-                <div className="wrap-post-info">
-                </div>
-            </div>
-            <div className="wrap-post">
-                <a className="i1" href><img className="i11" src="https://res.cloudinary.com/dinhpv/image/upload/v1626590593/instargram-clone/ctwepinwq4a0izywpujy.jpg" alt="bacon post picture" /></a>
-                <div className="wrap-post-info">
-                </div>
-            </div>
-            <div className="wrap-post">
-                <a className="i1" href><img className="i11" src="https://res.cloudinary.com/dinhpv/image/upload/v1626590593/instargram-clone/ctwepinwq4a0izywpujy.jpg" alt="bill murray post picture" /></a>
-                <div className="wrap-post-info">
-                </div>
-            </div>
-            <div className="wrap-post">
-                <a className="i1" href><img className="i11" src="https://res.cloudinary.com/dinhpv/image/upload/v1625041353/instargram-clone/download_3_dencum.jpg" alt="bacon post picture" /></a>
-                <div className="wrap-post-info">
-                </div>
-            </div>
-            <div className="wrap-post">
-                <a className="i1" href><img className="i11" src="https://res.cloudinary.com/dinhpv/image/upload/v1625041353/instargram-clone/download_3_dencum.jpg" alt="post picture" /></a>
-                <div className="wrap-post-info">
-                </div>
-            </div>
-            <div className="wrap-post">
-                <a className="i1" href><img className="i11" src="https://res.cloudinary.com/dinhpv/image/upload/v1626604699/instargram-clone/tiz3lgcozqcozyj0fv2t.png" alt="bill murray post picture" /></a>
-                <div className="wrap-post-info">
-                </div>
-            </div>
+                ))
+            }
+            {
+                showModal()
+            }
         </div>
     )
 }
-export default HavePostsComponents
+function mapStateToProps(state) {
+    return{}
+}
+function mapDispatchToProps(dispatch) {
+    return{
+        getUserProfile:(username,callback)=>{
+            dispatch(profileAction.action.getUserProfile(username,callback))
+        },
+    }
+}
+export default connect(mapStateToProps,mapDispatchToProps)(HavePostsComponents)

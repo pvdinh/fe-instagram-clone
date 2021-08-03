@@ -388,6 +388,13 @@
     align-items: center;
     grid-auto-rows: 60px;
   }
+  .tabbed-pane__header__other {
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    justify-items: center;
+    align-items: center;
+    grid-auto-rows: 60px;
+  }
 
   .tabbed-pane__header li {
     text-transform: uppercase;

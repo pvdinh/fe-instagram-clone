@@ -12,11 +12,11 @@ function ItemInSuggestionsToFollow(props) {
 
     return (
         <div className="side-menu__suggestion">
-            <a href="#" className="side-menu__suggestion-avatar">
+            <a href={`/${props.item.displayName}`} className="side-menu__suggestion-avatar">
                 <img src={props.item.profilePhoto} alt="User Picture"/>
             </a>
             <div className="side-menu__suggestion-info">
-                <a href="#">{props.item.displayName}</a>
+                <a href={`/${props.item.displayName}`}>{props.item.displayName}</a>
                 <span>Followed by user1, user2 and 9 others</span>
             </div>
             {

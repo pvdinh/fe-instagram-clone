@@ -8,11 +8,11 @@ function UserProfileComponent(props) {
     },[])
     return (
     <div className="side-menu__user-profile">
-        <a href="https://github.com/leocosta1" target="_blank" className="side-menu__user-avatar">
+        <a href={`/${props.userAccountProfile.username}`} className="side-menu__user-avatar">
             <img src={props.userAccountProfile.profilePhoto} alt="User Picture"/>
         </a>
         <div className="side-menu__user-info">
-            <a href="https://github.com/leocosta1" target="_blank">{props.userAccountProfile.username}</a>
+            <a href={`/${props.userAccountProfile.username}`} target="_blank">{props.userAccountProfile.username}</a>
             <span>{props.userAccountProfile.displayName}</span>
         </div>
         <button className="side-menu__user-button">Switch</button>

@@ -1,61 +1,70 @@
 import React, {useEffect, useState} from "react";
-import LazyLoad from 'react-lazyload'
-import {Instagram} from 'react-content-loader'
+import {Avatar, Modal} from "antd";
+import MoreActionInPost from ".././home/MoreActionInPost";
+import CommentComponent from ".././home/CommentComponent";
 import postActions from "../../redux/actions/postActions";
 import {connect} from "react-redux";
-import CommentComponent from "./CommentComponent";
-import MoreActionInPost from "./MoreActionInPost";
-import dbLike from '../../assets/homePage/posts/red_heart.svg';
-import PostDetailComponent from "./PostDetailComponent";
 
-function PostItemComponent1(props) {
+function PostDetailModal(props) {
     const [like, setLike] = useState(true)
-    const [isVisiblePostDetail, setIsVisiblePostDetail] = useState(false)
-    const [listComment, setListComment] = useState([])
-    const [contentLoader, setContentLoader] = useState(false)
-    const [reLoad, setReLoad] = useState(true)
-    const [classdbClick, setClassdbClick] = useState("pop")
+    const [reload, setReload] = useState(true)
+    const [post, setPost] = useState(true)
+    const [listCmt, setListCmt] = useState([])
+    const [listLike, setListLike] = useState([])
+    const [ownerPost, setOwnerPost] = useState([])
 
-    useEffect(() => {
-        const setTimeOut = setTimeout(() => {
-            setContentLoader(true)
-        }, 2000)
-    }, [])
-
-    useEffect(() => {
-        props.likes.includes(props.userAccountProfile.username) ? setLike(true) : setLike(false)
-    }, [props.likes])
-
-    useEffect(() => {
-        props.getCommentPost(props.post.id, (data) => {
-            setListComment([...data])
+    useEffect(()=>{
+        props.getPostInformationFromPId(props.postId,(data)=>{
+            data.likes.includes(props.userAccountProfile.username) ? setLike(true) : setLike(false)
+            setListLike(data.likes)
+            setOwnerPost(data.userAccountSetting)
+            setPost(data.post)
         })
-    }, [reLoad])
+    },[props.postId])
+    useEffect(()=>{
+        props.getPostInformationFromPId(props.postId,(data)=>{
+            data.likes.includes(props.userAccountProfile.username) ? setLike(true) : setLike(false)
+            setListLike(data.likes)
+        })
+    },[like])
+
+    useEffect(()=>{
+        props.getCommentPost(props.postId,(data)=>{
+            setListCmt(data)
+        })
+    },[props.postId,reload])
+
+    useEffect(()=>{
+        if(props.visible === true)
+        {
+            //scroll to the bottom of "#chats-body"
+            let myDiv = document.getElementById("chats-body");
+            myDiv.scrollTop = myDiv.scrollHeight;
+        }
+    })
 
     const onClickLike = () => {
-        like ? props.unLikePost(props.post.id) : props.likePost(props.post.id)
+        if(like){
+            setLike(false)
+            props.unlikePostInPostDetail(post.id)
+        }else {
+            setLike(true)
+            props.likePostInPostDetail(post.id)
+        }
     }
-
-    const onDoubleClick = () => {
-        if(!like) props.likePost(props.post.id)
-        setClassdbClick(classdbClick + " dbClick")
-        setTimeout(() => {
-            setClassdbClick("pop")
-        }, 1000)
-    }
-
     const postComment = (cmt) => {
         let comment = {
             id: "",
             content: cmt,
-            idPost: props.post.id,
+            idPost: post.id,
             idUser: props.userAccountProfile.id,
             dateCommented: new Date().getTime(),
         }
-        setReLoad(!reLoad)
         props.commentPost(comment, (data) => {
+            setReload(!reload)
         })
     }
+
     const calculatorDayCreated = (timeCreated) => {
         let distance = Math.round((new Date().getTime() - timeCreated) / (1000))
         switch (true) {
@@ -71,6 +80,21 @@ function PostItemComponent1(props) {
                 return Math.round(distance / (60 * 60)) + " HOURS AGO"
             case 3600 * 24 <= distance :
                 return Math.round((distance / (60 * 60 * 24))) + " DAYS AGO"
+            default:
+                break;
+        }
+    }
+    const calculatorDayCommented = (timeComment) => {
+        let distance = Math.round((new Date().getTime() - timeComment) / (1000))
+        switch (true) {
+            case 0 <= distance && distance <= 59:
+                return distance + "s"
+            case 60 <= distance && distance < 3600:
+                return Math.round(distance / 60) + "m"
+            case 3600 <= distance && distance < (3600 * 24):
+                return Math.round(distance / (60 * 60)) + "h"
+            case 3600 * 24 <= distance :
+                return Math.round((distance / (60 * 60 * 24))) + "d"
             default:
                 break;
         }
@@ -102,36 +126,42 @@ function PostItemComponent1(props) {
                 return (<div></div>)
         }
     }
-
-    return (
-        <div>
-            {
-                contentLoader ?
-                    <article className="post">
-                        <div className="post__header">
-                            <div className="post__profile">
-                                <a href="https://github.com/leocosta1" target="_blank" className="post__avatar">
-                                    <img src={props.userAccountSetting.profilePhoto} alt="User Picture"/>
-                                </a>
-                                <a href="https://github.com/leocosta1" target="_blank"
-                                   className="post__user">{props.userAccountSetting.displayName}</a>
-                            </div>
-
-                            <MoreActionInPost userAccountFollowing={props.userAccountSetting}/>
+    return(
+        <Modal className="wrap-home-post-detail" closable={false} footer={null} visible={props.visible} onCancel={()=>{props.setVisible()}} centered >
+            <div className="wrap-post-detail">
+                <div className="wrap-image-post-detail">
+                    <img className="image-post-detail" alt="picture" src={post.imagePath} />
+                </div>
+                <div>
+                    <div className="post__header">
+                        <div className="post__profile">
+                            <a href={`/${ownerPost.username}`} className="post__avatar">
+                                <Avatar src={ownerPost.profilePhoto} alt="picture"></Avatar>
+                            </a>
+                            <a href={`/${ownerPost.username}`}
+                               className="post__user">{ownerPost.username}</a>
                         </div>
 
-                        <div className="post__content">
-                            <div className="post__medias">
-                                <LazyLoad>
-                                    <img className="post__media" src={props.post.imagePath} onDoubleClick={() => {
-                                        onDoubleClick()
-                                    }} alt="Post Content"/>
-                                </LazyLoad>
-                                <img src={dbLike} className={classdbClick}/>
-                            </div>
-                        </div>
-
-                        <div className="post__footer">
+                        <MoreActionInPost userAccountFollowing={ownerPost}/>
+                    </div>
+                    <div className="post-detail-body-comment" id="chats-body">
+                        {
+                            listCmt.map((value,index)=>(
+                                <div className="comment">
+                                    <div className="avatar-user">
+                                        <Avatar src={value.userAccountSetting.profilePhoto} alt="picture"></Avatar>
+                                    </div>
+                                    <div className="content-comment">
+                                        <a href={`/${value.userAccountSetting.displayName}`} className="displayname-user">{value.userAccountSetting.displayName}</a>
+                                        <span>{value.comment.content}</span>
+                                        <div className="time-commented">{calculatorDayCommented(value.comment.dateCommented)}</div>
+                                    </div>
+                                </div>
+                            ))
+                        }
+                    </div>
+                    <div className="post-detail-footer-comment">
+                        <div style={{padding:"10px 16px"}}>
                             <div className="post__buttons">
                                 {
                                     !like ?
@@ -185,65 +215,26 @@ function PostItemComponent1(props) {
                                     </svg>
                                 </button>
                             </div>
-
                             <div className="post__infos">
                                 <div className="post__likes">
-                                    {/*<a href="#" className="post__likes-avatar">*/}
-                                    {/*    <img src="assets/default-user.png" alt="User Picture"/>*/}
-                                    {/*</a>*/}
-                                    {displayLikes(props.likes)}
+                                    {
+                                        displayLikes(listLike)
+                                    }
                                 </div>
-                                <div className="post__description">
-                                    <span>
-                                        <a className="post__name--underline" href="https://github.com/leocosta1"
-                                           target="_blank">leocosta1</a>
-                                        Responsive clone of Instagram UI. Made with ❤ for study purposes.
-                                    </span>
-                                </div>
-                                {
-                                    listComment.length > 2 ?
-                                        <>
-                                            <p className="view-all-comment" onClick={()=>{setIsVisiblePostDetail(true)}}>
-                                                View all {listComment.length} comments
-                                            </p>
-                                            {
-                                                listComment.slice(listComment.length - 2, listComment.length).map((item, index) => (
-                                                    <div className="comment">
-                                                            <span
-                                                                style={{fontWeight: "600"}}>{item.userAccountSetting.displayName}</span>
-                                                        <span> {item.comment.content}</span>
-                                                    </div>
-                                                ))
-                                            }
-                                        </>
-                                        : <>
-                                            {
-                                                listComment.map((item, index) => (
-                                                    <div className="comment">
-                                                            <span
-                                                                style={{fontWeight: "600"}}>{item.userAccountSetting.displayName}</span>
-                                                        <span> {item.comment.content}</span>
-                                                    </div>
-                                                ))
-                                            }
-                                        </>
-                                }
                                 <span
-                                    className="post__date-time">{calculatorDayCreated(props.post.dateCreated)}</span>
+                                    className="post__date-time">{calculatorDayCreated(post.dateCreated)}</span>
                             </div>
-                            <hr className='post-hr'/>
-                            <CommentComponent postComment={(cmt) => {
-                                postComment(cmt)
-                            }}/>
                         </div>
-                    </article>
-                    : <Instagram/>
-            }
-            <PostDetailComponent reload={()=>{setReLoad(!reLoad)}} post={props.post} likes={props.likes} listComment={listComment} userAccountSetting={props.userAccountSetting} visible={isVisiblePostDetail} setVisible={()=>{setIsVisiblePostDetail(!isVisiblePostDetail)}} />
-        </div>
+                        <hr className='post-hr'/>
+                        <CommentComponent postComment={(cmt) => {
+                            postComment(cmt)
+                        }} />
+                    </div>
+                </div>
+            </div>
+        </Modal>
     )
 }
-
 function mapStateToProps(state) {
     return {
         userAccountProfile: state.home.userAccountProfile,
@@ -252,11 +243,11 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        likePost: (pId) => {
-            dispatch(postActions.action.likePost(pId))
+        likePostInPostDetail: (pId) => {
+            dispatch(postActions.action.likePostInPostDetail(pId))
         },
-        unLikePost: (pId) => {
-            dispatch(postActions.action.unLikePost(pId))
+        unlikePostInPostDetail: (pId) => {
+            dispatch(postActions.action.unlikePostInPostDetail(pId))
         },
         commentPost: (data, callback) => {
             dispatch(postActions.action.commentPost(data, callback))
@@ -264,7 +255,9 @@ function mapDispatchToProps(dispatch) {
         getCommentPost: (pId, callback) => {
             dispatch(postActions.action.getCommentPost(pId, callback))
         },
+        getPostInformationFromPId:(pId,callback)=>{
+          dispatch(postActions.action.getPostInformationFromPId(pId,callback))
+        },
     }
 }
-
-export default connect(mapStateToProps, mapDispatchToProps)(PostItemComponent1)
+export default connect(mapStateToProps, mapDispatchToProps)(PostDetailModal)

@@ -1,9 +1,8 @@
 import React, {useEffect, useState} from "react";
-import PostItemComponent from "./PostItemComponent";
 import postActions from "../../redux/actions/postActions";
 import {connect} from "react-redux";
 import InfiniteList from "react-infinite-scroll-list";
-import PostItemComponent1 from "./PostItemComponent1";
+import PostItemComponent from "./PostItemComponent";
 
 function PostComponent(props) {
     useEffect(() => {
@@ -26,7 +25,7 @@ function PostComponent(props) {
             >
                 {
                     props.listPostOfFollowing.map((item,key) =>(
-                        <PostItemComponent1 key={key} post={item.post} likes={item.likes} userAccountSetting={item.userAccountSetting} />
+                        <PostItemComponent key={key} post={item.post} likes={item.likes} userAccountSetting={item.userAccountSetting} />
                     ))
                 }
             </InfiniteList>
