@@ -16,8 +16,6 @@ function PostItemComponent(props) {
     const [contentLoader, setContentLoader] = useState(false)
     const [reLoad, setReLoad] = useState(true)
     const [classdbClick, setClassdbClick] = useState("pop")
-    let history=useHistory()
-
 
     useEffect(() => {
         const setTimeOut = setTimeout(() => {
@@ -30,10 +28,12 @@ function PostItemComponent(props) {
     }, [props.likes])
 
     useEffect(() => {
+        // props.post re-render lại component khi thêm một bài đăng mới
+        //không có sẽ ko re-render dẫn đến hiển thị comment bị lỗi
         props.getCommentPost(props.post.id, (data) => {
             setListComment([...data])
         })
-    }, [reLoad])
+    }, [reLoad,props.post])
 
     const onClickLike = () => {
         like ? props.unLikePost(props.post.id) : props.likePost(props.post.id)
