@@ -8,6 +8,7 @@ import Oauth2Redirect from "./oauth2Redirect/Oath2Redirect";
 import SignupPage from "../screens/SignupPage";
 import MessagePage from "../screens/MessagePage";
 import ProfilePage from "../screens/ProfilePage";
+import ErrorPage from "./errorPage/ErrorPage";
 
 function AppRouter() {
     return (
@@ -27,6 +28,7 @@ function AppRouter() {
                         <Switch>
                             <ProtectedRoute path={"/"} exact render={()=>{return <HomePage />}}></ProtectedRoute>
                             <ProtectedRoute path={"/message"} exact render={()=>{return <MessagePage />}}></ProtectedRoute>
+                            <ProtectedRoute path={"/error"} exact render={()=>{return <ErrorPage />}}></ProtectedRoute>
                             <ProtectedRoute path={"/:username"} exact render={(props)=>{return <ProfilePage {...props} />}}></ProtectedRoute>
                         </Switch>
                     </Layout>

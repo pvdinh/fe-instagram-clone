@@ -12,8 +12,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        getUserProfile:(username,callback)=>{
-            dispatch(profileAction.action.getUserProfile(username,callback))
+        getUserProfile:(username,callback,history)=>{
+            dispatch(profileAction.action.getUserProfile(username,callback,history))
         },
     }
 }

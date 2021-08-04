@@ -26,4 +26,4 @@ function mapDispatchToProps(dispatch) {
     }
 }
 
-export default connect(mapDispatchToProps, mapDispatchToProps)(Oauth2Redirect)
+export default  connect(mapDispatchToProps, mapDispatchToProps)(Oauth2Redirect)
