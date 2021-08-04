@@ -2,6 +2,7 @@
   z-index: 0;
   background: var(--bg-profile-page);
   position: relative;
+  min-height: 100%;
   --header-height: 54px;
   --page-margin-side: 5px;
   --blue: #0095f6;
@@ -395,6 +396,7 @@
     justify-items: center;
     align-items: center;
     grid-auto-rows: 60px;
+    border-top: 1px solid lightgrey;
   }
 
   .tabbed-pane__header li {
@@ -557,7 +559,7 @@
   }
 
   .copyright {
-    color: var(--dull-grey);
+    color: var(--text-dark);
   }
 
   .site-footer__language {

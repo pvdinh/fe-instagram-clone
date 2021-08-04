@@ -9,7 +9,11 @@ function *getUserProfile_saga(action) {
         if(response.statusCode === 200){
             yield put({type:profileAction.type.GET_USER_PROFILE_SUCCESS,data:response.data})
         }
+        else {
+            action.history.replace("/error")
+        }
     }catch (e) {
+        action.history.replace("/error")
         console.log("err",e)
     }
 }

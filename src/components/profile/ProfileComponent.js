@@ -2,11 +2,13 @@ import React, {useEffect} from "react";
 import {GoVerified} from "react-icons/all";
 import HavePostsComponents from "./HavePostsComponents";
 import HaveNotPostsComponents from "./HaveNotPostsComponents";
+import {useHistory} from "react-router";
 
 function ProfileComponent(props) {
+    let history = useHistory()
 
     useEffect(()=>{
-        props.getUserProfile(props.match.params.username,()=>{})
+        props.getUserProfile(props.match.params.username,()=>{},history)
     },[])
     useEffect(()=>{
         if(props.userAccountProfile.username !== undefined)
@@ -127,87 +129,87 @@ function ProfileComponent(props) {
                                     </ul>
                                     :
 
-                                    <ul className="tabbed-pane__header__other">
+                                                <ul className="tabbed-pane__header__other">
+                                                    <li>
+                                                        <a href className="tab-link">
+                                                            <div className="wrap-type-post">
+                                                                <svg aria-label="" className="_8-yf5 " fill="#262626" height="12" role="img"
+                                                                     viewBox="0 0 48 48" width="12">
+                                                                    <path clip-rule="evenodd"
+                                                                          d="M45 1.5H3c-.8 0-1.5.7-1.5 1.5v42c0 .8.7 1.5 1.5 1.5h42c.8 0 1.5-.7 1.5-1.5V3c0-.8-.7-1.5-1.5-1.5zm-40.5 3h11v11h-11v-11zm0 14h11v11h-11v-11zm11 25h-11v-11h11v11zm14 0h-11v-11h11v11zm0-14h-11v-11h11v11zm0-14h-11v-11h11v11zm14 28h-11v-11h11v11zm0-14h-11v-11h11v11zm0-14h-11v-11h11v11z"
+                                                                          fill-rule="evenodd"></path>
+                                                                </svg>
+                                                                <span className="tab-link-text"> Posts</span>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href className="tab-link">
+                                                            <div className="wrap-type-post">
+                                                                <svg aria-label="" className="_8-yf5 " fill="#8e8e8e" height="12" role="img"
+                                                                     viewBox="0 0 48 48" width="12">
+                                                                    <path
+                                                                        d="M41 10c-2.2-2.1-4.8-3.5-10.4-3.5h-3.3L30.5 3c.6-.6.5-1.6-.1-2.1-.6-.6-1.6-.5-2.1.1L24 5.6 19.7 1c-.6-.6-1.5-.6-2.1-.1-.6.6-.7 1.5-.1 2.1l3.2 3.5h-3.3C11.8 6.5 9.2 7.9 7 10c-2.1 2.2-3.5 4.8-3.5 10.4v13.1c0 5.7 1.4 8.3 3.5 10.5 2.2 2.1 4.8 3.5 10.4 3.5h13.1c5.7 0 8.3-1.4 10.5-3.5 2.1-2.2 3.5-4.8 3.5-10.4V20.5c0-5.7-1.4-8.3-3.5-10.5zm.5 23.6c0 5.2-1.3 7-2.6 8.3-1.4 1.3-3.2 2.6-8.4 2.6H17.4c-5.2 0-7-1.3-8.3-2.6-1.3-1.4-2.6-3.2-2.6-8.4v-13c0-5.2 1.3-7 2.6-8.3 1.4-1.3 3.2-2.6 8.4-2.6h13.1c5.2 0 7 1.3 8.3 2.6 1.3 1.4 2.6 3.2 2.6 8.4v13zM34.6 25l-9.1 2.8v-3.7c0-.5-.2-.9-.6-1.2-.4-.3-.9-.4-1.3-.2l-11.1 3.4c-.8.2-1.2 1.1-1 1.9.2.8 1.1 1.2 1.9 1l9.1-2.8v3.7c0 .5.2.9.6 1.2.3.2.6.3.9.3.1 0 .3 0 .4-.1l11.1-3.4c.8-.2 1.2-1.1 1-1.9s-1.1-1.2-1.9-1z"></path>
+                                                                </svg>
+                                                                <span className="tab-link-text"> IGTV</span>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                        }
+
+                                    </nav>
+                                    {
+                                        props.listPostDetails.length > 0 ?
+                                            <HavePostsComponents listPostDetails={props.listPostDetails} currentUserAccountSetting={props.currentUserAccountSetting} />
+                                            :
+                                            <HaveNotPostsComponents />
+                                    }
+                                    <div className="tabbed-pane__igtv" />
+                                    <div className="tabbed-pane__tagged" />
+                                </section>
+                            </main>
+                            <footer className="site-footer">
+                                <nav>
+                                    <ul>
                                         <li>
-                                            <a href className="tab-link">
-                                                <div className="wrap-type-post">
-                                                    <svg aria-label="" className="_8-yf5 " fill="#262626" height="12" role="img"
-                                                         viewBox="0 0 48 48" width="12">
-                                                        <path clip-rule="evenodd"
-                                                              d="M45 1.5H3c-.8 0-1.5.7-1.5 1.5v42c0 .8.7 1.5 1.5 1.5h42c.8 0 1.5-.7 1.5-1.5V3c0-.8-.7-1.5-1.5-1.5zm-40.5 3h11v11h-11v-11zm0 14h11v11h-11v-11zm11 25h-11v-11h11v11zm14 0h-11v-11h11v11zm0-14h-11v-11h11v11zm0-14h-11v-11h11v11zm14 28h-11v-11h11v11zm0-14h-11v-11h11v11zm0-14h-11v-11h11v11z"
-                                                              fill-rule="evenodd"></path>
-                                                    </svg>
-                                                    <span className="tab-link-text"> Posts</span>
-                                                </div>
-                                            </a>
+                                            <a href="https://about.instagram.com/about-us" rel="nofollow noopener noreferrer" target="_blank">About</a>
                                         </li>
                                         <li>
-                                            <a href className="tab-link">
-                                                <div className="wrap-type-post">
-                                                    <svg aria-label="" className="_8-yf5 " fill="#8e8e8e" height="12" role="img"
-                                                         viewBox="0 0 48 48" width="12">
-                                                        <path
-                                                            d="M41 10c-2.2-2.1-4.8-3.5-10.4-3.5h-3.3L30.5 3c.6-.6.5-1.6-.1-2.1-.6-.6-1.6-.5-2.1.1L24 5.6 19.7 1c-.6-.6-1.5-.6-2.1-.1-.6.6-.7 1.5-.1 2.1l3.2 3.5h-3.3C11.8 6.5 9.2 7.9 7 10c-2.1 2.2-3.5 4.8-3.5 10.4v13.1c0 5.7 1.4 8.3 3.5 10.5 2.2 2.1 4.8 3.5 10.4 3.5h13.1c5.7 0 8.3-1.4 10.5-3.5 2.1-2.2 3.5-4.8 3.5-10.4V20.5c0-5.7-1.4-8.3-3.5-10.5zm.5 23.6c0 5.2-1.3 7-2.6 8.3-1.4 1.3-3.2 2.6-8.4 2.6H17.4c-5.2 0-7-1.3-8.3-2.6-1.3-1.4-2.6-3.2-2.6-8.4v-13c0-5.2 1.3-7 2.6-8.3 1.4-1.3 3.2-2.6 8.4-2.6h13.1c5.2 0 7 1.3 8.3 2.6 1.3 1.4 2.6 3.2 2.6 8.4v13zM34.6 25l-9.1 2.8v-3.7c0-.5-.2-.9-.6-1.2-.4-.3-.9-.4-1.3-.2l-11.1 3.4c-.8.2-1.2 1.1-1 1.9.2.8 1.1 1.2 1.9 1l9.1-2.8v3.7c0 .5.2.9.6 1.2.3.2.6.3.9.3.1 0 .3 0 .4-.1l11.1-3.4c.8-.2 1.2-1.1 1-1.9s-1.1-1.2-1.9-1z"></path>
-                                                    </svg>
-                                                    <span className="tab-link-text"> IGTV</span>
-                                                </div>
-                                            </a>
+                                            <a href="https://help.instagram.com/" target="_blank">Help</a>
+                                        </li>
+                                        <li>
+                                            <a href="https://instagram-press.com/" target="_blank">Press</a>
+                                        </li>
+                                        <li><a href="#">API</a></li>
+                                        <li><a href="#">Jobs</a></li>
+                                        <li>
+                                            <a href="#">Privacy</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Terms</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Locations</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Top Accounts</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Suggested Accounts</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Hashtags</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Language</a>
                                         </li>
                                     </ul>
-                            }
-
-                        </nav>
-                        {
-                            props.listPostDetails.length > 0 ?
-                                <HavePostsComponents listPostDetails={props.listPostDetails} currentUserAccountSetting={props.currentUserAccountSetting} />
-                                :
-                                <HaveNotPostsComponents />
-                        }
-                        <div className="tabbed-pane__igtv" />
-                        <div className="tabbed-pane__tagged" />
-                    </section>
-                </main>
-                <footer className="site-footer">
-                    <nav>
-                        <ul>
-                            <li>
-                                <a href="https://about.instagram.com/about-us" rel="nofollow noopener noreferrer" target="_blank">About</a>
-                            </li>
-                            <li>
-                                <a href="https://help.instagram.com/" target="_blank">Help</a>
-                            </li>
-                            <li>
-                                <a href="https://instagram-press.com/" target="_blank">Press</a>
-                            </li>
-                            <li><a href="#">API</a></li>
-                            <li><a href="#">Jobs</a></li>
-                            <li>
-                                <a href="#">Privacy</a>
-                            </li>
-                            <li>
-                                <a href="#">Terms</a>
-                            </li>
-                            <li>
-                                <a href="#">Locations</a>
-                            </li>
-                            <li>
-                                <a href="#">Top Accounts</a>
-                            </li>
-                            <li>
-                                <a href="#">Suggested Accounts</a>
-                            </li>
-                            <li>
-                                <a href="#">Hashtags</a>
-                            </li>
-                            <li>
-                                <a href="#">Language</a>
-                            </li>
-                        </ul>
-                    </nav>
-                    <span className="copyright">© 2021 Instagram from Facebook</span>
-                </footer>
-            </div>
-        </div>
+                                </nav>
+                                <span className="copyright">© 2021 Instagram from Facebook</span>
+                            </footer>
+                        </div>
+                    </div>
     )
 }
 export default ProfileComponent
