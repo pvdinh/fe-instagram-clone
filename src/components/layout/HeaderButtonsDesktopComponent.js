@@ -3,12 +3,11 @@ import {Dropdown, Menu} from "antd";
 import React from "react";
 import loginActions from "../../redux/actions/loginActions";
 import {connect} from "react-redux";
-import {useHistory} from "react-router";
 
 function HeaderButtonsDesktopComponent(props) {
     const menu = (
         <Menu className="wrap-page-home-in-header">
-            <Menu.Item>
+            <Menu.Item className={"wrap-item"}>
                 <a className="wrap-icon" rel="noopener noreferrer" href={`/${props.userAccountProfile.username}`}>
                 <div className="icon">
                         <svg aria-label="Profile" className="_8-yf5 " fill="#262626" height="16" role="img"
@@ -21,7 +20,7 @@ function HeaderButtonsDesktopComponent(props) {
                     Profile
                 </a>
             </Menu.Item>
-            <Menu.Item>
+            <Menu.Item className={"wrap-item"}>
                 <a className="wrap-icon" target="_blank" rel="noopener noreferrer" href="#">
                     <div className="icon">
                         <svg aria-label="Saved" className="_8-yf5 " fill="#262626" height="16" role="img"
@@ -34,7 +33,7 @@ function HeaderButtonsDesktopComponent(props) {
                     Saved
                 </a>
             </Menu.Item>
-            <Menu.Item>
+            <Menu.Item className={"wrap-item"}>
                 <a className="wrap-icon" target="_blank" rel="noopener noreferrer" href="#">
                     <div className="icon">
                         <svg aria-label="Settings" className="_8-yf5 " fill="#262626" height="16" role="img"
@@ -47,7 +46,7 @@ function HeaderButtonsDesktopComponent(props) {
                     Setting
                 </a>
             </Menu.Item>
-            <Menu.Item>
+            <Menu.Item className={"wrap-item"}>
                 <a className="wrap-icon" target="_blank" rel="noopener noreferrer" href="#">
                     <div className="icon">
                         <svg aria-label="Switch Accounts" className="_8-yf5 " fill="#262626" height="16" role="img"

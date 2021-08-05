@@ -17,6 +17,7 @@ html,body, #root{
   --link: hsl(204, 100%, 48%);
 
   --bg-dropdown: hsl(0, 0%, 100%);
+  --bg-dropdown-hover: #e3e1e1;
   --bg-profile-page:#fafafa;
 }
 :root.darkTheme {
@@ -33,6 +34,7 @@ html,body, #root{
   --like: hsl(355, 82%, 61%);
   --link: hsl(204, 100%, 48%);
 
+  --bg-dropdown-hover: #615c5c;
   --bg-dropdown: #222222;
   --bg-profile-page: #222222;
 }
