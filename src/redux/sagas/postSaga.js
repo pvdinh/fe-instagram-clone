@@ -1,7 +1,7 @@
 import {all, takeEvery, call, put} from "@redux-saga/core/effects";
 import postActions from "../actions/postActions";
 import {
-    commentPost,
+    commentPost, deletePost,
     getAllPostInformationFollowing,
     getCommentPost, getPostInformationFromPId,
     likePost, postImageToCloudinary, postNewPost,
@@ -90,6 +90,15 @@ function *saga_getPostInformationFromPId(action) {
         console.log("err",e)
     }
 }
+function *saga_deletePost(action) {
+    try{
+        const res= yield call(deletePost,action.id)
+        const response = yield call(getAllPostInformationFollowing)
+        yield put({type:postActions.type.GET_ALL_POST_OF_FOLLOWING_SUCCESS,data:response.data})
+    }catch (e) {
+        console.log("err",e)
+    }
+}
 
 function* listen() {
     yield takeEvery(postActions.type.GET_ALL_POST_OF_FOLLOWING, saga_getAllPostOfFollowing)
@@ -102,6 +111,7 @@ function* listen() {
     yield takeEvery(postActions.type.POST_NEW_POST, saga_postNewPost)
     yield takeEvery(postActions.type.POST_IMAGE_TO_CLOUDINARY, saga_postImageToCloudinary)
     yield takeEvery(postActions.type.GET_POST_INFORMATION_FROM_P_ID, saga_getPostInformationFromPId)
+    yield takeEvery(postActions.type.DELETE_POST, saga_deletePost)
 }
 
 function* postSaga() {

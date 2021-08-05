@@ -15,6 +15,8 @@ const type = {
     GET_POST_INFORMATION_FROM_P_ID_SUCCESS:"GET_POST_INFORMATION_FROM_P_ID_SUCCESS",
     LIKE_POST_IN_POST_DETAIL:"LIKE_POST_IN_POST_DETAIL",
     UNLIKE_POST_IN_POST_DETAIL:"UNLIKE_POST_IN_POST_DETAIL",
+    DELETE_POST:"DELETE_POST",
+    DELETE_POST_SUCCESS:"DELETE_POST_SUCCESS",
 }
 const action = {
     getAllPostOfFollowing: () => {
@@ -85,6 +87,12 @@ const action = {
             type:type.GET_POST_INFORMATION_FROM_P_ID,
             id:pId,
             callback,
+        }
+    },
+    deletePost:(pId)=>{
+        return{
+            type:type.DELETE_POST,
+            id:pId,
         }
     },
 }

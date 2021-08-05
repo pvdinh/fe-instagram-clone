@@ -24,6 +24,10 @@ export const postNewPost = (data) =>{
     const postRequest = new PostRequest()
     return postRequest.postNewPost(data)
 }
+export const deletePost = (pId) =>{
+    const postRequest = new PostRequest()
+    return postRequest.deletePost(pId)
+}
 export const postImageToCloudinary = (data) =>{
     const postRequest = new PostRequest()
     return postRequest.postImageToCloudinary(data)

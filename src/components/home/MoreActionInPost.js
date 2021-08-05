@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import {Modal} from "antd";
 import homeActions from "../../redux/actions/homeActions";
 import {connect} from "react-redux";
+import postActions from "../../redux/actions/postActions";
 
 function MoreActionInPost(props) {
     const [isModalVisible, setIsModalVisible] = useState(false);
@@ -38,6 +39,10 @@ function MoreActionInPost(props) {
     const goToPost = (pId) =>{
         window.location.href="/p/"+pId
     }
+    const onClickDeletePost = (pId) =>{
+        props.deletePost(pId)
+        handleCancel()
+    }
 
     return (
         <>
@@ -54,7 +59,7 @@ function MoreActionInPost(props) {
                     props.userAccountFollowing.id === props.userAccountProfile.id ?
                         <>
                             <button className='options-dialog__button' style={{borderBottom:"1px solid var(--border)"}} onClick={()=>{goToPost(props.post.id)}} >Go to post</button>
-                            <button className='options-dialog__button' style={{borderBottom:"1px solid var(--border)",color:"#ed4956",fontWeight: "700"}}>Delete post</button>
+                            <button className='options-dialog__button' style={{borderBottom:"1px solid var(--border)",color:"#ed4956",fontWeight: "700"}} onClick={()=>{onClickDeletePost(props.post.id)}}>Delete post</button>
                             <button className='options-dialog__button' style={{borderBottom:"1px solid var(--border)"}} onClick={()=>{onCopyLink(props.post.id)}}>Copy link</button>
                             <button className='options-dialog__button' onClick={()=>{handleCancel()}}>Cancel</button>
                         </>
@@ -81,6 +86,9 @@ function mapDispatchToProps(dispatch) {
     return {
         endFollowing: (userFollowingId) => {
             dispatch(homeActions.action.endFollowing(userFollowingId))
+        },
+        deletePost:(pId)=>{
+          dispatch(postActions.action.deletePost(pId))
         },
     }
 }

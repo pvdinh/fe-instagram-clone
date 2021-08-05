@@ -30,6 +30,10 @@ class PostRequest extends BaseRequest{
         let url = `post`
         return this.post(url,data)
     }
+    deletePost(pId){
+        let url = `post/${pId}/delete`
+        return this.post(url)
+    }
     getPostInformationFromPId(pId){
         let url = `post/${pId}/get`
         return this.get(url)
