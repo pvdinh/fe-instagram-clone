@@ -120,7 +120,7 @@ function PostItemComponent(props) {
                                    className="post__user">{props.userAccountSetting.username}</a>
                             </div>
 
-                            <MoreActionInPost userAccountFollowing={props.userAccountSetting}/>
+                            <MoreActionInPost post={props.post} userAccountFollowing={props.userAccountSetting}/>
                         </div>
 
                         <div className="post__content">
