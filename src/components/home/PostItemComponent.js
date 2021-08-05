@@ -83,22 +83,22 @@ function PostItemComponent(props) {
             case likes.length === 1:
                 return (
                     <span className="likes">
-              Liked by <a className='post__name--underline' href="#">{likes[0]}</a>
+              Liked by <a className='post__name--underline' href={`/${likes[0]}`}>{likes[0]}</a>
                     </span>
                 )
             case likes.length === 2:
                 return (
                     <span className="likes">
-              Liked by <a className='post__name--underline' href="#">{likes[0]}</a> and <a
-                        className='post__name--underline' href="#">{likes[1]}</a>
+              Liked by <a className='post__name--underline' href={`/${like[0]}`}>{likes[0]}</a> and <a
+                        className='post__name--underline' href={`/${like[1]}`}>{likes[1]}</a>
                     </span>
                 )
             case likes.length > 2:
                 return (
                     <span className="likes">
-              Liked by <a className='post__name--underline' href="#">{likes[0]}</a>, <a
+              Liked by <a className='post__name--underline' href={`/${like[0]}`}>{likes[0]}</a>, <a
                         className='post__name--underline'
-                        href="#">{likes[1]}</a> and <strong>{likes.length - 2} others</strong>
+                        href={`/${like[1]}`}>{likes[1]}</a> and <strong>{likes.length - 2} others</strong>
             </span>
                 )
             default:
@@ -198,9 +198,9 @@ function PostItemComponent(props) {
                                 </div>
                                 <div className="post__description">
                                     <span>
-                                        <a className="post__name--underline" href="https://github.com/leocosta1"
-                                           target="_blank">leocosta1</a>
-                                        Responsive clone of Instagram UI. Made with ❤ for study purposes.
+                                        <a className="post__name--underline" href={`/${props.userAccountSetting.username}`}
+                                           target="_blank">{props.userAccountSetting.username}</a>&nbsp;
+                                        {props.post.caption}.
                                     </span>
                                 </div>
                                 {
@@ -212,8 +212,8 @@ function PostItemComponent(props) {
                                             {
                                                 listComment.slice(listComment.length - 2, listComment.length).map((item, index) => (
                                                     <div className="comment">
-                                                            <span
-                                                                style={{fontWeight: "600"}}>{item.userAccountSetting.displayName}</span>
+                                                            <a href={`/${item.userAccountSetting.displayName}`}
+                                                                style={{fontWeight: "600",color:"var(--text-dark)"}}>{item.userAccountSetting.displayName}</a>
                                                         <span> {item.comment.content}</span>
                                                     </div>
                                                 ))
@@ -223,8 +223,8 @@ function PostItemComponent(props) {
                                             {
                                                 listComment.map((item, index) => (
                                                     <div className="comment">
-                                                            <span
-                                                                style={{fontWeight: "600"}}>{item.userAccountSetting.displayName}</span>
+                                                            <a href={`/${item.userAccountSetting.displayName}`}
+                                                                style={{fontWeight: "600",color:"var(--text-dark)"}}>{item.userAccountSetting.displayName}</a>
                                                         <span> {item.comment.content}</span>
                                                     </div>
                                                 ))
