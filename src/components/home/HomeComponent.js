@@ -2,6 +2,7 @@ import React, {useEffect} from "react";
 import PostComponent from "./PostComponent";
 import UserProfileComponent from "./UserProfileComponent";
 import SuggestionsToFollow from "./SuggestionsToFollow";
+import {Modal} from "antd";
 function HomeComponent() {
     useEffect(()=>{
         // Getting the scrollbar width to adjust the header alignment
@@ -228,6 +229,10 @@ function HomeComponent() {
                     </div>
                 </button>
             </nav>
+
+            <div className="alertCopyLink">
+                <div className="alert-text">Link copied to clipboard</div>
+            </div>
         </div>
     )
 }

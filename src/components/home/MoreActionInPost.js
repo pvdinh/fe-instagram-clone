@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import {Modal} from "antd";
 import homeActions from "../../redux/actions/homeActions";
 import {connect} from "react-redux";
+import postActions from "../../redux/actions/postActions";
 
 function MoreActionInPost(props) {
     const [isModalVisible, setIsModalVisible] = useState(false);
@@ -24,6 +25,25 @@ function MoreActionInPost(props) {
         props.endFollowing(userFollowingId)
         setIsModalVisible(false)
     }
+
+    const onCopyLink = (link) =>{
+        navigator.clipboard.writeText("http://localhost:3000/p/"+link)
+        handleCancel()
+        let elementAlert = document.getElementsByClassName("alertCopyLink")
+        elementAlert[0].classList.add("show")
+        const setTimeOut = setTimeout(()=>{
+            elementAlert[0].classList.remove("show")
+        },4000)
+    }
+
+    const goToPost = (pId) =>{
+        window.location.href="/p/"+pId
+    }
+    const onClickDeletePost = (pId) =>{
+        props.deletePost(pId)
+        handleCancel()
+    }
+
     return (
         <>
             <button className="post__more-options" onClick={()=>{showModal()}}>
@@ -34,22 +54,41 @@ function MoreActionInPost(props) {
                     <circle cx="17.5" cy="11.5" r="1.5" fill="var(--text-dark)"/>
                 </svg>
             </button>
-            <Modal centered visible={isModalVisible} className='instagram-home-page-wrap' onCancel={handleCancel} footer={null} closable={false}>
-                <button className='options-dialog__button' style={{borderBottom:"1px solid var(--border)"}} onClick={()=>{endFollowing(props.userAccountFollowing.id)}}>Unfollow</button>
-                <button className='options-dialog__button' style={{borderBottom:"1px solid var(--border)"}}>Unfollow</button>
-                <button className='options-dialog__button'>Unfollow</button>
+            <Modal centered visible={isModalVisible} className='instagram-home-page-wrap' onCancel={()=>{handleCancel()}} footer={null} closable={false}>
+                {
+                    props.userAccountFollowing.id === props.userAccountProfile.id ?
+                        <>
+                            <button className='options-dialog__button' style={{borderBottom:"1px solid var(--border)"}} onClick={()=>{goToPost(props.post.id)}} >Go to post</button>
+                            <button className='options-dialog__button' style={{borderBottom:"1px solid var(--border)",color:"#ed4956",fontWeight: "700"}} onClick={()=>{onClickDeletePost(props.post.id)}}>Delete post</button>
+                            <button className='options-dialog__button' style={{borderBottom:"1px solid var(--border)"}} onClick={()=>{onCopyLink(props.post.id)}}>Copy link</button>
+                            <button className='options-dialog__button' onClick={()=>{handleCancel()}}>Cancel</button>
+                        </>
+                        :
+                        <>
+                            <button className='options-dialog__button' style={{borderBottom:"1px solid var(--border)",color:"#ed4956",fontWeight: "700"}} >Report</button>
+                            <button className='options-dialog__button' style={{borderBottom:"1px solid var(--border)",color:"#ed4956",fontWeight: "700"}} onClick={()=>{endFollowing(props.userAccountFollowing.id)}}>Unfollow</button>
+                            <button className='options-dialog__button' style={{borderBottom:"1px solid var(--border)"}} onClick={()=>{goToPost(props.post.id)}}>Go to post</button>
+                            <button className='options-dialog__button' style={{borderBottom:"1px solid var(--border)"}} onClick={()=>{onCopyLink(props.post.id)}}>Copy link</button>
+                            <button className='options-dialog__button' onClick={()=>{handleCancel()}}>Cancel</button>
+                        </>
+                }
             </Modal>
         </>
     )
 }
 function mapStateToProps(state) {
-    return {}
+    return {
+        userAccountProfile:state.home.userAccountProfile,
+    }
 }
 
 function mapDispatchToProps(dispatch) {
     return {
         endFollowing: (userFollowingId) => {
             dispatch(homeActions.action.endFollowing(userFollowingId))
+        },
+        deletePost:(pId)=>{
+          dispatch(postActions.action.deletePost(pId))
         },
     }
 }

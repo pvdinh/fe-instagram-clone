@@ -120,7 +120,7 @@ function PostItemComponent(props) {
                                    className="post__user">{props.userAccountSetting.username}</a>
                             </div>
 
-                            <MoreActionInPost userAccountFollowing={props.userAccountSetting}/>
+                            <MoreActionInPost post={props.post} userAccountFollowing={props.userAccountSetting}/>
                         </div>
 
                         <div className="post__content">
@@ -212,8 +212,8 @@ function PostItemComponent(props) {
                                             {
                                                 listComment.slice(listComment.length - 2, listComment.length).map((item, index) => (
                                                     <div className="comment">
-                                                            <a href={`/${item.userAccountSetting.displayName}`}
-                                                                style={{fontWeight: "600",color:"var(--text-dark)"}}>{item.userAccountSetting.displayName}</a>
+                                                            <a href={`/${item.userAccountSetting.username}`}
+                                                                style={{fontWeight: "600",color:"var(--text-dark)"}}>{item.userAccountSetting.username}</a>
                                                         <span> {item.comment.content}</span>
                                                     </div>
                                                 ))
@@ -223,8 +223,8 @@ function PostItemComponent(props) {
                                             {
                                                 listComment.map((item, index) => (
                                                     <div className="comment">
-                                                            <a href={`/${item.userAccountSetting.displayName}`}
-                                                                style={{fontWeight: "600",color:"var(--text-dark)"}}>{item.userAccountSetting.displayName}</a>
+                                                            <a href={`/${item.userAccountSetting.username}`}
+                                                                style={{fontWeight: "600",color:"var(--text-dark)"}}>{item.userAccountSetting.username}</a>
                                                         <span> {item.comment.content}</span>
                                                     </div>
                                                 ))
