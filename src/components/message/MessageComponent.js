@@ -3,10 +3,10 @@ import {BASE_URL, BASE_URL_WEBSOCKET} from "../../url";
 import SockJS from "sockjs-client"
 import Stomp from "stompjs"
 import ModalSelectReceiverComponent from "./ModalSelectReceiverComponent";
+import MessageContentComponent from "./MessageContentComponent";
 let stompClient=null
 let stompClientAllInbox=null
 function MessageComponent(props) {
-    const [message,setMessage] = useState("")
     const [isVisible,setIsVisible] = useState(false)
 
     useEffect(()=>{
@@ -34,18 +34,14 @@ function MessageComponent(props) {
         props.findAllBySender()
     },[])
 
-    function auto_grow(element) {
-        let ag=window.document.getElementById("auto_grow")
-        ag.style.height = "5px";
-        ag.style.height = (ag.scrollHeight)+"px";
-    }
-    
-    const sendMessage = () =>{
+
+    const sendMessage = (message,type) =>{
         let data={
             sender:props.userAccountProfile.id,
             receiver:props.listMessageOfSenderAndReceiver.userAccountSettingReceiver.id,
             message:message,
             emotion:"",
+            type:type,
         }
         stompClient.send("/app/chat.sendMessage",{},JSON.stringify(data))
         stompClientAllInbox.send("/app/chat.sendMessageToAll",{},JSON.stringify(data))
@@ -53,7 +49,6 @@ function MessageComponent(props) {
         // props.postMessage(data,()=>{
         //     props.findAllBySenderAndReceiver(props.listMessageOfSenderAndReceiver.userAccountSettingReceiver.id)
         // })
-        setMessage("")
     }
     const onConnect = (receiver)=>{
         // Subscribe to the Public Topic
@@ -78,9 +73,6 @@ function MessageComponent(props) {
         }
     }
 
-    const onChangeMessage = (e) =>{
-        setMessage(e.target.value)
-    }
     const onBeginChat = (receiver) =>{
         openInboxCurrentReceiver(receiver)
     }
@@ -102,14 +94,6 @@ function MessageComponent(props) {
             stompClient.debug = null
         })
     }
-
-    const convertTimeStampToDate = (timeStamp) => {
-        let time = new Date(timeStamp)
-        let months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-        let minute = time.getMinutes() < 10  ? "0"+time.getMinutes() : time.getMinutes()
-        return time.getDate()+" "+months[time.getMonth()]+" "+time.getFullYear()+" "+time.getHours()+":"+minute
-    }
-
 
     return(
         <div className="wrap-body-page-message">
@@ -156,46 +140,10 @@ function MessageComponent(props) {
                 </div>
                 {
                     props.listMessageOfSenderAndReceiver.userAccountSettingReceiver ?
-                        <div className="chats">
-                            <div className="chat-banner">
-                                <div>
-              <span id="chat-pic">
-                <img id="pic" src={props.listMessageOfSenderAndReceiver.userAccountSettingReceiver.profilePhoto} alt="image" />
-              </span>
-                                </div>
-                                <div><i className="fas fa-info"/></div>
-                            </div>
-                            <div className="chats-body" id="chats-body">
-                                {
-                                    props.listMessageOfSenderAndReceiver.messages.map((value,index)=>(
-                                        <div>
-                                            {
-                                                value.sender !== props.userAccountProfile.id ?
-                                                    <div className="wrap-sender">
-                                                        <div className="sender">{value.message}</div>
-                                                        <div className="dateMessaged">{convertTimeStampToDate(value.dateSendMessage)}</div>
-                                                    </div>
-                                                    :
-                                                    <div className="wrap-receiver">
-                                                        <div className="dateMessaged">{convertTimeStampToDate(value.dateSendMessage)}</div>
-                                                        <div className="receiver">{value.message}</div>
-                                                    </div>
-
-                                            }
-                                            <div id="heart">❤️</div>
-
-                                        </div>
-                                    ))
-                                }
-                            </div>
-                            <div className="user-input"/>
-                            <div className="input-msg">
-                                <div className="wrap-send-input">
-                                    <textarea onInput={()=>{auto_grow()}} onChange={(e)=>{onChangeMessage(e)}} value={message} id="auto_grow" className="send-input" placeholder="Message..." />
-                                    <button className="button-send-message" onClick={()=>{sendMessage()}}>Send</button>
-                                </div>
-                            </div>
-                        </div>
+                        <MessageContentComponent userAccountProfile={props.userAccountProfile}
+                                                 messages={props.listMessageOfSenderAndReceiver.messages}
+                                                 sendMessage={(message,type)=>{sendMessage(message,type)}}
+                                                 userAccountSettingReceiver={props.listMessageOfSenderAndReceiver.userAccountSettingReceiver}/>
                         :
                         <div className="no-chats">
                             <div className="wrap-content-write-message">
