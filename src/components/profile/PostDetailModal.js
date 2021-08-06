@@ -142,7 +142,7 @@ function PostDetailModal(props) {
                                className="post__user">{ownerPost.username}</a>
                         </div>
 
-                        <MoreActionInPost userAccountFollowing={ownerPost}/>
+                        <MoreActionInPost post={post} userAccountFollowing={ownerPost}/>
                     </div>
                     <div className="post-detail-body-comment" id="chats-body">
                         {

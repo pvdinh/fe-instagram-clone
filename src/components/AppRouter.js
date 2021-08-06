@@ -9,6 +9,7 @@ import SignupPage from "../screens/SignupPage";
 import MessagePage from "../screens/MessagePage";
 import ProfilePage from "../screens/ProfilePage";
 import ErrorPage from "./errorPage/ErrorPage";
+import PostDetailPage from "../screens/PostDetailPage";
 
 function AppRouter() {
     return (
@@ -29,6 +30,7 @@ function AppRouter() {
                             <ProtectedRoute path={"/"} exact render={()=>{return <HomePage />}}></ProtectedRoute>
                             <ProtectedRoute path={"/message"} exact render={()=>{return <MessagePage />}}></ProtectedRoute>
                             <ProtectedRoute path={"/error"} exact render={()=>{return <ErrorPage />}}></ProtectedRoute>
+                            <ProtectedRoute path={"/p/:pId"} exact render={(props)=>{return <PostDetailPage {...props} />}}></ProtectedRoute>
                             <ProtectedRoute path={"/:username"} exact render={(props)=>{return <ProfilePage {...props} />}}></ProtectedRoute>
                         </Switch>
                     </Layout>

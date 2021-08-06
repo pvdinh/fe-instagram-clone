@@ -119,7 +119,7 @@ function PostDetailComponent(props) {
                                className="post__user">{props.userAccountSetting.username}</a>
                         </div>
 
-                        <MoreActionInPost userAccountFollowing={props.userAccountSetting}/>
+                        <MoreActionInPost post={props.post} userAccountFollowing={props.userAccountSetting}/>
                     </div>
                     <div className="post-detail-body-comment" id="chats-body">
                         {
