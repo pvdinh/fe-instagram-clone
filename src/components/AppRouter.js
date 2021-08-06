@@ -30,7 +30,7 @@ function AppRouter() {
                             <ProtectedRoute path={"/"} exact render={()=>{return <HomePage />}}></ProtectedRoute>
                             <ProtectedRoute path={"/message"} exact render={()=>{return <MessagePage />}}></ProtectedRoute>
                             <ProtectedRoute path={"/error"} exact render={()=>{return <ErrorPage />}}></ProtectedRoute>
-                            <ProtectedRoute path={"/p/:pId"} exact render={()=>{return <PostDetailPage />}}></ProtectedRoute>
+                            <ProtectedRoute path={"/p/:pId"} exact render={(props)=>{return <PostDetailPage {...props} />}}></ProtectedRoute>
                             <ProtectedRoute path={"/:username"} exact render={(props)=>{return <ProfilePage {...props} />}}></ProtectedRoute>
                         </Switch>
                     </Layout>

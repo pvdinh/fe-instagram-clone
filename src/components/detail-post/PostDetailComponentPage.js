@@ -1,8 +1,10 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Avatar, Modal} from "antd";
 import MoreActionInPost from "../home/MoreActionInPost";
 import CommentComponent from "../home/CommentComponent";
 import {BsFillHeartFill, FaComment} from "react-icons/all";
+import HavePostsComponents from "../profile/HavePostsComponents";
+import MorePostComponent from "./MorePostComponent";
 
 function PostDetailComponentPage(props) {
 
@@ -13,9 +15,58 @@ function PostDetailComponentPage(props) {
     const [listLike, setListLike] = useState([])
     const [ownerPost, setOwnerPost] = useState([])
 
+    useEffect(()=>{
+        props.getPostInformationFromPId(props.match.params.pId,(data)=>{
+            data.likes.includes(props.userAccountProfile.username) ? setLike(true) : setLike(false)
+            setListLike(data.likes)
+            setOwnerPost(data.userAccountSetting)
+            setPost(data.post)
+        })
+    },[props.match.params.pId])
+
+
+    useEffect(()=>{
+        props.getPostInformationFromPId(props.match.params.pId,(data)=>{
+            data.likes.includes(props.userAccountProfile.username) ? setLike(true) : setLike(false)
+            setListLike(data.likes)
+        })
+    },[like])
+
+    useEffect(()=>{
+        props.getCommentPost(props.match.params.pId,(data)=>{
+            setListCmt(data)
+        })
+    },[props.match.params.pId,reload])
+
+    useEffect(()=>{
+        if(props.visible === true)
+        {
+            //scroll to the bottom of "#chats-body"
+            let myDiv = document.getElementById("chats-body");
+            myDiv.scrollTop = myDiv.scrollHeight;
+        }
+    })
+
     const onClickLike = () => {
+        if(like){
+            setLike(false)
+            props.unlikePostInPostDetail(post.id)
+        }else {
+            setLike(true)
+            props.likePostInPostDetail(post.id)
+        }
     }
     const postComment = (cmt) => {
+        let comment = {
+            id: "",
+            content: cmt,
+            idPost: post.id,
+            idUser: props.userAccountProfile.id,
+            dateCommented: new Date().getTime(),
+        }
+        props.commentPost(comment, (data) => {
+            setReload(!reload)
+        })
     }
 
     const calculatorDayCreated = (timeCreated) => {
@@ -84,19 +135,19 @@ function PostDetailComponentPage(props) {
             <div className="body-page-post-detail">
                 <div className="wrap-post-detail">
                     <div className="wrap-image-post-detail">
-                        <img className="image-post-detail" alt="picture" src="https://res.cloudinary.com/dinhpv/image/upload/v1626766147/instargram-clone/cjfhyyqfmjwsciad3trp.jpg" />
+                        <img className="image-post-detail" alt="picture" src={post.imagePath} />
                     </div>
                     <div style={{border: "1px solid var(--border)"}}>
                         <div className="post__header">
                             <div className="post__profile">
                                 <a href={`/${ownerPost.username}`} className="post__avatar">
-                                    <Avatar src="https://res.cloudinary.com/dinhpv/image/upload/v1626766147/instargram-clone/cjfhyyqfmjwsciad3trp.jpg" alt="picture"></Avatar>
+                                    <Avatar src={ownerPost.profilePhoto} alt="picture"></Avatar>
                                 </a>
                                 <a href={`/${ownerPost.username}`}
                                    className="post__user">{ownerPost.username}</a>
                             </div>
 
-                            <MoreActionInPost userAccountFollowing={ownerPost}/>
+                            <MoreActionInPost post={post} userAccountFollowing={ownerPost}/>
                         </div>
                         <div className="post-detail-body-comment" id="chats-body">
                             {
@@ -176,8 +227,7 @@ function PostDetailComponentPage(props) {
                                         }
                                     </div>
                                     <span
-                                        // className="post__date-time">{calculatorDayCreated(post.dateCreated)}</span>
-                                        className="post__date-time">xxxxxx</span>
+                                        className="post__date-time">{calculatorDayCreated(post.dateCreated)}</span>
                                 </div>
                             </div>
                             <hr className='post-hr'/>
@@ -189,123 +239,13 @@ function PostDetailComponentPage(props) {
                 </div>
             </div>
             <div className="wrap-more-post-of-user">
-                <div className="title">More posts from <a className="title-name" href="#">xxxxx</a></div>
-                <div className="tabbed-pane__posts">
-                    <div className="wrap-post">
-                                <a className="i1" href><img className="i11" src="https://res.cloudinary.com/dinhpv/image/upload/v1626766147/instargram-clone/cjfhyyqfmjwsciad3trp.jpg" alt="bill murray post picture" /></a>
-                                <div className="wrap-post-info" >
-                                    <div className="post-info">
-                                        <div className="likes">
-                                            <div className="L1L">
-                                                <BsFillHeartFill />
-                                            </div>
-                                            66
-                                        </div>
-                                        <div className="comments">
-                                            <div className="C1C">
-                                                <FaComment />
-                                            </div>
-                                            66
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                    <div className="wrap-post">
-                        <a className="i1" href><img className="i11" src="https://res.cloudinary.com/dinhpv/image/upload/v1626766147/instargram-clone/cjfhyyqfmjwsciad3trp.jpg" alt="bill murray post picture" /></a>
-                        <div className="wrap-post-info" >
-                            <div className="post-info">
-                                <div className="likes">
-                                    <div className="L1L">
-                                        <BsFillHeartFill />
-                                    </div>
-                                    66
-                                </div>
-                                <div className="comments">
-                                    <div className="C1C">
-                                        <FaComment />
-                                    </div>
-                                    66
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="wrap-post">
-                        <a className="i1" href><img className="i11" src="https://res.cloudinary.com/dinhpv/image/upload/v1626766147/instargram-clone/cjfhyyqfmjwsciad3trp.jpg" alt="bill murray post picture" /></a>
-                        <div className="wrap-post-info" >
-                            <div className="post-info">
-                                <div className="likes">
-                                    <div className="L1L">
-                                        <BsFillHeartFill />
-                                    </div>
-                                    66
-                                </div>
-                                <div className="comments">
-                                    <div className="C1C">
-                                        <FaComment />
-                                    </div>
-                                    66
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="wrap-post">
-                        <a className="i1" href><img className="i11" src="https://res.cloudinary.com/dinhpv/image/upload/v1626766147/instargram-clone/cjfhyyqfmjwsciad3trp.jpg" alt="bill murray post picture" /></a>
-                        <div className="wrap-post-info" >
-                            <div className="post-info">
-                                <div className="likes">
-                                    <div className="L1L">
-                                        <BsFillHeartFill />
-                                    </div>
-                                    66
-                                </div>
-                                <div className="comments">
-                                    <div className="C1C">
-                                        <FaComment />
-                                    </div>
-                                    66
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="wrap-post">
-                        <a className="i1" href><img className="i11" src="https://res.cloudinary.com/dinhpv/image/upload/v1626766147/instargram-clone/cjfhyyqfmjwsciad3trp.jpg" alt="bill murray post picture" /></a>
-                        <div className="wrap-post-info" >
-                            <div className="post-info">
-                                <div className="likes">
-                                    <div className="L1L">
-                                        <BsFillHeartFill />
-                                    </div>
-                                    66
-                                </div>
-                                <div className="comments">
-                                    <div className="C1C">
-                                        <FaComment />
-                                    </div>
-                                    66
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="wrap-post">
-                        <a className="i1" href><img className="i11" src="https://res.cloudinary.com/dinhpv/image/upload/v1626766147/instargram-clone/cjfhyyqfmjwsciad3trp.jpg" alt="bill murray post picture" /></a>
-                        <div className="wrap-post-info" >
-                            <div className="post-info">
-                                <div className="likes">
-                                    <div className="L1L">
-                                        <BsFillHeartFill />
-                                    </div>
-                                    66
-                                </div>
-                                <div className="comments">
-                                    <div className="C1C">
-                                        <FaComment />
-                                    </div>
-                                    66
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <div className="title">More posts from <a className="title-name" href="#">{ownerPost.username}</a></div>
+                {
+                    ownerPost.username !== undefined ?
+                        <MorePostComponent username={ownerPost.username} />
+                        :
+                        null
+                }
             </div>
 
             <div className="footer-post-detail-page">
