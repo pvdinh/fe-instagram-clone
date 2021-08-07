@@ -198,6 +198,14 @@
     border: 1px solid var(--border);
     transition: all .2s ease;
     color: var(--text-dark);
+    .video-react{
+      width: 400px!important;
+      max-height: 250px!important;
+    }
+    .sender-image{
+      object-fit: cover;
+      height: 250px;
+    }
   }
   .sender:hover {
     background-color: pink;

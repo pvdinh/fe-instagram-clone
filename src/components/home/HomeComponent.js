@@ -230,9 +230,9 @@ function HomeComponent() {
                 </button>
             </nav>
 
-            <div className="alertCopyLink">
-                <div className="alert-text">Link copied to clipboard</div>
-            </div>
+            {/*<div className="alertCopyLink">*/}
+            {/*    <div className="alert-text">Link copied to clipboard</div>*/}
+            {/*</div>*/}
         </div>
     )
 }

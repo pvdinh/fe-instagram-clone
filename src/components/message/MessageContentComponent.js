@@ -3,6 +3,7 @@ import {LinkPreview} from '@dhaiwat10/react-link-preview';
 import postActions from "../../redux/actions/postActions";
 import {connect} from "react-redux";
 import InputEmoji from 'react-input-emoji'
+import {Player} from 'video-react';
 
 
 function MessageContentComponent(props) {
@@ -52,14 +53,23 @@ function MessageContentComponent(props) {
     }
 
     const onChangeUploadImage = (e) => {
+        let elementAlert = document.getElementsByClassName("alertUploading")
+        elementAlert[0].classList.add("show")
         if (e.target.files[0]) {
             let data = {
                 "file": e.target.files[0],
                 "upload_preset": "instagram-clone",
             }
-            props.postImageToCloudinary(data, (data) => {
-                props.sendMessage(data.url, "image")
-            })
+            e.target.files[0].type.includes("video") ?
+                props.postImageToCloudinary(data, (data) => {
+                    elementAlert[0].classList.remove("show")
+                    props.sendMessage(data.url, "video")
+                })
+                :
+                props.postImageToCloudinary(data, (data) => {
+                    elementAlert[0].classList.remove("show")
+                    props.sendMessage(data.url, "image")
+                })
         }
     }
 
@@ -82,16 +92,26 @@ function MessageContentComponent(props) {
                                     <div className="wrap-sender">
                                         {
                                             value.type === "link" ?
-                                                <div className="sender">
+                                                <div className="receiver">
                                                     <LinkPreview url={value.message} height={"350px"}/>
                                                 </div>
                                                 :
                                                 value.type === "image" ?
                                                     <div className="receiver">
-                                                        <img className="receiver-image" src={value.message} alt="image" />
+                                                        <img className="receiver-image" src={value.message}
+                                                             alt="image"/>
                                                     </div>
                                                     :
-                                                    <div className="sender">{value.message}</div>
+                                                    value.type === "video" ?
+                                                        <div className="receiver">
+                                                            <Player
+                                                                playsInline
+                                                                crossOrigin={'anonymous'}
+                                                                src={value.message}>
+                                                            </Player>
+                                                        </div>
+                                                        :
+                                                        <div className="receiver">{value.message}</div>
                                         }
                                         <div
                                             className="dateMessaged">{convertTimeStampToDate(value.dateSendMessage)}</div>
@@ -102,16 +122,25 @@ function MessageContentComponent(props) {
                                             className="dateMessaged">{convertTimeStampToDate(value.dateSendMessage)}</div>
                                         {
                                             value.type === "link" ?
-                                                <div className="receiver">
+                                                <div className="sender">
                                                     <LinkPreview url={value.message} height={"350px"}/>
                                                 </div>
                                                 :
                                                 value.type === "image" ?
-                                                    <div className="sender">
-                                                        <img className="sender-image" src={value.message} alt="image" />
+                                                    <div className="sender" style={{minHeight: "250px"}}>
+                                                        <img className="sender-image" src={value.message} alt="image"/>
                                                     </div>
                                                     :
-                                                <div className="receiver">{value.message}</div>
+                                                    value.type === "video" ?
+                                                        <div className="sender">
+                                                            <Player
+                                                                playsInline
+                                                                crossOrigin={'anonymous'}
+                                                                src={value.message}>
+                                                            </Player>
+                                                        </div>
+                                                        :
+                                                        <div className="sender">{value.message}</div>
                                         }
                                     </div>
 
@@ -133,9 +162,12 @@ function MessageContentComponent(props) {
                     <InputEmoji
                         value={message}
                         cleanOnEnter
-                        onChange={(text)=>{
-                            onChangesMessageE(text)}}
-                        onEnter={()=>{sendMessage()}}
+                        onChange={(text) => {
+                            onChangesMessageE(text)
+                        }}
+                        onEnter={() => {
+                            sendMessage()
+                        }}
                         placeholder="Message..."
                     />
                     <div className="image-selector">
@@ -148,7 +180,7 @@ function MessageContentComponent(props) {
                             </svg>
                         </label>
                     </div>
-                    <input id="image-upload" type="file" accept="image/*" onClick={(event) => {
+                    <input id="image-upload" type="file" accept="audio/*|video/*|image/*" onClick={(event) => {
                         event.target.value = null
                     }} style={{display: "none"}} onChange={(e) => {
                         onChangeUploadImage(e)
