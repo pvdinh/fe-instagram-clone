@@ -28,6 +28,7 @@
     "sass": "^1.35.1",
     "sockjs-client": "^1.5.1",
     "stompjs": "^2.3.3",
+    "video-react": "^0.14.1",
     "web-vitals": "^1.1.2"
   },
   "scripts": {

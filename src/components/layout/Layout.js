@@ -157,6 +157,12 @@ function Layout(props) {
             </nav>
         </header>
             {props.children}
+            <div className="alertCopyLink">
+                <div className="alert-text">Link copied to clipboard</div>
+            </div>
+            <div className="alertUploading">
+                <div className="alert-text">Uploading...</div>
+            </div>
         </div>
     )
 }

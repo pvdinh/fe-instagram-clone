@@ -82,6 +82,7 @@ function MessageComponent(props) {
     //phải xác nhận JWT ở headers để xác thực người dùng
     //stompClient.connect khi connect thành công, truyền vào id receiver để thực hiện lắng nghe tin nhắn
     const openInboxCurrentReceiver = (id) => {
+        if(stompClient !== null) stompClient.disconnect()
         props.findAllBySenderAndReceiver(id,(data)=>{
             console.log(data)
             let sockjs = new SockJS(BASE_URL_WEBSOCKET+"/ws")
