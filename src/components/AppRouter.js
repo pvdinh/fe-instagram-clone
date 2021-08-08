@@ -10,6 +10,7 @@ import MessagePage from "../screens/MessagePage";
 import ProfilePage from "../screens/ProfilePage";
 import ErrorPage from "./errorPage/ErrorPage";
 import PostDetailPage from "../screens/PostDetailPage";
+import SettingAccountPage from "../screens/SettingAccountPage";
 
 function AppRouter() {
     return (
@@ -32,6 +33,7 @@ function AppRouter() {
                             <ProtectedRoute path={"/error"} exact render={()=>{return <ErrorPage />}}></ProtectedRoute>
                             <ProtectedRoute path={"/p/:pId"} exact render={(props)=>{return <PostDetailPage {...props} />}}></ProtectedRoute>
                             <ProtectedRoute path={"/:username"} exact render={(props)=>{return <ProfilePage {...props} />}}></ProtectedRoute>
+                            <ProtectedRoute path={"/accounts/edit"} exact render={()=>{return <SettingAccountPage />}}></ProtectedRoute>
                         </Switch>
                     </Layout>
                 </Route>
