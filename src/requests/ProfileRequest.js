@@ -13,4 +13,8 @@ export class ProfileRequest extends BaseRequest{
         let url=`user-account-setting/get-private-info`
         return this.get(url)
     }
+    changePassword(data){
+        let url=`user-account-setting/change-password`
+        return this.post(url,data)
+    }
 }

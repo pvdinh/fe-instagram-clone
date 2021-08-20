@@ -12,3 +12,7 @@ export const getPrivateInformation = () => {
     let profileRequest = new ProfileRequest()
     return profileRequest.getPrivateInformation()
 }
+export const changePassword = (data) => {
+    let profileRequest = new ProfileRequest()
+    return profileRequest.changePassword(data)
+}

@@ -11,7 +11,7 @@ function EditAccountSettingComponent(props) {
     const [bio, setBio] = useState("")
     const [email, setEmail] = useState("")
     const [phoneNumber, setPhoneNumber] = useState("")
-    const [checkSubmit, setCheckSubmit] = useState(true)
+    const [checkSubmit, setCheckSubmit] = useState(false)
 
     useEffect(()=>{
         props.getPrivateInformation((data)=>{
@@ -27,38 +27,41 @@ function EditAccountSettingComponent(props) {
         setBio(props.userAccountProfile.description)
     },[props.userAccountProfile])
 
-    const checkName = () => {
-
-    }
     const onChangeName = (e) => {
         setName(e.target.value)
+        checkSubmitChange()
     }
-    const checkUsername = () => {
 
+    const checkSubmitChange = () =>{
+        if(name.split(" ").join("") !== "" && username.split(" ").join("") !== ""
+            && bio.split(" ").join("") !== "" && email.split(" ").join("") !== ""
+            && phoneNumber.split(" ").join("") !== "" && website.split(" ").join("") !== "")
+        {
+            setCheckSubmit(true)
+        }else setCheckSubmit(false)
     }
+
     const onChangeUsername = (e) => {
         setUsername(e.target.value)
-    }
-    const checkEmail = () => {
-
+        checkSubmitChange()
     }
     const onChangeEmail = (e) => {
         setEmail(e.target.value)
+        checkSubmitChange()
     }
-    const checkPhoneNumber = () => {
 
-    }
     const onChangePhoneNumber = (e) => {
         setPhoneNumber(e.target.value)
+        checkSubmitChange()
     }
     const onChangeBio = (e) => {
         setBio(e.target.value)
-        setCheckSubmit(true)
+        checkSubmitChange()
     }
 
     const onChangeWebsite = (e) => {
         setWebsite(e.target.value)
-        setCheckSubmit(true)
+        checkSubmitChange()
     }
 
     const onSubmit = (e) => {

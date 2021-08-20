@@ -57,6 +57,7 @@
               border-radius: 3px;
               width: 100%;
               padding: 8px;
+              color: var(--text-dark);
             }
             .bnt-submit-change{
               outline: none;
@@ -100,6 +101,10 @@
       border-left: 1px solid var(--border);
       border-top: 1px solid var(--border);
       border-bottom: 1px solid var(--border);
+      flex: 0 0 236px!important;
+      max-width: 236px!important;
+      min-width: 236px!important;
+      width: 236px!important;
       .ant-menu-item-selected{
         color: var(--text-dark) !important;
         font-weight: 600;
@@ -128,5 +133,73 @@
       border: 1px solid var(--border);
       background: var(--primary)!important;
     }
+  }
+  .wrap-body-change-password-account-setting{
+    height: 810px;
+    .body-change-password-account-setting{
+      padding: 40px 80px 40px 10px;
+      .form-group{
+        display: grid;
+        grid-template-columns: 150px auto;
+        grid-column-gap: 30px;
+        align-items: center;
+        margin-top: 20px;
+        .wrap-label{
+          text-align: end;
+          label{
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text-dark);
+            text-align: end;
+          }
+        }
+        .wrap-input{
+          input,textarea{
+            background: var(--bg-profile-page);
+            border: 1px solid var(--border);
+            border-radius: 3px;
+            width: 100%;
+            padding: 8px;
+            color: var(--text-dark);
+          }
+          .link{
+            font-weight: 600;
+            font-size: 14px;
+          }
+          .bnt-submit-change{
+            outline: none;
+            background-color: #0095f6;
+            border: none;
+            color: #fff;
+            padding: 5px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-family: inherit;
+            font-weight: 600;
+            position: relative;
+            overflow: hidden;
+          }
+          .bnt-submit-change-disable{
+            outline: none;
+            background-color: #0095f6;
+            border: none;
+            color: #fff;
+            padding: 5px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-family: inherit;
+            font-weight: 600;
+            position: relative;
+            overflow: hidden;
+            opacity: .5;
+          }
+        }
+      }
+    }
+  }
+}
+@media screen and (max-width: 790px) {
+  .wrap-body-page-setting-account .wrap-navigation-account-setting .ant-layout-sider{
+    display: none;
   }
 }
