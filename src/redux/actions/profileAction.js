@@ -4,6 +4,7 @@ const type = {
     EDIT_USER_ACCOUNT_SETTING:"EDIT_USER_ACCOUNT_SETTING",
     EDIT_USER_ACCOUNT_SETTING_SUCCESS:"EDIT_USER_ACCOUNT_SETTING_SUCCESS",
     GET_PRIVATE_INFORMATION:"GET_PRIVATE_INFORMATION",
+    CHANGE_PASSWORD:"CHANGE_PASSWORD",
 }
 const action = {
     getUserProfile:(username,callback,history)=>{
@@ -24,6 +25,13 @@ const action = {
     getPrivateInformation:(callback)=>{
         return{
             type:type.GET_PRIVATE_INFORMATION,
+            callback,
+        }
+    },
+    changePassword:(data,callback)=>{
+        return{
+            type:type.CHANGE_PASSWORD,
+            data:data,
             callback,
         }
     },

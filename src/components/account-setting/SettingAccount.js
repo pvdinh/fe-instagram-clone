@@ -41,7 +41,7 @@ function SettingAccount() {
                                     selectedMenuItem==1 ?
                                         <EditAccountSettingComponent setAlertSubmit={(alert)=>{setAlertSubmit(alert)}} />
                                         :
-                                        <ChangePasswordComponent />
+                                        <ChangePasswordComponent setAlertSubmit={(alert)=>{setAlertSubmit(alert)}} />
                                 }
                             </div>
                         </Content>
