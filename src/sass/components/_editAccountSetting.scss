@@ -25,6 +25,7 @@
           .username{
             font-size: 18px;
             font-weight: 400;
+            color: var(--text-dark);
             .below-username{
               color: #0095f6;
               font-weight: 600;
@@ -69,6 +70,20 @@
               font-weight: 600;
               position: relative;
               overflow: hidden;
+            }
+            .bnt-submit-change-disable{
+              outline: none;
+              background-color: #0095f6;
+              border: none;
+              color: #fff;
+              padding: 5px 20px;
+              border-radius: 4px;
+              cursor: pointer;
+              font-family: inherit;
+              font-weight: 600;
+              position: relative;
+              overflow: hidden;
+              opacity: .5;
             }
           }
         }
