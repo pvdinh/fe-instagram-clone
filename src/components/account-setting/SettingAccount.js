@@ -1,19 +1,22 @@
 import React, {useEffect, useState} from "react";
 import { Layout, Menu } from 'antd';
 import EditAccountSettingComponent from "./EditAccountSettingComponent";
+import ChangePasswordComponent from "./ChangePasswordComponent";
 
 const {Content, Sider } = Layout;
 
 function SettingAccount() {
     const [alertSubmit,setAlertSubmit] = useState("")
+    const [selectedMenuItem, setSelectedMenuItem]= useState('1')
 
     return(
-        <div>
+        <div style={{minHeight: "100%",background: "var(--bg-profile-page)"}} >
             <div className="wrap-body-page-setting-account">
                 <Layout className="wrap-navigation-account-setting">
                     <Sider
                         breakpoint="lg"
-                        collapsedWidth="0"
+                        // collapsedWidth="0"
+                        collapsed={false}
                         onBreakpoint={broken => {
                             console.log(broken);
                         }}
@@ -22,7 +25,7 @@ function SettingAccount() {
                         }}
                         className="sider-navigation"
                     >
-                        <Menu mode="inline" defaultSelectedKeys={['1']}>
+                        <Menu onClick={(e)=>{setSelectedMenuItem(e.key)}} mode="inline" defaultSelectedKeys={['1']}>
                             <Menu.Item key="1" >
                                 Edit Profile
                             </Menu.Item>
@@ -34,7 +37,12 @@ function SettingAccount() {
                     <Layout>
                         <Content>
                             <div className="site-layout-background" >
-                                <EditAccountSettingComponent setAlertSubmit={(alert)=>{setAlertSubmit(alert)}} />
+                                {
+                                    selectedMenuItem==1 ?
+                                        <EditAccountSettingComponent setAlertSubmit={(alert)=>{setAlertSubmit(alert)}} />
+                                        :
+                                        <ChangePasswordComponent />
+                                }
                             </div>
                         </Content>
                     </Layout>
