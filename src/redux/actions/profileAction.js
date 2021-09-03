@@ -5,6 +5,8 @@ const type = {
     EDIT_USER_ACCOUNT_SETTING_SUCCESS:"EDIT_USER_ACCOUNT_SETTING_SUCCESS",
     GET_PRIVATE_INFORMATION:"GET_PRIVATE_INFORMATION",
     CHANGE_PASSWORD:"CHANGE_PASSWORD",
+    GET_SAVED_POST:"GET_SAVED_POST",
+    GET_SAVED_POST_SUCCESS:"GET_SAVED_POST_SUCCESS",
 }
 const action = {
     getUserProfile:(username,callback,history)=>{
@@ -33,6 +35,14 @@ const action = {
             type:type.CHANGE_PASSWORD,
             data:data,
             callback,
+        }
+    },
+    getSavedPost:(username,callback,history)=>{
+        return{
+            type:type.GET_SAVED_POST,
+            username:username,
+            callback,
+            history,
         }
     },
 }

@@ -16,3 +16,7 @@ export const changePassword = (data) => {
     let profileRequest = new ProfileRequest()
     return profileRequest.changePassword(data)
 }
+export const getSavedPost = (username) => {
+    let profileRequest = new ProfileRequest()
+    return profileRequest.getSavedPost(username)
+}

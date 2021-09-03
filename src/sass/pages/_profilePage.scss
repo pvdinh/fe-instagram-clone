@@ -388,7 +388,22 @@
     grid-template-columns: repeat(4, auto);
     justify-items: center;
     align-items: center;
-    grid-auto-rows: 60px;
+    grid-auto-rows: 65px;
+    .li-posts{
+
+    }
+    .li-igtv{
+
+    }
+    .li-tagged{
+
+    }
+    .li-saved{
+
+    }
+    .selected{
+      border-top: 2px solid var(--text-dark);
+    }
   }
   .tabbed-pane__header__other {
     display: grid;
@@ -400,8 +415,10 @@
   }
 
   .tabbed-pane__header li {
+    user-select: none;
     text-transform: uppercase;
-    padding: 10px 0;
+    //padding: 10px 0;
+    height: 100%;
   }
 
   a.tab-link {
@@ -639,9 +656,9 @@
       padding-left: 10px;
     }
 
-    .tabbed-pane__header li {
-      padding: 20px 0;
-    }
+    //.tabbed-pane__header li {
+    //  padding: 20px 0;
+    //}
 
     a.tab-link i {
       font-size: 1em;

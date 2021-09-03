@@ -15,7 +15,7 @@ function HeaderButtonsDesktopComponent(props) {
     const menu = (
         <Menu className="wrap-page-home-in-header">
             <Menu.Item className={"wrap-item"}>
-                <a className="wrap-icon" rel="noopener noreferrer" href={`/${props.userAccountProfile.username}`}>
+                <a className="wrap-icon" rel="noopener noreferrer" href={`/${props.userAccountProfile.username}`} onClick={()=>{setCurrentPage(" ")}}>
                 <div className="icon">
                         <svg aria-label="Profile" className="_8-yf5 " fill="#262626" height="16" role="img"
                              viewBox="0 0 32 32" width="16">
@@ -28,7 +28,7 @@ function HeaderButtonsDesktopComponent(props) {
                 </a>
             </Menu.Item>
             <Menu.Item className={"wrap-item"}>
-                <a className="wrap-icon" target="_blank" rel="noopener noreferrer" href="#">
+                <a className="wrap-icon" target="_blank" rel="noopener noreferrer" href="#" onClick={()=>{setCurrentPage(" ")}} >
                     <div className="icon">
                         <svg aria-label="Saved" className="_8-yf5 " fill="#262626" height="16" role="img"
                              viewBox="0 0 32 32" width="16">
@@ -41,7 +41,7 @@ function HeaderButtonsDesktopComponent(props) {
                 </a>
             </Menu.Item>
             <Menu.Item className={"wrap-item"}>
-                <a className="wrap-icon" rel="noopener noreferrer" href="/accounts/edit">
+                <a className="wrap-icon" rel="noopener noreferrer" href="/accounts/edit" onClick={()=>{setCurrentPage(" ")}} >
                     <div className="icon">
                         <svg aria-label="Settings" className="_8-yf5 " fill="#262626" height="16" role="img"
                              viewBox="0 0 32 32" width="16">
@@ -54,7 +54,7 @@ function HeaderButtonsDesktopComponent(props) {
                 </a>
             </Menu.Item>
             <Menu.Item className={"wrap-item"}>
-                <a className="wrap-icon" target="_blank" rel="noopener noreferrer" href="#">
+                <a className="wrap-icon" target="_blank" rel="noopener noreferrer" href="#" onClick={()=>{setCurrentPage("")}} >
                     <div className="icon">
                         <svg aria-label="Switch Accounts" className="_8-yf5 " fill="#262626" height="16" role="img"
                              viewBox="0 0 32 32" width="16">
@@ -185,9 +185,9 @@ function HeaderButtonsDesktopComponent(props) {
                 }
             </a>
             <PostPostComponent/>
-            <Dropdown overlay={menu} placement="bottomRight" arrow trigger={['click']} >
+            <Dropdown overlay={menu} placement="bottomRight" arrow trigger={['click']}>
                 <button className="profile-button">
-                    <div className="profile-button__border" />
+                    <div className={localStorage.getItem("currentPage") === " " ? "profile-button__border display-border" : "profile-button__border"} />
                     <div className="profile-button__picture">
                         <img src={props.userAccountProfile.profilePhoto} alt="User Picture" />
                     </div>
