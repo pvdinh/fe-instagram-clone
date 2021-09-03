@@ -4,6 +4,12 @@ import UserProfileComponent from "./UserProfileComponent";
 import SuggestionsToFollow from "./SuggestionsToFollow";
 import {Modal} from "antd";
 function HomeComponent() {
+
+    useEffect(()=>{
+        localStorage.setItem("currentPage","Home")
+    },[])
+
+
     useEffect(()=>{
         // Getting the scrollbar width to adjust the header alignment
         const content = document.querySelector('.main-container');

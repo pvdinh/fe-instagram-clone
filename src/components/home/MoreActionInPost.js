@@ -27,7 +27,9 @@ function MoreActionInPost(props) {
     }
 
     const onCopyLink = (link) =>{
-        navigator.clipboard.writeText("http://localhost:3000/p/"+link)
+        let url = window.location.href;
+        let arrUrl = url.split("/");
+        navigator.clipboard.writeText(arrUrl[0] + "//" + arrUrl[2] + '/p/' +link)
         handleCancel()
         let elementAlert = document.getElementsByClassName("alertCopyLink")
         elementAlert[0].classList.add("show")

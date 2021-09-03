@@ -2,7 +2,7 @@ import {all, takeEvery, call, put} from "@redux-saga/core/effects";
 import {
     changePassword,
     editUserAccountSetting,
-    getPrivateInformation,
+    getPrivateInformation, getSavedPost,
     getUserProfile
 } from "../../services/ProfileApiService";
 import profileAction from "../actions/profileAction";
@@ -53,11 +53,25 @@ function *changePassword_saga(action) {
         console.log("err",e)
     }
 }
+function *getSavedPost_saga(action) {
+    try{
+        const response= yield call(getSavedPost,action.username)
+        if(response.statusCode === 200){
+            yield put({type:profileAction.type.GET_SAVED_POST_SUCCESS,data:response.data})
+        }else {
+            action.history.replace("/error")
+        }
+    }catch (e) {
+        action.history.replace("/error")
+        console.log("err",e)
+    }
+}
 function *listen() {
     yield takeEvery(profileAction.type.GET_USER_PROFILE,getUserProfile_saga)
     yield takeEvery(profileAction.type.EDIT_USER_ACCOUNT_SETTING,editUserAccountSetting_saga)
     yield takeEvery(profileAction.type.GET_PRIVATE_INFORMATION,getPrivateInformation_saga)
     yield takeEvery(profileAction.type.CHANGE_PASSWORD,changePassword_saga)
+    yield takeEvery(profileAction.type.GET_SAVED_POST,getSavedPost_saga)
 }
 function* profileSaga() {
     yield all([listen()])

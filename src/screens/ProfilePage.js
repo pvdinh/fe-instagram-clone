@@ -7,6 +7,7 @@ function mapStateToProps(state) {
         userAccountProfile: state.home.userAccountProfile,
         currentUserAccountSetting:state.profile.currentUserAccountSetting,
         listPostDetails:state.profile.listPostDetails,
+        listSavedPostDetails: state.profile.listSavedPostDetails,
     }
 }
 
@@ -14,6 +15,9 @@ function mapDispatchToProps(dispatch) {
     return {
         getUserProfile:(username,callback,history)=>{
             dispatch(profileAction.action.getUserProfile(username,callback,history))
+        },
+        getSavedPost: (username, callback, history) => {
+            dispatch(profileAction.action.getSavedPost(username, callback, history))
         },
     }
 }
