@@ -28,7 +28,7 @@ function HeaderButtonsDesktopComponent(props) {
                 </a>
             </Menu.Item>
             <Menu.Item className={"wrap-item"}>
-                <a className="wrap-icon" target="_blank" rel="noopener noreferrer" href="#" onClick={()=>{setCurrentPage(" ")}} >
+                <a className="wrap-icon" rel="noopener noreferrer" href={`/${props.userAccountProfile.username}/saved`} onClick={()=>{setCurrentPage(" ")}} >
                     <div className="icon">
                         <svg aria-label="Saved" className="_8-yf5 " fill="#262626" height="16" role="img"
                              viewBox="0 0 32 32" width="16">

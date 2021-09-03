@@ -38,5 +38,17 @@ class PostRequest extends BaseRequest{
         let url = `post/${pId}/get`
         return this.get(url)
     }
+    checkSavedPost(pId){
+        let url = `post/${pId}/check-save-post`
+        return this.get(url,pId)
+    }
+    endSavePost(pId){
+        let url = `post/${pId}/end-save-post`
+        return this.post(url,pId)
+    }
+    beginSavePost(pId){
+        let url = `post/${pId}/begin-save-post`
+        return this.post(url,pId)
+    }
 }
 export default PostRequest

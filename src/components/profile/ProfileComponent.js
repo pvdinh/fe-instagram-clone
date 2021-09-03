@@ -11,8 +11,10 @@ function ProfileComponent(props) {
 
     useEffect(() => {
         props.getUserProfile(props.match.params.username, () => {
-            props.getSavedPost(props.match.params.username, () => {
-            }, history)
+            if (props.match.url.includes("saved")) {
+                props.getSavedPost(props.match.params.username, () => {
+                }, history)
+            }
         }, history)
     }, [])
 

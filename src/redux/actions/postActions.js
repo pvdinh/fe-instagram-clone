@@ -17,6 +17,9 @@ const type = {
     UNLIKE_POST_IN_POST_DETAIL:"UNLIKE_POST_IN_POST_DETAIL",
     DELETE_POST:"DELETE_POST",
     DELETE_POST_SUCCESS:"DELETE_POST_SUCCESS",
+    CHECK_SAVED_POST:"CHECK_SAVED_POST",
+    BEGIN_SAVE_POST:"BEGIN_SAVE_POST",
+    END_SAVE_POST:"END_SAVE_POST",
 }
 const action = {
     getAllPostOfFollowing: () => {
@@ -93,6 +96,27 @@ const action = {
         return{
             type:type.DELETE_POST,
             id:pId,
+        }
+    },
+    checkSavedPost:(pId,callback)=>{
+        return{
+            type:type.CHECK_SAVED_POST,
+            id:pId,
+            callback,
+        }
+    },
+    beginSavePost:(pId,callback)=>{
+        return{
+            type:type.BEGIN_SAVE_POST,
+            id:pId,
+            callback,
+        }
+    },
+    endSavePost:(pId,callback)=>{
+        return{
+            type:type.END_SAVE_POST,
+            id:pId,
+            callback,
         }
     },
 }
