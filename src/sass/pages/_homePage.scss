@@ -476,6 +476,13 @@
 
       padding: 8px;
     }
+    .post__button__other {
+      background-color: transparent;
+      border: none;
+      cursor: pointer;
+
+      padding: 8px;
+    }
 
     .post__button:active {
       -ms-transform: scale(1.5); /* IE 9 */
@@ -1277,6 +1284,13 @@
           background-color: var(--link);
         }
         .post__button {
+          background-color: transparent;
+          border: none;
+          cursor: pointer;
+
+          padding: 8px;
+        }
+        .post__button__other {
           background-color: transparent;
           border: none;
           cursor: pointer;

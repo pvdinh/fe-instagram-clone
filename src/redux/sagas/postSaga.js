@@ -1,7 +1,9 @@
 import {all, takeEvery, call, put} from "@redux-saga/core/effects";
 import postActions from "../actions/postActions";
 import {
-    commentPost, deletePost,
+    beginSavePost,
+    checkSavedPost,
+    commentPost, deletePost, endSavePost,
     getAllPostInformationFollowing,
     getCommentPost, getPostInformationFromPId,
     likePost, postImageToCloudinary, postNewPost,
@@ -100,6 +102,35 @@ function *saga_deletePost(action) {
     }
 }
 
+function *saga_checkSavedPost(action) {
+    try{
+        const res= yield call(checkSavedPost,action.id)
+        yield action.callback(res.data)
+    }catch (e) {
+        console.log("err",e)
+    }
+}
+function *saga_beginSavePost(action) {
+    try{
+        const res= yield call(beginSavePost,action.id)
+        if(res.statusCode === 200){
+            yield action.callback(res.data)
+        }
+    }catch (e) {
+        console.log("err",e)
+    }
+}
+function *saga_endSavePost(action) {
+    try{
+        const res= yield call(endSavePost,action.id)
+        if(res.statusCode === 200) {
+            yield action.callback(res.data)
+        }
+    }catch (e) {
+        console.log("err",e)
+    }
+}
+
 function* listen() {
     yield takeEvery(postActions.type.GET_ALL_POST_OF_FOLLOWING, saga_getAllPostOfFollowing)
     yield takeEvery(postActions.type.LIKE_POST, saga_likePost)
@@ -112,6 +143,9 @@ function* listen() {
     yield takeEvery(postActions.type.POST_IMAGE_TO_CLOUDINARY, saga_postImageToCloudinary)
     yield takeEvery(postActions.type.GET_POST_INFORMATION_FROM_P_ID, saga_getPostInformationFromPId)
     yield takeEvery(postActions.type.DELETE_POST, saga_deletePost)
+    yield takeEvery(postActions.type.CHECK_SAVED_POST, saga_checkSavedPost)
+    yield takeEvery(postActions.type.BEGIN_SAVE_POST, saga_beginSavePost)
+    yield takeEvery(postActions.type.END_SAVE_POST, saga_endSavePost)
 }
 
 function* postSaga() {

@@ -12,9 +12,6 @@ function HavePostsComponents(props) {
     useEffect(()=>{
         props.getUserProfile(props.currentUserAccountSetting.username,()=>{})
     },[isVisiblePostDetail])
-    useEffect(()=>{
-        props.getSavedPost(props.currentUserAccountSetting.username,()=>{})
-    },[isVisiblePostDetail])
 
     const onClickPost = (p) =>{
         console.log(p.post)

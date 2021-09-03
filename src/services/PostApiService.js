@@ -36,3 +36,15 @@ export const getPostInformationFromPId = (pId) =>{
     const postRequest = new PostRequest()
     return postRequest.getPostInformationFromPId(pId)
 }
+export const checkSavedPost = (pId) =>{
+    const postRequest = new PostRequest()
+    return postRequest.checkSavedPost(pId)
+}
+export const endSavePost = (pId) =>{
+    const postRequest = new PostRequest()
+    return postRequest.endSavePost(pId)
+}
+export const beginSavePost = (pId) =>{
+    const postRequest = new PostRequest()
+    return postRequest.beginSavePost(pId)
+}

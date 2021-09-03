@@ -25,6 +25,15 @@ function mapDispatchToProps(dispatch) {
         getCommentPost: (pId, callback) => {
             dispatch(postActions.action.getCommentPost(pId, callback))
         },
+        checkSavedPost: (pId, callback) => {
+            dispatch(postActions.action.checkSavedPost(pId, callback))
+        },
+        beginSavePost: (pId, callback) => {
+            dispatch(postActions.action.beginSavePost(pId, callback))
+        },
+        endSavePost: (pId, callback) => {
+            dispatch(postActions.action.endSavePost(pId, callback))
+        },
     }
 }
 export default connect(mapStateToProps,mapDispatchToProps)(PostDetailComponentPage)
