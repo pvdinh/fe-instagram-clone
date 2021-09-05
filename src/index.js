@@ -8,6 +8,8 @@ import {applyMiddleware, createStore} from "redux";
 import rootReducer from "./redux/reducers/rootReducer";
 import createSagaMiddleware from'redux-saga'
 import rootSaga from "./redux/sagas/rootSaga";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 const sagaMiddleware=createSagaMiddleware()
 const store=createStore(rootReducer,applyMiddleware(sagaMiddleware))

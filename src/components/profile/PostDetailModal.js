@@ -30,7 +30,7 @@ function PostDetailModal(props) {
                 :
                 setSaved(false)
         })
-    }, [reload])
+    }, [reload,props.postId])
 
     useEffect(()=>{
         props.getPostInformationFromPId(props.postId,(data)=>{

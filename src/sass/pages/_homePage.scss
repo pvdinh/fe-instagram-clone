@@ -1095,6 +1095,28 @@
   .show{
     display: flex!important;
   }
+
+  .slick-prev:before, .slick-next:before{
+    color: #808080	;
+    font-size: 25px;
+  }
+  .slick-prev, .slick-next{
+    width: 30px!important;
+    height: 30px!important;
+  }
+  .slick-prev{
+    margin-left: 10px!important;
+  }
+  .slick-next{
+    margin-right: 10px!important;
+  }
+  .slick-disabled{
+    display: none!important;
+  }
+  .slick-list{
+    margin-left: 15px;
+  }
+
 }
 .ant-scrolling-effect{
   width: 100% !important;
