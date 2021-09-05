@@ -3,6 +3,7 @@ import PostComponent from "./PostComponent";
 import UserProfileComponent from "./UserProfileComponent";
 import SuggestionsToFollow from "./SuggestionsToFollow";
 import {Modal} from "antd";
+import Slider from "react-slick";
 function HomeComponent() {
 
     useEffect(()=>{
@@ -20,6 +21,17 @@ function HomeComponent() {
             document.documentElement.style.setProperty('--scrollbar-width', `${width}px`);
         }
     })
+
+    var settings = {
+        dots: false,
+        infinite: false,
+        speed: 500,
+        slidesToShow: 6,
+        slidesToScroll: 1,
+        autoplay: false,
+        autoplaySpeed: 5000,
+        arrows: true,
+    };
     return(
         <div className="wrap-home-page-body">
             <main className="main-container">
@@ -33,94 +45,183 @@ function HomeComponent() {
                                 </svg>
                             </button>
                             <div className='stories__content'>
-                                <button className="story story--has-story">
-                                    <div className="story__avatar">
-                                        <div className="story__border">
-                                            <svg width="64" height="64" xmlns="http://www.w3.org/2000/svg">
-                                                <circle r="31" cy="32" cx="32"/>
-                                                <defs>
-                                                    <linearGradient y2="0" x2="1" y1="1" x1="0" id="--story-gradient">
-                                                        <stop offset="0" stop-color="#f09433"/>
-                                                        <stop offset="0.25" stop-color="#e6683c"/>
-                                                        <stop offset="0.5" stop-color="#dc2743"/>
-                                                        <stop offset="0.75" stop-color="#cc2366"/>
-                                                        <stop offset="1" stop-color="#bc1888"/>
-                                                    </linearGradient>
-                                                </defs>
-                                            </svg>
-                                        </div>
-                                        <div className="story__picture">
-                                            <img src="https://res.cloudinary.com/dinhpv/image/upload/v1624981802/instagram-clone/test_zmmdlh.jpg" alt="User Picture" />
-                                        </div>
+                                <Slider {...settings} style={{width:'100%'}}>
+                                    <div>
+                                        <button className="story story--has-story">
+                                            <div className="story__avatar">
+                                                <div className="story__border">
+                                                    <svg width="64" height="64" xmlns="http://www.w3.org/2000/svg">
+                                                        <circle r="31" cy="32" cx="32"/>
+                                                        <defs>
+                                                            <linearGradient y2="0" x2="1" y1="1" x1="0" id="--story-gradient">
+                                                                <stop offset="0" stop-color="#f09433"/>
+                                                                <stop offset="0.25" stop-color="#e6683c"/>
+                                                                <stop offset="0.5" stop-color="#dc2743"/>
+                                                                <stop offset="0.75" stop-color="#cc2366"/>
+                                                                <stop offset="1" stop-color="#bc1888"/>
+                                                            </linearGradient>
+                                                        </defs>
+                                                    </svg>
+                                                </div>
+                                                <div className="story__picture">
+                                                    <img src="https://res.cloudinary.com/dinhpv/image/upload/v1624981802/instagram-clone/test_zmmdlh.jpg" alt="User Picture" />
+                                                </div>
+                                            </div>
+                                            <span className="story__user">usernick1</span>
+                                        </button>
+
                                     </div>
-                                    <span className="story__user">usernick1</span>
-                                </button>
-                                <button className="story">
-                                    <div className="story__avatar">
-                                        <div className="story__border">
-                                            <svg width="64" height="64" xmlns="http://www.w3.org/2000/svg">
-                                                <circle r="31" cy="32" cx="32"/>
-                                                <defs>
-                                                    <linearGradient y2="0" x2="1" y1="1" x1="0" id="--story-gradient">
-                                                        <stop offset="0" stop-color="#f09433"/>
-                                                        <stop offset="0.25" stop-color="#e6683c"/>
-                                                        <stop offset="0.5" stop-color="#dc2743"/>
-                                                        <stop offset="0.75" stop-color="#cc2366"/>
-                                                        <stop offset="1" stop-color="#bc1888"/>
-                                                    </linearGradient>
-                                                </defs>
-                                            </svg>
-                                        </div>
-                                        <div className="story__picture">
-                                            <img src="https://res.cloudinary.com/dinhpv/image/upload/v1624981802/instagram-clone/test_zmmdlh.jpg" alt="User Picture" />
-                                        </div>
+                                    <div>
+                                        <button className="story">
+                                            <div className="story__avatar">
+                                                <div className="story__border">
+                                                    <svg width="64" height="64" xmlns="http://www.w3.org/2000/svg">
+                                                        <circle r="31" cy="32" cx="32"/>
+                                                        <defs>
+                                                            <linearGradient y2="0" x2="1" y1="1" x1="0" id="--story-gradient">
+                                                                <stop offset="0" stop-color="#f09433"/>
+                                                                <stop offset="0.25" stop-color="#e6683c"/>
+                                                                <stop offset="0.5" stop-color="#dc2743"/>
+                                                                <stop offset="0.75" stop-color="#cc2366"/>
+                                                                <stop offset="1" stop-color="#bc1888"/>
+                                                            </linearGradient>
+                                                        </defs>
+                                                    </svg>
+                                                </div>
+                                                <div className="story__picture">
+                                                    <img src="https://res.cloudinary.com/dinhpv/image/upload/v1624981802/instagram-clone/test_zmmdlh.jpg" alt="User Picture" />
+                                                </div>
+                                            </div>
+                                            <span className="story__user">usernick1</span>
+                                        </button>
+
                                     </div>
-                                    <span className="story__user">usernick1</span>
-                                </button>
-                                <button className="story story--has-story">
-                                    <div className="story__avatar">
-                                        <div className="story__border">
-                                            <svg width="64" height="64" xmlns="http://www.w3.org/2000/svg">
-                                                <circle r="31" cy="32" cx="32"/>
-                                                <defs>
-                                                    <linearGradient y2="0" x2="1" y1="1" x1="0" id="--story-gradient">
-                                                        <stop offset="0" stop-color="#f09433"/>
-                                                        <stop offset="0.25" stop-color="#e6683c"/>
-                                                        <stop offset="0.5" stop-color="#dc2743"/>
-                                                        <stop offset="0.75" stop-color="#cc2366"/>
-                                                        <stop offset="1" stop-color="#bc1888"/>
-                                                    </linearGradient>
-                                                </defs>
-                                            </svg>
-                                        </div>
-                                        <div className="story__picture">
-                                            <img src="https://res.cloudinary.com/dinhpv/image/upload/v1624981802/instagram-clone/test_zmmdlh.jpg" alt="User Picture" />
-                                        </div>
+                                    <div>
+                                        <button className="story story--has-story">
+                                            <div className="story__avatar">
+                                                <div className="story__border">
+                                                    <svg width="64" height="64" xmlns="http://www.w3.org/2000/svg">
+                                                        <circle r="31" cy="32" cx="32"/>
+                                                        <defs>
+                                                            <linearGradient y2="0" x2="1" y1="1" x1="0" id="--story-gradient">
+                                                                <stop offset="0" stop-color="#f09433"/>
+                                                                <stop offset="0.25" stop-color="#e6683c"/>
+                                                                <stop offset="0.5" stop-color="#dc2743"/>
+                                                                <stop offset="0.75" stop-color="#cc2366"/>
+                                                                <stop offset="1" stop-color="#bc1888"/>
+                                                            </linearGradient>
+                                                        </defs>
+                                                    </svg>
+                                                </div>
+                                                <div className="story__picture">
+                                                    <img src="https://res.cloudinary.com/dinhpv/image/upload/v1624981802/instagram-clone/test_zmmdlh.jpg" alt="User Picture" />
+                                                </div>
+                                            </div>
+                                            <span className="story__user">usernick1</span>
+                                        </button>
+
                                     </div>
-                                    <span className="story__user">usernick1</span>
-                                </button>
-                                <button className="story">
-                                    <div className="story__avatar">
-                                        <div className="story__border">
-                                            <svg width="64" height="64" xmlns="http://www.w3.org/2000/svg">
-                                                <circle r="31" cy="32" cx="32"/>
-                                                <defs>
-                                                    <linearGradient y2="0" x2="1" y1="1" x1="0" id="--story-gradient">
-                                                        <stop offset="0" stop-color="#f09433"/>
-                                                        <stop offset="0.25" stop-color="#e6683c"/>
-                                                        <stop offset="0.5" stop-color="#dc2743"/>
-                                                        <stop offset="0.75" stop-color="#cc2366"/>
-                                                        <stop offset="1" stop-color="#bc1888"/>
-                                                    </linearGradient>
-                                                </defs>
-                                            </svg>
-                                        </div>
-                                        <div className="story__picture">
-                                            <img src="https://res.cloudinary.com/dinhpv/image/upload/v1624981802/instagram-clone/test_zmmdlh.jpg" alt="User Picture" />
-                                        </div>
+                                    <div>
+                                        <button className="story">
+                                            <div className="story__avatar">
+                                                <div className="story__border">
+                                                    <svg width="64" height="64" xmlns="http://www.w3.org/2000/svg">
+                                                        <circle r="31" cy="32" cx="32"/>
+                                                        <defs>
+                                                            <linearGradient y2="0" x2="1" y1="1" x1="0" id="--story-gradient">
+                                                                <stop offset="0" stop-color="#f09433"/>
+                                                                <stop offset="0.25" stop-color="#e6683c"/>
+                                                                <stop offset="0.5" stop-color="#dc2743"/>
+                                                                <stop offset="0.75" stop-color="#cc2366"/>
+                                                                <stop offset="1" stop-color="#bc1888"/>
+                                                            </linearGradient>
+                                                        </defs>
+                                                    </svg>
+                                                </div>
+                                                <div className="story__picture">
+                                                    <img src="https://res.cloudinary.com/dinhpv/image/upload/v1624981802/instagram-clone/test_zmmdlh.jpg" alt="User Picture" />
+                                                </div>
+                                            </div>
+                                            <span className="story__user">usernick1</span>
+                                        </button>
+
                                     </div>
-                                    <span className="story__user">usernick1</span>
-                                </button>
+                                    <div>
+                                        <button className="story story--has-story">
+                                            <div className="story__avatar">
+                                                <div className="story__border">
+                                                    <svg width="64" height="64" xmlns="http://www.w3.org/2000/svg">
+                                                        <circle r="31" cy="32" cx="32"/>
+                                                        <defs>
+                                                            <linearGradient y2="0" x2="1" y1="1" x1="0" id="--story-gradient">
+                                                                <stop offset="0" stop-color="#f09433"/>
+                                                                <stop offset="0.25" stop-color="#e6683c"/>
+                                                                <stop offset="0.5" stop-color="#dc2743"/>
+                                                                <stop offset="0.75" stop-color="#cc2366"/>
+                                                                <stop offset="1" stop-color="#bc1888"/>
+                                                            </linearGradient>
+                                                        </defs>
+                                                    </svg>
+                                                </div>
+                                                <div className="story__picture">
+                                                    <img src="https://res.cloudinary.com/dinhpv/image/upload/v1624981802/instagram-clone/test_zmmdlh.jpg" alt="User Picture" />
+                                                </div>
+                                            </div>
+                                            <span className="story__user">usernick1</span>
+                                        </button>
+
+                                    </div>
+                                    <div>
+                                        <button className="story story--has-story">
+                                            <div className="story__avatar">
+                                                <div className="story__border">
+                                                    <svg width="64" height="64" xmlns="http://www.w3.org/2000/svg">
+                                                        <circle r="31" cy="32" cx="32"/>
+                                                        <defs>
+                                                            <linearGradient y2="0" x2="1" y1="1" x1="0" id="--story-gradient">
+                                                                <stop offset="0" stop-color="#f09433"/>
+                                                                <stop offset="0.25" stop-color="#e6683c"/>
+                                                                <stop offset="0.5" stop-color="#dc2743"/>
+                                                                <stop offset="0.75" stop-color="#cc2366"/>
+                                                                <stop offset="1" stop-color="#bc1888"/>
+                                                            </linearGradient>
+                                                        </defs>
+                                                    </svg>
+                                                </div>
+                                                <div className="story__picture">
+                                                    <img src="https://res.cloudinary.com/dinhpv/image/upload/v1624981802/instagram-clone/test_zmmdlh.jpg" alt="User Picture" />
+                                                </div>
+                                            </div>
+                                            <span className="story__user">usernick1</span>
+                                        </button>
+
+                                    </div>
+                                    <div>
+                                        <button className="story story--has-story">
+                                            <div className="story__avatar">
+                                                <div className="story__border">
+                                                    <svg width="64" height="64" xmlns="http://www.w3.org/2000/svg">
+                                                        <circle r="31" cy="32" cx="32"/>
+                                                        <defs>
+                                                            <linearGradient y2="0" x2="1" y1="1" x1="0" id="--story-gradient">
+                                                                <stop offset="0" stop-color="#f09433"/>
+                                                                <stop offset="0.25" stop-color="#e6683c"/>
+                                                                <stop offset="0.5" stop-color="#dc2743"/>
+                                                                <stop offset="0.75" stop-color="#cc2366"/>
+                                                                <stop offset="1" stop-color="#bc1888"/>
+                                                            </linearGradient>
+                                                        </defs>
+                                                    </svg>
+                                                </div>
+                                                <div className="story__picture">
+                                                    <img src="https://res.cloudinary.com/dinhpv/image/upload/v1624981802/instagram-clone/test_zmmdlh.jpg" alt="User Picture" />
+                                                </div>
+                                            </div>
+                                            <span className="story__user">usernick1</span>
+                                        </button>
+
+                                    </div>
+                                </Slider>
                             </div>
                             <button className="stories__right-button">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
@@ -131,6 +232,8 @@ function HomeComponent() {
                         </div>
                         <PostComponent />
                     </div>
+
+
 
                     <section className="side-menu">
                         <UserProfileComponent />
@@ -239,6 +342,7 @@ function HomeComponent() {
             {/*<div className="alertCopyLink">*/}
             {/*    <div className="alert-text">Link copied to clipboard</div>*/}
             {/*</div>*/}
+
         </div>
     )
 }
