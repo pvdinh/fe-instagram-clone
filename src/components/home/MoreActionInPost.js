@@ -3,6 +3,7 @@ import {Modal} from "antd";
 import homeActions from "../../redux/actions/homeActions";
 import {connect} from "react-redux";
 import postActions from "../../redux/actions/postActions";
+import StoryAction from "../../redux/actions/StoryAction";
 
 function MoreActionInPost(props) {
     const [isModalVisible, setIsModalVisible] = useState(false);
@@ -45,6 +46,14 @@ function MoreActionInPost(props) {
         props.deletePost(pId)
         handleCancel()
     }
+    const addToStory = (pId) =>{
+        let story={
+            idPost:pId,
+            idUser:props.userAccountProfile.id,
+        }
+        props.beginStory(story)
+        handleCancel()
+    }
 
     return (
         <>
@@ -62,6 +71,7 @@ function MoreActionInPost(props) {
                         <>
                             <button className='options-dialog__button' style={{borderBottom:"1px solid var(--border)"}} onClick={()=>{goToPost(props.post.id)}} >Go to post</button>
                             <button className='options-dialog__button' style={{borderBottom:"1px solid var(--border)",color:"#ed4956",fontWeight: "700"}} onClick={()=>{onClickDeletePost(props.post.id)}}>Delete post</button>
+                            <button className='options-dialog__button' style={{borderBottom:"1px solid var(--border)",fontWeight: "700"}} onClick={()=>{addToStory(props.post.id)}}>Add to story</button>
                             <button className='options-dialog__button' style={{borderBottom:"1px solid var(--border)"}} onClick={()=>{onCopyLink(props.post.id)}}>Copy link</button>
                             <button className='options-dialog__button' onClick={()=>{handleCancel()}}>Cancel</button>
                         </>
@@ -91,6 +101,9 @@ function mapDispatchToProps(dispatch) {
         },
         deletePost:(pId)=>{
           dispatch(postActions.action.deletePost(pId))
+        },
+        beginStory: (story) =>{
+            dispatch(StoryAction.action.beginStory(story))
         },
     }
 }
