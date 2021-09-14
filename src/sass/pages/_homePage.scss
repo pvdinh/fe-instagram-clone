@@ -225,6 +225,9 @@
 
     scroll-behavior: smooth;
     scrollbar-width: none;
+    .item{
+      margin-right: 30px;
+    }
   }
 
   .stories__content::-webkit-scrollbar {
@@ -260,10 +263,12 @@
 
   .stories__left-button {
     left: 10px;
+    display: block;
   }
 
   .stories__right-button {
     right: 10px;
+    display: block;
   }
 
   .post__left-button {
