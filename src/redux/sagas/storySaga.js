@@ -4,10 +4,7 @@ import {beginStory, getAllStoryFollowing} from "../../services/StoryApiService";
 
 function *getAllStoryFollowing_saga(action) {
     try {
-        console.log("XXXXX",action)
-
         const response = yield call(getAllStoryFollowing)
-        console.log("XXXXX",response)
         yield put({type:StoryAction.type.GET_ALL_STORY_FOLLOWING_SUCCESS,data:response.data})
     }catch (e) {
         console.log("err",e)

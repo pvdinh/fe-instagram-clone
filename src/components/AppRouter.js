@@ -11,6 +11,7 @@ import ProfilePage from "../screens/ProfilePage";
 import ErrorPage from "./errorPage/ErrorPage";
 import PostDetailPage from "../screens/PostDetailPage";
 import SettingAccountPage from "../screens/SettingAccountPage";
+import StoryPage from "../screens/StoryPage";
 
 function AppRouter() {
     return (
@@ -25,6 +26,7 @@ function AppRouter() {
                 <Route path={"/oauth2/redirect/:token"} exact render={(props)=>{
                     return <Oauth2Redirect {...props} />
                 }}></Route>
+                <ProtectedRoute path={"/stories/:username/:pId"} exact render={(props)=>{return <StoryPage {...props} />}}></ProtectedRoute>
                 <Route>
                     <Layout>
                         <Switch>
