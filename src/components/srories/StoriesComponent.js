@@ -5,7 +5,6 @@ import StoriesItemComponent from "./StoriesItemComponent";
 
 function StoriesComponent(props) {
     const history = useHistory()
-    const [l,setL] = useState([1,1,1,1,1,1])
     const [reload,setReload] = useState(false)
 
     useEffect(()=>{
@@ -21,7 +20,7 @@ function StoriesComponent(props) {
         centerMode: true,
         infinite: true,
         centerPadding: "130px",
-        slidesToShow: 5,
+        slidesToShow: props.listUserHaveStory.length < 7 ? props.listUserHaveStory.length -1 : 5,
         speed: 500,
         // dots:true,
         focusOnSelect:true,
@@ -78,8 +77,8 @@ function StoriesComponent(props) {
             <div className="wrap-body-page-stories">
                 <Slider {...settings} >
                     {
-                        l.map((value,index)=>(
-                            <StoriesItemComponent setReload={()=>{setReload(!reload)}} pos={index} key={index} settings={settingsUserItem} settingsCurrent={settingsUserItemCurrent} />
+                        props.listUserHaveStory.map((value,index)=>(
+                            <StoriesItemComponent data={value} setReload={()=>{setReload(!reload)}} pos={index} key={index} settings={settingsUserItem} settingsCurrent={settingsUserItemCurrent} />
                         ))
                     }
                 </Slider>
