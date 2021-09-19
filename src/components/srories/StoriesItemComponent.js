@@ -2,17 +2,20 @@ import {connect} from "react-redux";
 import Slider from "react-slick";
 import React, {useEffect, useState} from "react";
 import {Avatar} from "antd";
+import {useHistory} from "react-router";
 
 function StoriesItemComponent(props) {
+    let history = useHistory()
     useEffect(() => {
         console.log("props", props)
-        if (props.pos === 0) {
+        if (props.data.userAccountSetting.username === props.usernameUrl) {
             localStorage.setItem("pos", props.pos)
         }
-    }, [])
+    }, [props.usernameUrl])
 
     const setCurrent = () => {
         localStorage.setItem("pos", props.pos)
+        history.replace(`/stories/${props.data.userAccountSetting.username}/${props.data.postDetails[0].post.id}`)
         props.setReload()
     }
 

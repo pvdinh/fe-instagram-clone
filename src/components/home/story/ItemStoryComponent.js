@@ -10,7 +10,7 @@ function ItemStoryComponent(props) {
             {/*//has story*/}
             <div className="item">
                 <button className="story story--has-story">
-                    <div className="story__avatar" onClick={()=>{history.push("/stories/n/n")}}>
+                    <div className="story__avatar" onClick={()=>{history.push(`/stories/${props.userAccountSetting.username}/${props.story[0].post.id}`)}}>
                         <div className="story__border">
                             <svg width="64" height="64" xmlns="http://www.w3.org/2000/svg">
                                 <circle r="31" cy="32" cx="32"/>
