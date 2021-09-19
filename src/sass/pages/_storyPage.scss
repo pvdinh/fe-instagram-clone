@@ -1,0 +1,121 @@
+.wrap-page-stories{
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background:#222222;
+  .wrap-body-page-stories{
+    width: 100%;
+    height: 100%;
+    .center{
+      height: 100%;
+      .wrap-user-story{
+        width: 100%;
+      }
+      .slick-list{
+        padding: 0 0 !important;
+        height: 100%;
+        .slick-track{
+          height: 100%;
+          .item-story{
+            cursor: pointer;
+            height: 430px;
+            margin-right: 15px;
+            margin-left: 15px;
+            .img-story{
+              border-radius: 10px;
+              object-fit: cover;
+              width: 100%;
+              height: 100%;
+              opacity: .5;
+            }
+            .user-profile{
+              position: absolute;
+              top: 50%;
+              display: block;
+              z-index: 999;
+              .ant-avatar-image{
+                width: 70px;
+                height: 70px;
+                border: 2px solid white;
+              }
+              .username{color: #fff!important;font-weight: 600;}
+              .time_add{color: rgba(255, 255, 255, 0.62) !important;font-weight: 600;}
+            }
+          }
+          .slick-current{
+            height: 100%;
+            min-width: 600px;
+            .item-story{
+              height: 900px;
+              cursor: unset!important;
+              background: transparent;
+              opacity: 1!important;
+              .img-story{
+                opacity: 1!important;
+              }
+              .user-profile{
+                position: absolute;
+                top: 0px;
+                background-image: linear-gradient(rgba(0, 0, 0, 0.69), rgba(0, 0, 0, 0));
+                width: 560px;
+                padding-top: 15px;
+                padding-bottom: 50px;
+                border-radius: 10px;
+                text-align: left!important;
+                padding-left: 20px!important;
+                .ant-avatar-image{
+                  margin-right: 10px;
+                  width: 32px!important;
+                  height: 32px!important;
+                  border: none;
+                }
+                .username{color: #fff!important;font-weight: 600;}
+                .time_add{color: rgba(255, 255, 255, 0.62) !important;font-weight: 600;}
+              }
+              .footer-story{
+                position: absolute;
+                bottom: 0px;
+                background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.69));
+                width: 560px;
+                padding-bottom: 20px;
+                padding-top: 60px;
+                border-radius: 10px;
+              }
+            }
+            &>div{width: 100%;z-index: 999;}
+          }
+          div{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          }
+        }
+      }
+    }
+    .settingsUserItem{
+      width: 600px;
+      .slick-list{
+        .slick-track{
+
+        }
+      }
+    }
+  }
+  .wrap-btn-esc{
+    position: fixed;
+    cursor: pointer;
+    z-index: 9999;
+    background: transparent;
+    border: none;
+    top: 20px;
+    right: 20px;
+  }
+  .wrap-logo{
+    position: fixed;
+    cursor: pointer;
+    z-index: 9999;
+    top: 20px;
+    left: 20px;
+  }
+}
