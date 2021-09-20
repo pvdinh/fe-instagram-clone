@@ -33,7 +33,7 @@ function StoriesComponent(props) {
         centerMode: true,
         infinite: true,
         centerPadding: "130px",
-        slidesToShow: props.listUserHaveStory.length < 7 ? props.listUserHaveStory.length -1 : 5,
+        slidesToShow: props.listUserHaveStory.length < 3 ? props.listUserHaveStory.length : props.listUserHaveStory.length < 7 ? props.listUserHaveStory.length -1 : 5,
         speed: 500,
         // dots:true,
         focusOnSelect:true,

@@ -33,15 +33,15 @@
             .user-profile{
               position: absolute;
               top: 50%;
-              display: block;
+              display: grid;
               z-index: 999;
               .ant-avatar-image{
                 width: 70px;
                 height: 70px;
                 border: 2px solid white;
               }
-              .username{color: #fff!important;font-weight: 600;}
-              .time_add{color: rgba(255, 255, 255, 0.62) !important;font-weight: 600;}
+              .username{color: #fff!important;font-weight: 600;text-align: center;padding-top: 5px;}
+              .time_add{color: rgba(255, 255, 255, 0.62) !important;font-weight: 600;text-align: center;}
             }
           }
           .slick-current{
@@ -58,6 +58,7 @@
               }
               .user-profile{
                 position: absolute;
+                display: block;
                 top: 0px;
                 background-image: linear-gradient(rgba(0, 0, 0, 0.69), rgba(0, 0, 0, 0));
                 width: 570px;

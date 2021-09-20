@@ -54,9 +54,9 @@ function StoriesItemComponent(props) {
                                             <div>
                                                 <div className="item-story">
                                                     <div className="user-profile">
-                                                        <Avatar src={props.data.userAccountSetting.profilePhoto}/>&nbsp;
+                                                        <Avatar src={props.data.userAccountSetting.profilePhoto}/>
                                                         <span
-                                                            className="username">{props.data.userAccountSetting.username}</span>&nbsp;&nbsp;
+                                                            className="username">{props.data.userAccountSetting.username}</span>
                                                         <span className="time_add">12h</span>
                                                     </div>
                                                     <img className="img-story" src={value.post.imagePath}/>
@@ -72,9 +72,9 @@ function StoriesItemComponent(props) {
                                 <div>
                                     <div className="item-story">
                                         <div className="user-profile">
-                                            <Avatar src={props.data.userAccountSetting.profilePhoto}/>&nbsp;
+                                            <Avatar src={props.data.userAccountSetting.profilePhoto}/>
                                             <span
-                                                className="username">{props.data.userAccountSetting.username}</span>&nbsp;&nbsp;
+                                                className="username">{props.data.userAccountSetting.username}</span>
                                             <span className="time_add">12h</span>
                                         </div>
                                         <img className="img-story" src={props.data.postDetails[0].post.imagePath}/>
