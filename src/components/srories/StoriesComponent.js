@@ -10,19 +10,17 @@ function StoriesComponent(props) {
 
     useEffect(() => {
         props.getUserProfile(props.match.params.username, () => {}, history)
-    }, [props.match.params])
+    }, [props.match.params,reload])
 
     useEffect(()=>{
-        props.getAllStoryFollowing()
-    },[])
-
-    useEffect(()=>{
-        props.listUserHaveStory.map((value,index)=>{
-            if(props.match.params.username === value.userAccountSetting.username){
-                sliderRef.current.slickGoTo(index);
-            }
+        props.getAllStoryFollowing((data)=>{
+            data.map((value,index)=>{
+                if(props.match.params.username === value.userAccountSetting.username){
+                    sliderRef.current.slickGoTo(index);
+                }
+            })
         })
-    },[])
+    },[reload])
 
     const goBack = () =>{
         history.goBack()
@@ -88,13 +86,18 @@ function StoriesComponent(props) {
                 </svg>
             </button>
             <div className="wrap-body-page-stories">
-                <Slider {...settings} ref={sliderRef} >
-                    {
-                        props.listUserHaveStory.map((value,index)=>(
-                            <StoriesItemComponent usernameUrl={props.match.params.username} data={value} setReload={()=>{setReload(!reload)}} pos={index} key={index} settings={settingsUserItem} settingsCurrent={settingsUserItemCurrent} />
-                        ))
-                    }
-                </Slider>
+                {
+                    props.listUserHaveStory.length > 0 ?
+                        <Slider {...settings} ref={sliderRef} >
+                            {
+                                props.listUserHaveStory.map((value,index)=>(
+                                    <StoriesItemComponent usernameUrl={props.match.params.username} data={value} setReload={()=>{setReload(!reload)}} pos={index} key={index} settings={settingsUserItem} settingsCurrent={settingsUserItemCurrent} />
+                                ))
+                            }
+                        </Slider>
+                        :
+                        <></>
+                }
             </div>
         </div>
     )
