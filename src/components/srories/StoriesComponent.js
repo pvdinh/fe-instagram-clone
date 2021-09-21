@@ -39,24 +39,6 @@ function StoriesComponent(props) {
         draggable:false,
     };
 
-    const settingsUserItemCurrent = {
-        className: "settingsUserItem",
-        dots: true,
-        infinite: true,
-        speed: 500,
-        slidesToShow: 1,
-        slidesToScroll: 1,
-    };
-    const settingsUserItem = {
-        className: "settingsUserItem",
-        dots: false,
-        infinite: true,
-        speed: 500,
-        slidesToShow: 1,
-        slidesToScroll: 1,
-        draggable:false,
-        arrows: false,
-    };
     return(
         <div className="wrap-page-stories">
             <div className="wrap-logo">
@@ -91,7 +73,7 @@ function StoriesComponent(props) {
                         <Slider {...settings} ref={sliderRef} >
                             {
                                 props.listUserHaveStory.map((value,index)=>(
-                                    <StoriesItemComponent usernameUrl={props.match.params.username} data={value} setReload={()=>{setReload(!reload)}} pos={index} key={index} settings={settingsUserItem} settingsCurrent={settingsUserItemCurrent} />
+                                    <StoriesItemComponent pId={props.match.params.pId} usernameUrl={props.match.params.username} data={value} setReload={()=>{setReload(!reload)}} pos={index} key={index} />
                                 ))
                             }
                         </Slider>

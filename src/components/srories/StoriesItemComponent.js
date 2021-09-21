@@ -1,17 +1,54 @@
 import {connect} from "react-redux";
 import Slider from "react-slick";
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {Avatar} from "antd";
 import {useHistory} from "react-router";
 
 function StoriesItemComponent(props) {
     let history = useHistory()
+    const sliderRef = useRef()
+    const [currentSlide,setCurrentSlide] = useState(0)
+
     useEffect(() => {
         console.log("props", props)
         if (props.data.userAccountSetting.username === props.usernameUrl) {
             localStorage.setItem("pos", props.pos)
         }
     }, [props.usernameUrl])
+
+    useEffect(() => {
+        if(props.data.postDetails.length > 1){
+            props.data.postDetails.map((value,index)=>{
+                if(value.post.id === props.pId){
+                    sliderRef.current.slickGoTo(index);
+                }
+            })
+        }
+    }, [currentSlide])
+
+    const settingsUserItemCurrent = {
+        className: "settingsUserItem",
+        dots: true,
+        infinite: true,
+        speed: 500,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        afterChange : (e) =>{
+            setCurrentSlide(e)
+            history.replace(`/stories/${props.usernameUrl}/${props.data.postDetails[e].post.id}`)
+        }
+
+    };
+    const settingsUserItem = {
+        className: "settingsUserItem",
+        dots: false,
+        infinite: true,
+        speed: 500,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        draggable:false,
+        arrows: false,
+    };
 
     const setCurrent = () => {
         localStorage.setItem("pos", props.pos)
@@ -25,7 +62,7 @@ function StoriesItemComponent(props) {
         }}>
             {
                 localStorage.getItem("pos") === props.pos.toString() ?
-                    <Slider {...props.settingsCurrent}>
+                    <Slider {...settingsUserItemCurrent} ref={sliderRef}>
                         {
                             props.data.postDetails.map((value, index) => (
                                 <div>
@@ -48,7 +85,7 @@ function StoriesItemComponent(props) {
                     <>
                         {
                             props.data.postDetails.length > 1 ?
-                                <Slider {...props.settings}>
+                                <Slider {...settingsUserItem}>
                                     {
                                         props.data.postDetails.map((value, index) => (
                                             <div>
