@@ -14,8 +14,8 @@ function mapDispatchToProps(dispatch) {
         getUserProfile:(username,callback,history)=>{
             dispatch(profileAction.action.getUserProfile(username,callback,history))
         },
-        getAllStoryFollowing : () =>{
-            dispatch(StoryAction.action.getAllStoryFollowing())
+        getAllStoryFollowing : (callback) =>{
+            dispatch(StoryAction.action.getAllStoryFollowing(callback))
         },
     }
 }

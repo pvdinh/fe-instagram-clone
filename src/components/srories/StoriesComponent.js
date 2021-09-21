@@ -10,19 +10,17 @@ function StoriesComponent(props) {
 
     useEffect(() => {
         props.getUserProfile(props.match.params.username, () => {}, history)
-    }, [props.match.params])
+    }, [props.match.params,reload])
 
     useEffect(()=>{
-        props.getAllStoryFollowing()
-    },[])
-
-    useEffect(()=>{
-        props.listUserHaveStory.map((value,index)=>{
-            if(props.match.params.username === value.userAccountSetting.username){
-                sliderRef.current.slickGoTo(index);
-            }
+        props.getAllStoryFollowing((data)=>{
+            data.map((value,index)=>{
+                if(props.match.params.username === value.userAccountSetting.username){
+                    sliderRef.current.slickGoTo(index);
+                }
+            })
         })
-    },[])
+    },[reload])
 
     const goBack = () =>{
         history.goBack()
@@ -33,7 +31,7 @@ function StoriesComponent(props) {
         centerMode: true,
         infinite: true,
         centerPadding: "130px",
-        slidesToShow: props.listUserHaveStory.length < 7 ? props.listUserHaveStory.length -1 : 5,
+        slidesToShow: props.listUserHaveStory.length < 3 ? props.listUserHaveStory.length : props.listUserHaveStory.length < 7 ? props.listUserHaveStory.length -1 : 5,
         speed: 500,
         // dots:true,
         focusOnSelect:true,
@@ -41,24 +39,6 @@ function StoriesComponent(props) {
         draggable:false,
     };
 
-    const settingsUserItemCurrent = {
-        className: "settingsUserItem",
-        dots: true,
-        infinite: true,
-        speed: 500,
-        slidesToShow: 1,
-        slidesToScroll: 1,
-    };
-    const settingsUserItem = {
-        className: "settingsUserItem",
-        dots: false,
-        infinite: true,
-        speed: 500,
-        slidesToShow: 1,
-        slidesToScroll: 1,
-        draggable:false,
-        arrows: false,
-    };
     return(
         <div className="wrap-page-stories">
             <div className="wrap-logo">
@@ -88,13 +68,18 @@ function StoriesComponent(props) {
                 </svg>
             </button>
             <div className="wrap-body-page-stories">
-                <Slider {...settings} ref={sliderRef} >
-                    {
-                        props.listUserHaveStory.map((value,index)=>(
-                            <StoriesItemComponent usernameUrl={props.match.params.username} data={value} setReload={()=>{setReload(!reload)}} pos={index} key={index} settings={settingsUserItem} settingsCurrent={settingsUserItemCurrent} />
-                        ))
-                    }
-                </Slider>
+                {
+                    props.listUserHaveStory.length > 0 ?
+                        <Slider {...settings} ref={sliderRef} >
+                            {
+                                props.listUserHaveStory.map((value,index)=>(
+                                    <StoriesItemComponent pId={props.match.params.pId} usernameUrl={props.match.params.username} data={value} setReload={()=>{setReload(!reload)}} pos={index} key={index} />
+                                ))
+                            }
+                        </Slider>
+                        :
+                        <></>
+                }
             </div>
         </div>
     )

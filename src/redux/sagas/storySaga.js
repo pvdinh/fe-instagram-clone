@@ -6,6 +6,7 @@ function *getAllStoryFollowing_saga(action) {
     try {
         const response = yield call(getAllStoryFollowing)
         yield put({type:StoryAction.type.GET_ALL_STORY_FOLLOWING_SUCCESS,data:response.data})
+        yield action.callback(response.data)
     }catch (e) {
         console.log("err",e)
     }

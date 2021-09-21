@@ -7,9 +7,10 @@ const type ={
     END_STORY_SUCCESS:"END_STORY_SUCCESS",
 }
 const action = {
-    getAllStoryFollowing:() => {
+    getAllStoryFollowing:(callback) => {
         return{
             type:type.GET_ALL_STORY_FOLLOWING,
+            callback,
         }
     },
     beginStory:(story) => {
