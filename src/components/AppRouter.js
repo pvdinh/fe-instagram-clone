@@ -26,7 +26,7 @@ function AppRouter() {
                 <Route path={"/oauth2/redirect/:token"} exact render={(props)=>{
                     return <Oauth2Redirect {...props} />
                 }}></Route>
-                <ProtectedRoute path={"/stories/:username/:pId"} exact render={(props)=>{return <StoryPage {...props} />}}></ProtectedRoute>
+                <ProtectedRoute path={"/stories/:username"} exact render={(props)=>{return <StoryPage {...props} />}}></ProtectedRoute>
                 <Route>
                     <Layout>
                         <Switch>

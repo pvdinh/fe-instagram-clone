@@ -9,10 +9,20 @@ import {useHistory} from "react-router";
 function StoryComponentFacebook(props) {
     let history = useHistory()
 
-    useEffect(()=>{
-        console.log(props,"XXXx")
-        props.getAllStoryFollowing()
-    },[])
+    useEffect(() => {
+        props.getAllStoryFollowing((data) => {
+            data.map((value, index) => {
+                if (value.userAccountSetting.username === props.match.params.username) {
+                    props.setCurrentDisplayStory(value)
+                }
+            })
+        })
+    }, [])
+
+    useEffect(() => {
+        props.getUserProfile(props.match.params.username, () => {
+        }, history)
+    }, [props.match.params])
 
     const settings = {
         className: "fb-stories-setting-slide-slick",
@@ -24,10 +34,23 @@ function StoryComponentFacebook(props) {
         slidesToScroll: 1,
         draggable:false,
         afterChange : (e) =>{
-             history.replace(`/stories/${props.match.params.username}/${props.currentUserDisplayStory.postDetails[e].post.id}`)
+             history.replace(`/stories/${props.match.params.username}`)
          }
     };
 
+    const calculatorDateStory = (time) => {
+        let distance = Math.round((new Date().getTime() - time) / (1000))
+        switch (true) {
+            case 0 <= distance && distance <= 59:
+                return distance + "s"
+            case 60 <= distance && distance < 3600:
+                return Math.round(distance / 60) + "m"
+            case 3600 <= distance && distance < (3600 * 24):
+                return Math.round(distance / (60 * 60)) + "h"
+            default:
+                break;
+        }
+    }
 
     return(
         <div className="wrap-page-stories-facebook">
@@ -91,7 +114,7 @@ function StoryComponentFacebook(props) {
                                                             <Avatar src={props.currentUserDisplayStory.userAccountSetting.profilePhoto} />
                                                             <span
                                                                 className="username">{props.currentUserDisplayStory.userAccountSetting.username}</span>
-                                                            <span className="time_add">12h</span>
+                                                            <span className="time_add">{calculatorDateStory(value.dateBeginStory)}</span>
                                                         </div>
                                                         <img className="img-story" src={value.post.imagePath}/>
                                                         <div className="footer-story">
@@ -128,8 +151,11 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        getAllStoryFollowing : () =>{
-            dispatch(StoryAction.action.getAllStoryFollowing())
+        getAllStoryFollowing : (callback) =>{
+            dispatch(StoryAction.action.getAllStoryFollowing(callback))
+        },
+        setCurrentDisplayStory : (data) =>{
+            dispatch(StoryAction.action.setCurrentDisplayStory(data))
         },
     }
 }

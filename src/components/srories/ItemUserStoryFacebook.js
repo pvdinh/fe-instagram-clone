@@ -22,7 +22,7 @@ function ItemUserStoryFacebook(props) {
 
     const setCurrentDisplayStory = () =>{
         props.setCurrentDisplayStory(props.item)
-        history.replace(`/stories/${props.item.userAccountSetting.username}/${props.item.postDetails[0].post.id}`)
+        history.replace(`/stories/${props.item.userAccountSetting.username}`)
     }
 
     return(
