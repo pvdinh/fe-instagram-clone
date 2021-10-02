@@ -1,8 +1,18 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {Avatar, Tooltip} from "antd";
 import Slider from "@ant-design/react-slick";
+import StoryAction from "../../redux/actions/StoryAction";
+import {connect} from "react-redux";
+import ItemUserStoryFacebook from "./ItemUserStoryFacebook";
+import {useHistory} from "react-router";
 
-function StoryComponentFacebook() {
+function StoryComponentFacebook(props) {
+    let history = useHistory()
+
+    useEffect(()=>{
+        console.log(props,"XXXx")
+        props.getAllStoryFollowing()
+    },[])
 
     const settings = {
         className: "fb-stories-setting-slide-slick",
@@ -11,8 +21,14 @@ function StoryComponentFacebook() {
         infinite: true,
         speed: 500,
         slidesToShow: 1,
-        slidesToScroll: 1
+        slidesToScroll: 1,
+        draggable:false,
+        afterChange : (e) =>{
+             history.replace(`/stories/${props.match.params.username}/${props.currentUserDisplayStory.postDetails[e].post.id}`)
+         }
     };
+
+
     return(
         <div className="wrap-page-stories-facebook">
             <div className="wrap-page-stories-facebook">
@@ -53,58 +69,43 @@ function StoryComponentFacebook() {
                     <div className="left-body-facebook">
                         <div className="fb-label">Tất cả tin</div>
                             <div className="fb-list-user">
-                                <div className="fb-item">
-                                    <div style={{display:"flex",alignItems:"center",cursor:"pointer"}}>
-                                        <button className="story story--has-story">
-                                            <div className="story__avatar">
-                                                <div className="story__border">
-                                                    <svg width="64" height="64" xmlns="http://www.w3.org/2000/svg">
-                                                        <circle r="31" cy="32" cx="32"/>
-                                                        <defs>
-                                                            <linearGradient y2="0" x2="1" y1="1" x1="0" id="--story-gradient">
-                                                                <stop offset="0" stop-color="#f09433"/>
-                                                                <stop offset="0.25" stop-color="#e6683c"/>
-                                                                <stop offset="0.5" stop-color="#dc2743"/>
-                                                                <stop offset="0.75" stop-color="#cc2366"/>
-                                                                <stop offset="1" stop-color="#bc1888"/>
-                                                            </linearGradient>
-                                                        </defs>
-                                                    </svg>
-                                                </div>
-                                                <div className="story__picture">
-                                                    <img src="https://res.cloudinary.com/dinhpv/image/upload/v1631591663/instargram-clone/ooa0dweroytmeqfo6j7m.jpg" alt="User Picture" />
-                                                </div>
-                                            </div>
-                                        </button>
-                                        <div className="fb-item-info">
-                                            <div className="fb-item-info-name">Joker</div>
-                                            <div className="fb-item-info-time"><span className="color">1 thẻ mới</span><span> · </span> <span>12 giờ</span></div>
-                                        </div>
-                                    </div>
-
-                                </div>
+                                {
+                                    props.listUserHaveStory.map((value,index)=>(
+                                        <ItemUserStoryFacebook item={value} />
+                                    ))
+                                }
                             </div>
                     </div>
                 </div>
                 <div className='right-body-facebook'>
                     <div className="fb-stories">
-                        <Slider {...settings}>
-                            <div>
-                                <div className="item-story">
-                                    <div>
-                                        <div className="user-profile">
-                                            <Avatar src="https://res.cloudinary.com/dinhpv/image/upload/v1631591663/instargram-clone/ooa0dweroytmeqfo6j7m.jpg"/>
-                                            <span
-                                                className="username">Joker</span>
-                                            <span className="time_add">12h</span>
-                                        </div>
-                                        <img className="img-story" src="https://res.cloudinary.com/dinhpv/image/upload/v1631591663/instargram-clone/ooa0dweroytmeqfo6j7m.jpg"/>
-                                        <div className="footer-story">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </Slider>
+                        {
+                            Object.keys(props.currentUserDisplayStory).length !== 0 ?
+                                <Slider {...settings}>
+                                    {
+                                        props.currentUserDisplayStory.postDetails.map((value,index)=>(
+                                            <div>
+                                                <div className="item-story">
+                                                    <div>
+                                                        <div className="user-profile">
+                                                            <Avatar src={props.currentUserDisplayStory.userAccountSetting.profilePhoto} />
+                                                            <span
+                                                                className="username">{props.currentUserDisplayStory.userAccountSetting.username}</span>
+                                                            <span className="time_add">12h</span>
+                                                        </div>
+                                                        <img className="img-story" src={value.post.imagePath}/>
+                                                        <div className="footer-story">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        ))
+                                    }
+                                </Slider>
+                                :
+                                null
+
+                        }
                     </div>
                     <div className="fb-reply-story">
                         <div className="fb-input">
@@ -118,4 +119,18 @@ function StoryComponentFacebook() {
         </div>
     )
 }
-export default StoryComponentFacebook
+function mapStateToProps(state) {
+    return {
+        listUserHaveStory:state.story.listUserHaveStory,
+        currentUserDisplayStory:state.story.currentUserDisplayStory,
+    }
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        getAllStoryFollowing : () =>{
+            dispatch(StoryAction.action.getAllStoryFollowing())
+        },
+    }
+}
+export default connect(mapStateToProps,mapDispatchToProps)(StoryComponentFacebook)
