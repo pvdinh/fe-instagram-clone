@@ -122,3 +122,239 @@
     left: 20px;
   }
 }
+.wrap-page-stories-facebook{
+  background:#222222;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  .wrap-page-stories-facebook{
+    display: flex;
+    .right-body-facebook{
+      width: 100%;
+      height: 100%;
+      background: black;
+      .fb-stories{
+        width: 100%;
+        height: 95%;
+        display: flex;
+        align-items: center;
+
+        .fb-stories-setting-slide-slick{
+          height: 94%;
+          width: 500px;
+          margin: 0 auto;
+          .slick-prev:before, .slick-next:before{
+            font-size: 50px;
+          }
+          .slick-next{
+            right: -60px;
+          }
+          .slick-prev{
+            left: -60px;
+          }
+          .slick-list{
+            height: 100%;
+            .slick-track{
+              height: 100%;
+              div{
+                height: 100%;
+              }
+            }
+          }
+          .item-story{
+            height: 100%;
+            img{
+              object-fit: cover;
+              width: 500px;
+              height: 100%;
+              border-radius: 10px;
+            }
+            .user-profile{
+              position: absolute;
+              display: block;
+              top: 0px;
+              background-image: linear-gradient(rgba(0, 0, 0, 0.69), rgba(0, 0, 0, 0));
+              width: 500px;
+              padding-top: 15px;
+              border-radius: 10px;
+              text-align: left!important;
+              padding-left: 20px!important;
+              height: 60px!important;
+              .username{color: #fff!important;font-weight: 600;margin-left: 10px;cursor: pointer}
+              .time_add{color: rgba(255, 255, 255, 0.62) !important;font-weight: 600;margin-left: 6px;}
+              img{
+                width: 100% !important;
+              }
+            }
+            .footer-story{
+              position: absolute;
+              bottom: 0px;
+              background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.69));
+              width: 500px;
+              border-radius: 10px;
+              height: 60px!important;
+            }
+          }
+        }
+      }
+      .fb-reply-story{
+        width: 100%;
+        height: 6%;
+        .fb-input{
+          width: 400px;
+          margin: 0 auto;
+          display: flex;
+          align-items: center;
+          .fb-input-1{
+            padding-left: 15px;
+            width: 400px;
+            margin-right: 10px;
+            border-radius: 22px;
+            border: 1px solid white;
+            background: transparent;
+            height: 40px;
+            color: white;
+            outline: none;
+          }
+          .fb-text-send{
+            color: white;
+            font-weight: 600;
+          }
+          .fb-text-send-disable{
+            color: white;
+            font-weight: 600;
+            opacity: .5;
+          }
+        }
+      }
+    }
+    .top-body-facebook{
+      min-width : 350px;
+      .left-body-facebook{
+        width: 100%;
+        height: 100%;
+        color: white;
+        overflow: auto;
+        height: 950px;
+        .fb-label{
+          padding: 18px;
+        }
+        .fb-list-user{
+          .fb-item{
+            padding: 10px;
+            .fb-item-info{
+              margin-left: 20px;
+              .fb-item-info-name{
+                font-weight: 600;
+              }
+              .fb-item-info-time{
+                .color{
+                  color: #2e89ff;
+                }
+              }
+            }
+            /* Story */
+            .story {
+              background-color: transparent;
+              border: none;
+              cursor: pointer;
+
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              gap: 6px;
+            }
+
+            .story__avatar {
+              position: relative;
+            }
+
+            .story__border {
+              width: 64px;
+              height: 64px;
+
+              fill: none;
+              stroke: var(--story-border);
+              stroke-width: 1.5;
+            }
+
+            .story--has-story .story__border {
+              stroke: url(#--story-gradient);
+              stroke-width: 2;
+            }
+
+            .story__picture {
+              position: absolute;
+              top: 50%;
+              left: 50%;
+              transform: translate(-50%, -50%);
+
+              width: 56px;
+              height: 56px;
+              border-radius: 50%;
+              overflow: hidden;
+              img{
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+              }
+            }
+
+            .story__picture::after {
+              content: '';
+              position: absolute;
+              top: 0;
+              bottom: 0;
+              left: 0;
+              right: 0;
+
+              border: 1px solid var(--img-border);
+              border-radius: 50%;
+            }
+
+            .story__user {
+              font-size: 12px;
+              font-weight: 400;
+              color: var(--text-light);
+              text-transform: lowercase;
+
+              max-width: 72px;
+              text-overflow: ellipsis;
+              overflow: hidden;
+              white-space: nowrap;
+            }
+
+            .story--has-story .story__user {
+              color: var(--text-dark);
+            }
+
+          }
+        }
+      }
+      .top-top{
+        display: flex;
+        padding: 20px 20px 10px 20px;
+        .btn-close{
+          padding-right: 50px;
+          .wrap-btn-esc-facebook{
+            cursor: pointer;
+            background: transparent;
+            border: none;
+            top: 20px;
+            right: 20px;
+          }
+        }
+        .wrap-logo-facebook{
+          cursor: pointer;
+          top: 20px;
+          left: 20px;
+        }
+      }
+      .line{
+        width: 100%;
+        height: 1px;
+        background: rgb(47 48 49);
+      }
+    }
+  }
+}

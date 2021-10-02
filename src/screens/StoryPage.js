@@ -2,6 +2,7 @@ import {connect} from "react-redux";
 import StoriesComponent from "../components/srories/StoriesComponent";
 import StoryAction from "../redux/actions/StoryAction";
 import profileAction from "../redux/actions/profileAction";
+import StoryComponentFacebook from "../components/srories/StoryComponentFacebook";
 
 function mapStateToProps(state) {
     return {
@@ -19,4 +20,4 @@ function mapDispatchToProps(dispatch) {
         },
     }
 }
-export default connect(mapStateToProps,mapDispatchToProps)(StoriesComponent)
+export default connect(mapStateToProps,mapDispatchToProps)(StoryComponentFacebook)

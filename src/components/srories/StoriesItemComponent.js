@@ -56,6 +56,20 @@ function StoriesItemComponent(props) {
         props.setReload()
     }
 
+    const calculatorDateStory = (time) => {
+        let distance = Math.round((new Date().getTime() - time) / (1000))
+        switch (true) {
+            case 0 <= distance && distance <= 59:
+                return distance + "s"
+            case 60 <= distance && distance < 3600:
+                return Math.round(distance / 60) + "m"
+            case 3600 <= distance && distance < (3600 * 24):
+                return Math.round(distance / (60 * 60)) + "h"
+            default:
+                break;
+        }
+    }
+
     return (
         <div className="wrap-user-story" onClick={() => {
             setCurrent()
@@ -71,10 +85,10 @@ function StoriesItemComponent(props) {
                                             <Avatar src={props.data.userAccountSetting.profilePhoto}/>&nbsp;
                                             <span
                                                 className="username">{props.data.userAccountSetting.username}</span>&nbsp;&nbsp;
-                                            <span className="time_add">12h</span>
+                                            <span className="time_add">{calculatorDateStory(value.dateBeginStory)}</span>
                                         </div>
                                         <img className="img-story" src={value.post.imagePath}/>
-                                        <div className="footer-story">
+                                        <div className="footer-story"><input/>
                                         </div>
                                     </div>
                                 </div>
@@ -94,7 +108,7 @@ function StoriesItemComponent(props) {
                                                         <Avatar src={props.data.userAccountSetting.profilePhoto}/>
                                                         <span
                                                             className="username">{props.data.userAccountSetting.username}</span>
-                                                        <span className="time_add">12h</span>
+                                                        <span className="time_add">{calculatorDateStory(value.dateBeginStory)}</span>
                                                     </div>
                                                     <img className="img-story" src={value.post.imagePath}/>
                                                     <div className="footer-story">
