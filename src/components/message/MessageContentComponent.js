@@ -111,6 +111,12 @@ function MessageContentComponent(props) {
                                                             </Player>
                                                         </div>
                                                         :
+                                                        value.type === "replyStory" ?
+                                                            <div className="receiver">
+                                                                <img className="receiver-image" src={ new Date().getTime()> value.replyStory.split("(*)")[1] ? null : value.replyStory.split("(*)")[0]} alt="story not available"/>
+                                                                <div style={{width:"140px",marginTop:'10px'}}><span style={{fontWeight:"600"}}>Reply to story</span> : {value.message}</div>
+                                                            </div>
+                                                        :
                                                         <div className="receiver">{value.message}</div>
                                         }
                                         <div
@@ -140,6 +146,12 @@ function MessageContentComponent(props) {
                                                             </Player>
                                                         </div>
                                                         :
+                                                        value.type === "replyStory" ?
+                                                            <div className="sender" style={{minHeight: "250px"}}>
+                                                                <img className="sender-image" src={ new Date().getTime()> value.replyStory.split("(*)")[1] ? null : value.replyStory.split("(*)")[0]} alt="story not available"/>
+                                                                <div style={{width:"140px",marginTop:'10px'}}><span style={{fontWeight:"600"}}>Reply to story</span> : {value.message}</div>
+                                                            </div>
+                                                            :
                                                         <div className="sender">{value.message}</div>
                                         }
                                     </div>

@@ -5,6 +5,8 @@ const type ={
     BEGIN_STORY_SUCCESS:"BEGIN_STORY_SUCCESS",
     END_STORY:"END_STORY",
     END_STORY_SUCCESS:"END_STORY_SUCCESS",
+    SET_CURRENT_DISPLAY_STORY:"SET_CURRENT_DISPLAY_STORY",
+    SET_CURRENT_DISPLAY_STORY_SUCCESS:"SET_CURRENT_DISPLAY_STORY_SUCCESS",
 }
 const action = {
     getAllStoryFollowing:(callback) => {
@@ -23,6 +25,12 @@ const action = {
         return{
             type:type.END_STORY,
             id:pId,
+        }
+    },
+    setCurrentDisplayStory:(data) => {
+        return{
+            type:type.SET_CURRENT_DISPLAY_STORY,
+            data:data,
         }
     },
 }
