@@ -198,6 +198,25 @@
     }
   }
 }
+.alertSubmitUserAccount{
+  background-color: #262626;
+  width: 100%;
+  position: fixed;
+  height: 42px;
+  bottom: 0;
+  z-index: 10000000000000000;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2rem;
+  .alert-text{
+    color: white;
+    font-weight: 400;
+  }
+  display: none;
+}
+.show{
+  display: flex!important;
+}
 @media screen and (max-width: 790px) {
   .wrap-body-page-setting-account .wrap-navigation-account-setting .ant-layout-sider{
     display: none;

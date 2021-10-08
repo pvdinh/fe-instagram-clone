@@ -12,6 +12,8 @@ function StoryComponentFacebook(props) {
     let history = useHistory()
     const [message,setMessage] = useState("")
     const [currentReply,setCurrentReply] = useState({})
+    const [alertSubmit,setAlertSubmit] = useState("")
+
 
     useEffect(() => {
         props.getAllStoryFollowing((data) => {
@@ -61,7 +63,14 @@ function StoryComponentFacebook(props) {
                 type:"replyStory",
             }
         }
-        props.postMessage(data,()=>{setMessage("")})
+        props.postMessage(data,()=>{
+            let elementAlert = document.getElementsByClassName("alertSubmitUserAccount")
+            elementAlert[0].classList.add("show")
+            const setTimeOut = setTimeout(()=>{
+                elementAlert[0].classList.remove("show")
+            },1000)
+            setMessage("")
+        })
     }
 
     const settings = {
@@ -183,6 +192,9 @@ function StoryComponentFacebook(props) {
                         </div>
                     </div>
                 </div>
+            </div>
+            <div className="alertSubmitUserAccount">
+                <div className="alert-text">Replied to {props.match.params.username}</div>
             </div>
         </div>
     )
