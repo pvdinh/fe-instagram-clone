@@ -1,13 +1,17 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import {Avatar, Tooltip} from "antd";
 import Slider from "@ant-design/react-slick";
 import StoryAction from "../../redux/actions/StoryAction";
 import {connect} from "react-redux";
 import ItemUserStoryFacebook from "./ItemUserStoryFacebook";
 import {useHistory} from "react-router";
+import messageActions from "../../redux/actions/messageActions";
+import homeActions from "../../redux/actions/homeActions";
 
 function StoryComponentFacebook(props) {
     let history = useHistory()
+    const [message,setMessage] = useState("")
+    const [currentReply,setCurrentReply] = useState({})
 
     useEffect(() => {
         props.getAllStoryFollowing((data) => {
@@ -24,6 +28,42 @@ function StoryComponentFacebook(props) {
         }, history)
     }, [props.match.params])
 
+    useEffect(()=>{
+        props.getUserAccountProfile(()=>{})
+    },[])
+
+    const onChangeMessage = (e) =>{
+        setMessage(e.target.value)
+    }
+
+
+    const sendReplyStory = () =>{
+        let data;
+        let dataEndStory;
+        if(Object.keys(currentReply).length > 0){
+            dataEndStory=currentReply.dateBeginStory+(3600*24*1000)
+            data={
+                sender:props.userAccountProfile.id,
+                receiver:props.currentUserDisplayStory.userAccountSetting.id,
+                message:message,
+                emotion:"",
+                replyStory:currentReply.post.imagePath + "(*)" + dataEndStory,
+                type:"replyStory",
+            }
+        }else {
+            dataEndStory=props.currentUserDisplayStory.postDetails[0].dateBeginStory+(3600*24*1000)
+            data={
+                sender:props.userAccountProfile.id,
+                receiver:props.currentUserDisplayStory.userAccountSetting.id,
+                message:message,
+                emotion:"",
+                replyStory:props.currentUserDisplayStory.postDetails[0].post.imagePath + "(*)" + dataEndStory ,
+                type:"replyStory",
+            }
+        }
+        props.postMessage(data,()=>{setMessage("")})
+    }
+
     const settings = {
         className: "fb-stories-setting-slide-slick",
         dots: false,
@@ -34,6 +74,7 @@ function StoryComponentFacebook(props) {
         slidesToScroll: 1,
         draggable:false,
         afterChange : (e) =>{
+             setCurrentReply(props.currentUserDisplayStory.postDetails[e])
              history.replace(`/stories/${props.match.params.username}`)
          }
     };
@@ -132,9 +173,13 @@ function StoryComponentFacebook(props) {
                     </div>
                     <div className="fb-reply-story">
                         <div className="fb-input">
-                            <input className="fb-input-1" placeholder="Reply to ..." />
-                            <div className="fb-text-send">Send</div>
-
+                            <input className="fb-input-1" value={message} onChange={(e)=>{onChangeMessage(e)}} placeholder={`Reply to ${props.match.params.username} ... `} />
+                            {
+                                message === "" ?
+                                    <div className="fb-text-send-disable">Send</div>
+                                    :
+                                    <div className="fb-text-send" onClick={()=>{sendReplyStory()}}>Send</div>
+                            }
                         </div>
                     </div>
                 </div>
@@ -146,6 +191,7 @@ function mapStateToProps(state) {
     return {
         listUserHaveStory:state.story.listUserHaveStory,
         currentUserDisplayStory:state.story.currentUserDisplayStory,
+        userAccountProfile: state.home.userAccountProfile,
     }
 }
 
@@ -156,6 +202,12 @@ function mapDispatchToProps(dispatch) {
         },
         setCurrentDisplayStory : (data) =>{
             dispatch(StoryAction.action.setCurrentDisplayStory(data))
+        },
+        postMessage: (message,callback) =>{
+          dispatch(messageActions.action.postMessage(message,callback))
+        },
+        getUserAccountProfile: (callback) => {
+            dispatch(homeActions.action.getUserAccountProfile(callback))
         },
     }
 }
