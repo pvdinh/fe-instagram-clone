@@ -23,10 +23,17 @@ function HavePostsComponents(props) {
         setIsVisiblePostDetail(true)
     }
 
+    const reLoad = () =>{
+        if(props.reload !== undefined){
+            props.reload()
+        }
+        setIsVisiblePostDetail(!isVisiblePostDetail)
+    }
+
     const showModal = () =>{
         if(post.post !== undefined){
             return(
-                <PostDetailModal postId={post.post.id} visible={isVisiblePostDetail} setVisible={()=>{setIsVisiblePostDetail(!isVisiblePostDetail)}} />
+                <PostDetailModal postId={post.post.id} visible={isVisiblePostDetail} setVisible={()=>{reLoad()}} />
             )
         }
     }

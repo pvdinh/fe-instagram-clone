@@ -21,7 +21,7 @@ function PostDetailModal(props) {
             setOwnerPost(data.userAccountSetting)
             setPost(data.post)
         })
-    },[props.postId])
+    },[props.postId,props])
 
     useEffect(() => {
         props.checkSavedPost(props.postId, (mess) => {

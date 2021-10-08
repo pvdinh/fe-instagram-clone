@@ -1,6 +1,7 @@
 import {connect} from "react-redux";
 import PostDetailComponentPage from "../components/detail-post/PostDetailComponentPage";
 import postActions from "../redux/actions/postActions";
+import homeActions from "../redux/actions/homeActions";
 
 function mapStateToProps(state) {
     return {
@@ -33,6 +34,9 @@ function mapDispatchToProps(dispatch) {
         },
         endSavePost: (pId, callback) => {
             dispatch(postActions.action.endSavePost(pId, callback))
+        },
+        getUserAccountProfile: (callback) => {
+            dispatch(homeActions.action.getUserAccountProfile(callback))
         },
     }
 }

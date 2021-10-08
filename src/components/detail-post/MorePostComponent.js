@@ -12,14 +12,14 @@ function MorePostComponent(props) {
     useEffect(()=>{
         console.log(props)
         props.getUserProfile(props.username,()=>{},history)
-    },[props.username])
+    },[props.username,props.reload])
 
 
     return(
         <div>
             {
                 props.listPostDetails.length > 0 ?
-                    <HavePostsComponents listPostDetails={props.listPostDetails} currentUserAccountSetting={props.currentUserAccountSetting} />
+                    <HavePostsComponents reload={()=>{props.reload()}} listPostDetails={props.listPostDetails} currentUserAccountSetting={props.currentUserAccountSetting} />
                     :
                      null
             }

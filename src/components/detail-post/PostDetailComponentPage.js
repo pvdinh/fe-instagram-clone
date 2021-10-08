@@ -17,11 +17,13 @@ function PostDetailComponentPage(props) {
     const [ownerPost, setOwnerPost] = useState([])
 
     useEffect(()=>{
-        props.getPostInformationFromPId(props.match.params.pId,(data)=>{
-            data.likes.includes(props.userAccountProfile.username) ? setLike(true) : setLike(false)
-            setListLike(data.likes)
-            setOwnerPost(data.userAccountSetting)
-            setPost(data.post)
+        props.getUserAccountProfile((userCurrent)=>{
+            props.getPostInformationFromPId(props.match.params.pId,(data)=>{
+                data.likes.includes(userCurrent.username) ? setLike(true) : setLike(false)
+                setListLike(data.likes)
+                setOwnerPost(data.userAccountSetting)
+                setPost(data.post)
+            })
         })
     },[props.match.params.pId])
 
@@ -39,7 +41,7 @@ function PostDetailComponentPage(props) {
             data.likes.includes(props.userAccountProfile.username) ? setLike(true) : setLike(false)
             setListLike(data.likes)
         })
-    },[like])
+    },[like,reload])
 
     useEffect(()=>{
         props.getCommentPost(props.match.params.pId,(data)=>{
@@ -274,7 +276,7 @@ function PostDetailComponentPage(props) {
                 <div className="title">More posts from <a className="title-name" href="#">{ownerPost.username}</a></div>
                 {
                     ownerPost.username !== undefined ?
-                        <MorePostComponent username={ownerPost.username} />
+                        <MorePostComponent reload={()=>{setReload(!reload)}} username={ownerPost.username} />
                         :
                         null
                 }
