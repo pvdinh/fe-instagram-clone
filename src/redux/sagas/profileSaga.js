@@ -62,7 +62,6 @@ function *getSavedPost_saga(action) {
             action.history.replace("/error")
         }
     }catch (e) {
-        action.history.replace("/error")
         console.log("err",e)
     }
 }
