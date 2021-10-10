@@ -5,6 +5,7 @@ import postReducer from "./postReducer";
 import messageReducer from "./messageReducers";
 import profileReducer from "./profileReducer";
 import storyReducer from "./storyReducer";
+import exploreReducer from "./exploreReducer";
 
 const rootReducer = combineReducers({
     login:LoginReducer,
@@ -13,5 +14,6 @@ const rootReducer = combineReducers({
     message:messageReducer,
     profile:profileReducer,
     story:storyReducer,
+    explore:exploreReducer,
 })
 export default rootReducer

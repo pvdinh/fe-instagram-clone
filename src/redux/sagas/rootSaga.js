@@ -5,7 +5,8 @@ import postSaga from "./postSaga";
 import messageSaga from "./messageSaga";
 import profileSaga from "./profileSaga";
 import storySaga from "./storySaga";
+import exploreSaga from "./exploreSaga";
 
 export default function* rootSaga() {
-    yield all([loginSaga(), homeSaga(),postSaga(),messageSaga(),profileSaga(),storySaga()])
+    yield all([loginSaga(), homeSaga(),postSaga(),messageSaga(),profileSaga(),storySaga(),exploreSaga()])
 }
