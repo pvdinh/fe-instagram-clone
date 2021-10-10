@@ -1,0 +1,225 @@
+.wrap-body-page-explore{
+  height: 100%;
+  .wrap-center-body-page-explore{
+    width: 960px;
+    height: 100%;
+    margin: 0 auto;
+    .body-page-explore{
+      padding-top: 80px;
+      height: 100%;
+      img{
+        width: 100%!important;
+        height: 100%!important;
+        object-fit: cover!important;
+        object-fit: cover!important;
+      }
+      .body-page-explore-item-3{
+        display: grid;
+        grid-template-columns: 293px 293px 293px;
+          grid-column-gap: 30px;
+          .item{
+            width: 293px;
+            height: 293px;
+            cursor: pointer;
+            position: relative;
+            margin-bottom: 30px;
+
+            &:hover{
+              .wrap-post-info{
+                display: flex;
+              }
+            }
+            .wrap-post-info{
+              background-color: rgba(0, 0, 0, 0.36);
+              position: absolute;
+              width: 100%;
+              height: 100%;
+              top:0;
+              display: none;
+              cursor: pointer;
+              align-items: center;
+              justify-content: center;
+              .post-info{
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                .likes{
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  color: #f1e7e7;
+                  font-weight: 600;
+                  font-size: 16px;
+                  text-shadow: 0.2rem 0.2rem 0.2rem rgba(0, 0, 0, 0.1);
+                  margin-right: 35px;
+                  .L1L{
+                    width: 18px;
+                    height: 18px;
+                    margin-right: 5px;
+                    svg{
+                      width: 100%;
+                      height: 100%;
+                    }
+                  }
+                }
+                .comments{
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  color: #f1e7e7;
+                  font-weight: 600;
+                  font-size: 16px;
+                  text-shadow: 0.2rem 0.2rem 0.2rem rgba(0, 0, 0, 0.1);
+                  .C1C{
+                    width: 18px;
+                    height: 18px;
+                    margin-right: 5px;
+                    svg{
+                      width: 100%;
+                      height: 100%;
+                    }
+                  }
+                }
+              }
+            }
+          }
+      }
+      .body-page-explore-item-2{
+        display: grid;
+        grid-template-columns: 616px 293px;
+        grid-column-gap: 30px;
+        .item-large{
+          width: 616px;
+          height: 616px;
+          cursor: pointer;
+          position: relative;
+          &:hover{
+            .wrap-post-info{
+              display: flex;
+            }
+          }
+          .wrap-post-info{
+            background-color: rgba(0, 0, 0, 0.36);
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top:0;
+            display: none;
+            cursor: pointer;
+            align-items: center;
+            justify-content: center;
+            .post-info{
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              .likes{
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: #f1e7e7;
+                font-weight: 600;
+                font-size: 16px;
+                text-shadow: 0.2rem 0.2rem 0.2rem rgba(0, 0, 0, 0.1);
+                margin-right: 35px;
+                .L1L{
+                  width: 18px;
+                  height: 18px;
+                  margin-right: 5px;
+                  svg{
+                    width: 100%;
+                    height: 100%;
+                  }
+                }
+              }
+              .comments{
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: #f1e7e7;
+                font-weight: 600;
+                font-size: 16px;
+                text-shadow: 0.2rem 0.2rem 0.2rem rgba(0, 0, 0, 0.1);
+                .C1C{
+                  width: 18px;
+                  height: 18px;
+                  margin-right: 5px;
+                  svg{
+                    width: 100%;
+                    height: 100%;
+                  }
+                }
+              }
+            }
+          }
+        }
+        .item-2{
+          .item-21{
+            width: 293px;
+            height: 293px;
+            cursor: pointer;
+            position: relative;
+            margin-bottom: 30px;
+            &:hover{
+              .wrap-post-info{
+                display: flex;
+              }
+            }
+            .wrap-post-info{
+              background-color: rgba(0, 0, 0, 0.36);
+              position: absolute;
+              width: 100%;
+              height: 100%;
+              top:0;
+              display: none;
+              cursor: pointer;
+              align-items: center;
+              justify-content: center;
+              .post-info{
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                .likes{
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  color: #f1e7e7;
+                  font-weight: 600;
+                  font-size: 16px;
+                  text-shadow: 0.2rem 0.2rem 0.2rem rgba(0, 0, 0, 0.1);
+                  margin-right: 35px;
+                  .L1L{
+                    width: 18px;
+                    height: 18px;
+                    margin-right: 5px;
+                    svg{
+                      width: 100%;
+                      height: 100%;
+                    }
+                  }
+                }
+                .comments{
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  color: #f1e7e7;
+                  font-weight: 600;
+                  font-size: 16px;
+                  text-shadow: 0.2rem 0.2rem 0.2rem rgba(0, 0, 0, 0.1);
+                  .C1C{
+                    width: 18px;
+                    height: 18px;
+                    margin-right: 5px;
+                    svg{
+                      width: 100%;
+                      height: 100%;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
