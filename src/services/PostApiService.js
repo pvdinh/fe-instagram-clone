@@ -1,8 +1,8 @@
 import PostRequest from "../requests/PostRequest";
 
-export const getAllPostInformationFollowing = () =>{
+export const getAllPostInformationFollowing = (payload) =>{
     const postRequest = new PostRequest()
-    return postRequest.getAllPostOfFollowing()
+    return postRequest.getAllPostOfFollowing(payload)
 }
 export const likePost = (pId) =>{
     const postRequest = new PostRequest()

@@ -11,9 +11,9 @@ import {
 } from "../../services/PostApiService";
 import {getUserProfile} from "../../services/ProfileApiService";
 
-function* saga_getAllPostOfFollowing() {
+function* saga_getAllPostOfFollowing(action) {
     try {
-        const response = yield call(getAllPostInformationFollowing)
+        const response = yield call(getAllPostInformationFollowing,action.payload)
         yield put({type:postActions.type.GET_ALL_POST_OF_FOLLOWING_SUCCESS,data:response.data})
     } catch (e) {
         console.log("err", e)
@@ -22,8 +22,8 @@ function* saga_getAllPostOfFollowing() {
 function* saga_unLikePost(action) {
     try {
         const res = yield call(unLikePost,action.id)
-        const response = yield call(getAllPostInformationFollowing)
-        yield put({type:postActions.type.GET_ALL_POST_OF_FOLLOWING_SUCCESS,data:response.data})
+        const response = yield call(getAllPostInformationFollowing,{page:0,size:9+(9*action.currentPage)})
+        yield put({type:postActions.type.FETCH_ALL_POST_OF_FOLLOWING_SUCCESS,data:response.data})
     } catch (e) {
         console.log("err", e)
     }
@@ -31,8 +31,8 @@ function* saga_unLikePost(action) {
 function* saga_likePost(action) {
     try {
         const res = yield call(likePost,action.id)
-        const response = yield call(getAllPostInformationFollowing)
-        yield put({type:postActions.type.GET_ALL_POST_OF_FOLLOWING_SUCCESS,data:response.data})
+        const response = yield call(getAllPostInformationFollowing,{page:0,size:9+(9*action.currentPage)})
+        yield put({type:postActions.type.FETCH_ALL_POST_OF_FOLLOWING_SUCCESS,data:response.data})
     } catch (e) {
         console.log("err", e)
     }

@@ -2,8 +2,8 @@ import BaseRequest from "./BaseRequest";
 import {API_CLOUDINARY_BASE_URL} from "../url";
 
 class PostRequest extends BaseRequest{
-    getAllPostOfFollowing(){
-        let url = 'post/following'
+    getAllPostOfFollowing(payload){
+        let url = `post/following?page=${payload.page}&size=${payload.size}`
         return this.get(url)
     }
     likePost(pId){

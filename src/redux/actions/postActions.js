@@ -1,6 +1,7 @@
 const type = {
     GET_ALL_POST_OF_FOLLOWING: "GET_ALL_POST_OF_FOLLOWING",
     GET_ALL_POST_OF_FOLLOWING_SUCCESS: "GET_ALL_POST_OF_FOLLOWING_SUCCESS",
+    FETCH_ALL_POST_OF_FOLLOWING_SUCCESS: "FETCH_ALL_POST_OF_FOLLOWING_SUCCESS",
     LIKE_POST:"LIKE_POST",
     UNLIKE_POST:"UNLIKE_POST",
     LIKE_POST_SUCCESS:"LIKE_POST_SUCCESS",
@@ -22,9 +23,10 @@ const type = {
     END_SAVE_POST:"END_SAVE_POST",
 }
 const action = {
-    getAllPostOfFollowing: () => {
+    getAllPostOfFollowing: (payload) => {
         return {
-            type: type.GET_ALL_POST_OF_FOLLOWING
+            type: type.GET_ALL_POST_OF_FOLLOWING,
+            payload:payload,
         }
     },
     postImageToCloudinary: (data,callback) => {
@@ -45,16 +47,18 @@ const action = {
             callback,
         }
     },
-    likePost:(pId) =>{
+    likePost:(pId,currentPage) =>{
         return{
             type:type.LIKE_POST,
             id:pId,
+            currentPage:currentPage,
         }
     },
-    unLikePost:(pId) =>{
+    unLikePost:(pId,currentPage) =>{
         return{
             type:type.UNLIKE_POST,
             id:pId,
+            currentPage:currentPage,
         }
     },
     likePostInPostDetail:(pId) =>{

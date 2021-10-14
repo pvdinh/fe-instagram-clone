@@ -38,7 +38,7 @@ function PostDetailComponent(props) {
     }, [props.visible,reload])
 
     const onClickLike = () => {
-        like ? props.unLikePost(props.post.id) : props.likePost(props.post.id)
+        like ? props.unLikePost(props.post.id,props.currentPage) : props.likePost(props.post.id,props.currentPage)
     }
     const postComment = (cmt) => {
         let comment = {
@@ -254,11 +254,11 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        likePost: (pId) => {
-            dispatch(postActions.action.likePost(pId))
+        likePost: (pId,currentPage) => {
+            dispatch(postActions.action.likePost(pId,currentPage))
         },
-        unLikePost: (pId) => {
-            dispatch(postActions.action.unLikePost(pId))
+        unLikePost: (pId,currentPage) => {
+            dispatch(postActions.action.unLikePost(pId,currentPage))
         },
         commentPost: (data, callback) => {
             dispatch(postActions.action.commentPost(data, callback))

@@ -3,32 +3,40 @@ import postActions from "../../redux/actions/postActions";
 import {connect} from "react-redux";
 import InfiniteList from "react-infinite-scroll-list";
 import PostItemComponent from "./PostItemComponent";
+import InfiniteScroll from "react-infinite-scroll-component";
+
 
 function PostComponent(props) {
+    const [page,setPage] = useState(0)
+    const [size,setSize] = useState(9)
+
     useEffect(() => {
-        props.getAllPostOfFollowing()
+        props.getAllPostOfFollowing({page:0,size:size})
     }, [])
+
+
+    const fetchMoreData = () => {
+        // a fake async api call like which sends
+        // 20 more records in 1.5 secs
+        setTimeout(() => {
+            setPage(page + 1)
+            props.getAllPostOfFollowing({page:page+1,size:size})
+        }, 1500);
+    };
+
     return (
         <div>
-            <InfiniteList
-                root="container"
-                isLoading={true}
-                isEndReached={true}
-                onReachThreshold={() => {
-                    console.log('Load more content');
-                }}
-                containerClassName="custom-container-class-name"
-                sentinelClassName="custom-sentinel-class-name"
-                containerTagName="div"
-                sentinelTagName="div"
-                threshold={0}
+            <InfiniteScroll
+                dataLength={props.listPostOfFollowing.length}
+                next={()=>{fetchMoreData()}}
+                hasMore={true}
             >
                 {
                     props.listPostOfFollowing.map((item,key) =>(
-                        <PostItemComponent key={key} post={item.post} likes={item.likes} userAccountSetting={item.userAccountSetting} />
+                        <PostItemComponent currentPage={page} key={key} post={item.post} likes={item.likes} userAccountSetting={item.userAccountSetting} />
                     ))
                 }
-            </InfiniteList>
+            </InfiniteScroll>
         </div>
     )
 }
@@ -41,8 +49,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        getAllPostOfFollowing: () => {
-            dispatch(postActions.action.getAllPostOfFollowing())
+        getAllPostOfFollowing: (payload) => {
+            dispatch(postActions.action.getAllPostOfFollowing(payload))
         },
     }
 }

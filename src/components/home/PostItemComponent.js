@@ -45,7 +45,7 @@ function PostItemComponent(props) {
     }, [reLoad,props.post])
 
     const onClickLike = () => {
-        like ? props.unLikePost(props.post.id) : props.likePost(props.post.id)
+        like ? props.unLikePost(props.post.id,props.currentPage) : props.likePost(props.post.id,props.currentPage)
     }
 
     const onDoubleClick = () => {
@@ -273,7 +273,7 @@ function PostItemComponent(props) {
                     </article>
                     : <Instagram/>
             }
-            <PostDetailComponent reload={()=>{setReLoad(!reLoad)}} post={props.post} likes={props.likes} listComment={listComment} userAccountSetting={props.userAccountSetting} visible={isVisiblePostDetail} setVisible={()=>{setIsVisiblePostDetail(!isVisiblePostDetail)}} />
+            <PostDetailComponent currentPage={props.currentPage} reload={()=>{setReLoad(!reLoad)}} post={props.post} likes={props.likes} listComment={listComment} userAccountSetting={props.userAccountSetting} visible={isVisiblePostDetail} setVisible={()=>{setIsVisiblePostDetail(!isVisiblePostDetail)}} />
         </div>
     )
 }
@@ -286,11 +286,11 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        likePost: (pId) => {
-            dispatch(postActions.action.likePost(pId))
+        likePost: (pId,currentPage) => {
+            dispatch(postActions.action.likePost(pId,currentPage))
         },
-        unLikePost: (pId) => {
-            dispatch(postActions.action.unLikePost(pId))
+        unLikePost: (pId,currentPage) => {
+            dispatch(postActions.action.unLikePost(pId,currentPage))
         },
         commentPost: (data, callback) => {
             dispatch(postActions.action.commentPost(data, callback))
