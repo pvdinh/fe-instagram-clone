@@ -125,19 +125,21 @@ function MessageComponent(props) {
                             </svg>
                         </div>
                     </div>
-                    {
-                        props.listMessageOfSender.map((value,index)=>(
-                            <div>
+                    <div style={{display: 'block',height:'660px',overflow: 'auto'}}>
+                        {
+                            props.listMessageOfSender.map((value,index)=>(
+                                <div style={{display: 'flex',padding: '5px 0px'}}>
             <span id="pic-div">
               <img id="pic" src={value.userAccountSettingReceiver.profilePhoto} />
             </span>
-                                <div id="chat-username" onClick={()=>{openInboxCurrentReceiver(value.userAccountSettingReceiver.id)}}>
-                                    <span id="name">{value.userAccountSettingReceiver.displayName}</span>
-                                    <span id="msg">{value.messages[value.messages.length-1].message}</span>
+                                    <div id="chat-username" onClick={()=>{openInboxCurrentReceiver(value.userAccountSettingReceiver.id)}}>
+                                        <span id="name">{value.userAccountSettingReceiver.displayName}</span>
+                                        <span id="msg">{value.messages[value.messages.length-1].message}</span>
+                                    </div>
                                 </div>
-                            </div>
-                        ))
-                    }
+                            ))
+                        }
+                    </div>
                 </div>
                 {
                     props.listMessageOfSenderAndReceiver.userAccountSettingReceiver ?
