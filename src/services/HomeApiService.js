@@ -16,3 +16,11 @@ export const endFollowing = (userFollowingId) => {
     const homeRequest = new HomeRequest()
     return homeRequest.endFollowing(userFollowingId)
 }
+export const getHistorySearchUser = () => {
+    const homeRequest = new HomeRequest()
+    return homeRequest.getHistorySearchUser()
+}
+export const saveUserHistory = (data) => {
+    const homeRequest = new HomeRequest()
+    return homeRequest.saveUserHistory(data)
+}

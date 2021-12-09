@@ -5,6 +5,10 @@ const type = {
     GET_SUGGESTIONS_TO_FOLLOW_SUCCESS: "GET_SUGGESTIONS_TO_FOLLOW_SUCCESS",
     BEGIN_FOLLOWING:"BEGIN_FOLLOWING",
     END_FOLLOWING:"END_FOLLOWING",
+    GET_HISTORY_SEARCH_USER:"GET_HISTORY_SEARCH_USER",
+    GET_HISTORY_SEARCH_USER_SUCCESS:"GET_HISTORY_SEARCH_USER_SUCCESS",
+    SAVE_USER_HISTORY:"SAVE_USER_HISTORY",
+    SAVE_USER_HISTORY_SUCCESS:"END_FOLLOWING_SUCCESS",
 }
 const action = {
     getUserAccountProfile: (callback) => {
@@ -28,6 +32,19 @@ const action = {
         return {
             type: type.END_FOLLOWING,
             id:userFollowingId,
+        }
+    },
+    getHistorySearchUser: () => {
+        return {
+            type: type.GET_HISTORY_SEARCH_USER,
+        }
+    },
+    saveUserHistory: (data) => {
+        return {
+            type: type.SAVE_USER_HISTORY,
+            payload:{
+                data:data,
+            }
         }
     },
 }
