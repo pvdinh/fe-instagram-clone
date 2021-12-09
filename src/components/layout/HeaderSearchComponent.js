@@ -1,30 +1,72 @@
 import {Dropdown, Menu} from "antd";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import loginActions from "../../redux/actions/loginActions";
 import {connect} from "react-redux";
 import messageActions from "../../redux/actions/messageActions";
 import profileAction from "../../redux/actions/profileAction";
+import homeActions from "../../redux/actions/homeActions";
 
 
 function HeaderSearchComponent(props) {
     const [displayResultSearch,setDisplayResultSearch]=useState(false)
+
+    useEffect(()=>{
+        props.getHistorySearchUser()
+    },[])
+
+    const calculatorDateSearch = (timeSearch) => {
+        let distance = Math.round((new Date().getTime() - timeSearch) / (1000))
+        switch (true) {
+            case 0 <= distance && distance <= 59:
+                return distance + "s"
+            case 60 <= distance && distance < 3600:
+                return Math.round(distance / 60) + "m"
+            case 3600 <= distance && distance < (3600 * 24):
+                return Math.round(distance / (60 * 60)) + "h"
+            case 3600 * 24 <= distance :
+                return Math.round((distance / (60 * 60 * 24))) + "d"
+            default:
+                break;
+        }
+    }
+
     const menuEmpty = (
         <Menu className="wrap-page-home-in-header wrap-search-in-header">
-            <div className="wsih">
-                <div className="wsih1">Recent</div>
-                <div className="wsih2">
-                    <div className="wsih21">
-                        No recent searches
+            <div className="recent-">Recent search</div>
+            {
+                props.listHistorySearchUser.length > 0 ?
+                    props.listHistorySearchUser.map((value, index) => (
+                        <div className="swap-item-result-search" onClick={() => {
+                            saveSearchUser(value.userAccountSetting.id);
+                            window.location.href = `/${value.userAccountSetting.username}`
+                        }}>
+                            <div className="image">
+                                <img src={value.userAccountSetting.profilePhoto} alt="profile photo"/>
+                            </div>
+                            <div className="info">
+                                <div className="info-username">{value.userAccountSetting.username}</div>
+                                <div className="info-displayname">{value.userAccountSetting.displayName}</div>
+                            </div>
+                            <div className="wrap-dateSearch">{calculatorDateSearch(value.dateSearch)} ago</div>
+                        </div>
+                    ))
+                    :
+                    <div className="wsih">
+                        {/*<div className="wsih1">Recent</div>*/}
+                        <div className="wsih2">
+                            <div className="wsih21">
+                                No recent searches
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
+            }
         </Menu>
     );
     const menu = (
         <Menu className="wrap-page-home-in-header wrap-search-in-header">
             {
                 props.listReceiverResultSearch.map((value,index)=>(
-                    <div className="swap-item-result-search" onClick={()=>{window.location.href=`/${value.username}`}}>
+                    <div className="swap-item-result-search" onClick={()=>{saveSearchUser(value.id);window.location.href=`/${value.username}`}}>
                         <div className="image">
                             <img src={value.profilePhoto} alt="profile photo" />
                         </div>
@@ -45,6 +87,16 @@ function HeaderSearchComponent(props) {
             setDisplayResultSearch(false)
         }
     }
+
+    const saveSearchUser = (idSearch) =>{
+        const o = {
+            idUser:props.userAccountProfile.id,
+            idSearch:idSearch,
+            dateSearch:new Date().getTime(),
+        }
+        props.saveUserHistory(o)
+    }
+
     return(
         <div className="header__search">
             <Dropdown overlay={props.listReceiverResultSearch.length && displayResultSearch  > 0 ? menu : menuEmpty} placement="topCenter" arrow trigger={['click']}>
@@ -73,12 +125,20 @@ function HeaderSearchComponent(props) {
 function mapStateToProps(state) {
     return {
         listReceiverResultSearch:state.message.listReceiverResultSearch,
+        listHistorySearchUser:state.home.listHistorySearchUser,
+        userAccountProfile: state.home.userAccountProfile,
     }
 }
 function mapDispatchToProps(dispatch) {
     return{
         findReceiverByUsername:(search)=>{
             dispatch(messageActions.action.findReceiverByUsername(search))
+        },
+        getHistorySearchUser:()=>{
+            dispatch(homeActions.action.getHistorySearchUser())
+        },
+        saveUserHistory:(data)=>{
+            dispatch(homeActions.action.saveUserHistory(data))
         },
     }
 }
