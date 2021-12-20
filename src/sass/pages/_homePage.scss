@@ -428,11 +428,19 @@
     display: flex;
     overflow-y: hidden;
     overflow-x: auto;
-
+    max-height: 800px;
     width: 100%;
     scroll-snap-type: x mandatory;
     scroll-behavior: smooth;
     scrollbar-width: none;
+    .lazyload-wrapper{
+      width: 100%;
+    }
+    video{
+      width: 100%!important;
+      height: 100%;
+      object-fit: cover;
+    }
     .pop{
       position: absolute;
       top:50%;
@@ -1079,6 +1087,22 @@
     display: none;
   }
   .alertUploading{
+    background-color: #262626;
+    width: 100%;
+    position: fixed;
+    height: 42px;
+    bottom: 0;
+    z-index: 10000000000000000;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2rem;
+    .alert-text{
+      color: white;
+      font-weight: 400;
+    }
+    display: none;
+  }
+  .alertUploadErr{
     background-color: #262626;
     width: 100%;
     position: fixed;

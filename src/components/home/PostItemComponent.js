@@ -7,6 +7,8 @@ import CommentComponent from "./CommentComponent";
 import MoreActionInPost from "./MoreActionInPost";
 import dbLike from '../../assets/homePage/posts/red_heart.svg';
 import PostDetailComponent from "./PostDetailComponent";
+import ReactPlayer from "react-player";
+import homeActions from "../../redux/actions/homeActions";
 
 function PostItemComponent(props) {
     const [like, setLike] = useState(true)
@@ -24,7 +26,9 @@ function PostItemComponent(props) {
     }, [])
 
     useEffect(() => {
-        props.likes.includes(props.userAccountProfile.username) ? setLike(true) : setLike(false)
+        props.getUserAccountProfile((data)=>{
+            props.likes.includes(data.username) ? setLike(true) : setLike(false)
+        })
     }, [props.likes])
 
     useEffect(() => {
@@ -49,7 +53,7 @@ function PostItemComponent(props) {
     }
 
     const onDoubleClick = () => {
-        if(!like) props.likePost(props.post.id)
+        if(!like) props.likePost(props.post.id,props.currentPage)
         setClassdbClick(classdbClick + " dbClick")
         setTimeout(() => {
             setClassdbClick("pop")
@@ -148,9 +152,17 @@ function PostItemComponent(props) {
                         <div className="post__content">
                             <div className="post__medias">
                                 <LazyLoad>
-                                    <img className="post__media" src={props.post.imagePath} onDoubleClick={() => {
-                                        onDoubleClick()
-                                    }} alt="Post Content"/>
+                                    {
+                                        props.post.type === "image"
+                                            ?
+                                        <img className="post__media" src={props.post.imagePath} onDoubleClick={() => {
+                                            onDoubleClick()
+                                        }} alt="Post Content"/>
+                                        :
+                                            <ReactPlayer muted={true} playing height="780px" width="auto"
+                                                         controls={true} url={props.post.videoPath}
+                                                         light={props.post.imagePath}/>
+                                    }
                                 </LazyLoad>
                                 <img src={dbLike} className={classdbClick}/>
                             </div>
@@ -306,6 +318,9 @@ function mapDispatchToProps(dispatch) {
         },
         endSavePost: (pId, callback) => {
             dispatch(postActions.action.endSavePost(pId, callback))
+        },
+        getUserAccountProfile: (callback) => {
+            dispatch(homeActions.action.getUserAccountProfile(callback))
         },
     }
 }
