@@ -7,6 +7,7 @@ import ItemUserStoryFacebook from "./ItemUserStoryFacebook";
 import {useHistory} from "react-router";
 import messageActions from "../../redux/actions/messageActions";
 import homeActions from "../../redux/actions/homeActions";
+import ReactPlayer from "react-player";
 
 function StoryComponentFacebook(props) {
     let history = useHistory()
@@ -166,7 +167,14 @@ function StoryComponentFacebook(props) {
                                                                 className="username">{props.currentUserDisplayStory.userAccountSetting.username}</span>
                                                             <span className="time_add">{calculatorDateStory(value.dateBeginStory)}</span>
                                                         </div>
-                                                        <img className="img-story" src={value.post.imagePath}/>
+                                                        {
+                                                            value.post.type === "image" ?
+                                                                <img className="img-story" alt="picture" src={value.post.imagePath} />
+                                                                :
+                                                                <ReactPlayer muted={true} playing height="100%" width="100%"
+                                                                             controls={true} url={value.post.videoPath}
+                                                                             light={value.post.imagePath}/>
+                                                        }
                                                         <div className="footer-story">
                                                         </div>
                                                     </div>

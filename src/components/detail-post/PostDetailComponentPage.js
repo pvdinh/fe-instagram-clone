@@ -5,6 +5,7 @@ import CommentComponent from "../home/CommentComponent";
 import {BsFillHeartFill, FaComment} from "react-icons/all";
 import HavePostsComponents from "../profile/HavePostsComponents";
 import MorePostComponent from "./MorePostComponent";
+import ReactPlayer from "react-player";
 
 function PostDetailComponentPage(props) {
 
@@ -160,7 +161,14 @@ function PostDetailComponentPage(props) {
             <div className="body-page-post-detail">
                 <div className="wrap-post-detail">
                     <div className="wrap-image-post-detail">
-                        <img className="image-post-detail" alt="picture" src={post.imagePath} />
+                        {
+                            post.type === "image" ?
+                                <img className="image-post-detail" alt="picture" src={post.imagePath} />
+                                :
+                                <ReactPlayer muted={true} playing height="100%" width="100%"
+                                             controls={true} url={post.videoPath}
+                                             light={post.imagePath}/>
+                        }
                     </div>
                     <div style={{border: "1px solid var(--border)"}}>
                         <div className="post__header">

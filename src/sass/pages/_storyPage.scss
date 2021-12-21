@@ -163,6 +163,9 @@
           }
           .item-story{
             height: 100%;
+            video{
+              object-fit: cover;
+            }
             img{
               object-fit: cover;
               width: 500px;
