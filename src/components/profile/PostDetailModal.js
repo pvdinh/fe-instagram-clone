@@ -4,6 +4,7 @@ import MoreActionInPost from ".././home/MoreActionInPost";
 import CommentComponent from ".././home/CommentComponent";
 import postActions from "../../redux/actions/postActions";
 import {connect} from "react-redux";
+import ReactPlayer from "react-player";
 
 function PostDetailModal(props) {
     const [like, setLike] = useState(true)
@@ -155,7 +156,14 @@ function PostDetailModal(props) {
         <Modal className="wrap-home-post-detail" closable={false} footer={null} visible={props.visible} onCancel={()=>{props.setVisible()}} centered >
             <div className="wrap-post-detail">
                 <div className="wrap-image-post-detail">
-                    <img className="image-post-detail" alt="picture" src={post.imagePath} />
+                    {
+                        post.type === "image" ?
+                            <img className="image-post-detail" alt="picture" src={post.imagePath} />
+                            :
+                            <ReactPlayer muted={true} playing height="100%" width="100%"
+                                         controls={true} url={post.videoPath}
+                                         light={post.imagePath}/>
+                    }
                 </div>
                 <div>
                     <div className="post__header">

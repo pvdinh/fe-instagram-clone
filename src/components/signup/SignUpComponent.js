@@ -81,6 +81,7 @@ function SignUpComponent(props) {
     }
     const onChangePassword = (e) => {
         setPassword(e.target.value)
+        checkPassword()
     }
     const onChangeFullname = (e) => {
         setFullname(e.target.value)
