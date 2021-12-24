@@ -14,7 +14,13 @@ function StoryComponentFacebook(props) {
     const [message,setMessage] = useState("")
     const [currentReply,setCurrentReply] = useState({})
     const [alertSubmit,setAlertSubmit] = useState("")
+    const [reload,setReload] = useState(true)
 
+    useEffect(()=>{
+        const autoReload = setTimeout(()=>{
+            setReload(!reload)
+        },60000)
+    })
 
     useEffect(() => {
         props.getAllStoryFollowing((data) => {
@@ -24,7 +30,7 @@ function StoryComponentFacebook(props) {
                 }
             })
         })
-    }, [])
+    }, [reload])
 
     useEffect(() => {
         props.getUserProfile(props.match.params.username, () => {
