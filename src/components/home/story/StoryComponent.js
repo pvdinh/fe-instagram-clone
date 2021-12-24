@@ -1,13 +1,20 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import {connect} from "react-redux";
 import StoryAction from "../../../redux/actions/StoryAction";
 import ItemStoryComponent from "./ItemStoryComponent";
 
 function StoryComponent(props) {
+    const [reload,setReload] = useState(true)
+
+    useEffect(()=>{
+        const autoReload = setTimeout(()=>{
+            setReload(!reload)
+        },120000)
+    })
 
     useEffect(()=>{
         props.getAllStoryFollowing()
-    },[])
+    },[reload])
 
     useEffect(() => {
         let myDiv = document.getElementById("story-body");

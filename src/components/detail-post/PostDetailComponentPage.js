@@ -2,11 +2,13 @@ import React, {useEffect, useState} from "react";
 import {Avatar, Modal} from "antd";
 import MoreActionInPost from "../home/MoreActionInPost";
 import CommentComponent from "../home/CommentComponent";
-import {BsFillHeartFill, FaComment} from "react-icons/all";
-import HavePostsComponents from "../profile/HavePostsComponents";
+import SockJS from "sockjs-client"
+import Stomp from "stompjs"
 import MorePostComponent from "./MorePostComponent";
 import ReactPlayer from "react-player";
+import {BASE_URL_WEBSOCKET} from "../../url";
 
+let stompClient=null
 function PostDetailComponentPage(props) {
 
     const [like, setLike] = useState(true)
@@ -16,6 +18,20 @@ function PostDetailComponentPage(props) {
     const [listCmt, setListCmt] = useState([])
     const [listLike, setListLike] = useState([])
     const [ownerPost, setOwnerPost] = useState([])
+
+    useEffect(()=>{
+        let sockJS = new SockJS(BASE_URL_WEBSOCKET+"/ws")
+        let header = {
+            'Authorization': localStorage.getItem('sessionToken') ? 'Bearer ' + localStorage.getItem('sessionToken') : 'Bearer ',
+            'Content-Type': 'application/json',
+        }
+        stompClient = Stomp.over(sockJS)
+        stompClient.connect(header,()=>{onConnect()}, ()=>{onError()})
+        stompClient.debug=null
+        return(()=>{
+            stompClient.disconnect()
+        })
+    },[reload])
 
     useEffect(()=>{
         props.getUserAccountProfile((userCurrent)=>{
@@ -50,14 +66,25 @@ function PostDetailComponentPage(props) {
         })
     },[props.match.params.pId,reload])
 
-    useEffect(()=>{
-        if(props.visible === true)
-        {
-            //scroll to the bottom of "#chats-body"
-            let myDiv = document.getElementById("chats-body");
-            myDiv.scrollTop = myDiv.scrollHeight;
-        }
+    useEffect(() => {
+        //scroll to the bottom of "#chats-body"
+        let myDiv = document.getElementById("chats-body");
+        myDiv.scrollTop = myDiv.scrollHeight;
     })
+
+    const onError = () =>{
+        console.log("error connect to ws!")
+    }
+
+    const receive = () => {
+        //reload component
+        setReload(!reload)
+    }
+
+    const onConnect = () =>{
+        //subscribe post comment
+        stompClient.subscribe('/post/allComment',()=>{receive()})
+    }
 
     const onClickLike = () => {
         if(like){
@@ -76,9 +103,8 @@ function PostDetailComponentPage(props) {
             idUser: props.userAccountProfile.id,
             dateCommented: new Date().getTime(),
         }
-        props.commentPost(comment, (data) => {
-            setReload(!reload)
-        })
+        console.log(comment)
+        stompClient.send("/app/comment.allComment",{},JSON.stringify(comment))
     }
 
     const calculatorDayCreated = (timeCreated) => {
