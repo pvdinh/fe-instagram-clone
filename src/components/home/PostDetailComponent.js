@@ -5,12 +5,30 @@ import CommentComponent from "./CommentComponent";
 import postActions from "../../redux/actions/postActions";
 import {connect} from "react-redux";
 import ReactPlayer from "react-player";
+import SockJS from "sockjs-client";
+import {BASE_URL_WEBSOCKET} from "../../url";
+import Stomp from "stompjs";
 
+let stompClientModal=null
 function PostDetailComponent(props) {
     const [like, setLike] = useState(true)
     const [saved, setSaved] = useState(false)
     const [reload, setReload] = useState(true)
     const [listCmt, setListCmt] = useState([])
+
+    useEffect(()=>{
+        let sockJS = new SockJS(BASE_URL_WEBSOCKET+"/ws")
+        let header = {
+            'Authorization': localStorage.getItem('sessionToken') ? 'Bearer ' + localStorage.getItem('sessionToken') : 'Bearer ',
+            'Content-Type': 'application/json',
+        }
+        stompClientModal = Stomp.over(sockJS)
+        stompClientModal.connect(header,()=>{onConnect()}, ()=>{onError()})
+        stompClientModal.debug=null
+        return(()=>{
+            stompClientModal.disconnect()
+        })
+    },[])
 
     useEffect(() => {
         props.likes.includes(props.userAccountProfile.username) ? setLike(true) : setLike(false)
@@ -38,6 +56,22 @@ function PostDetailComponent(props) {
         })
     }, [props.visible,reload])
 
+
+    const receive = () => {
+        //reload component
+        setReload(!reload)
+        props.reload()
+    }
+
+    const onError = () =>{
+        console.log("error connect to ws!")
+    }
+
+    const onConnect = () =>{
+        //subscribe post comment
+        stompClientModal.subscribe('/post/allComment',()=>{receive()})
+    }
+
     const onClickLike = () => {
         like ? props.unLikePost(props.post.id,props.currentPage) : props.likePost(props.post.id,props.currentPage)
     }
@@ -49,9 +83,7 @@ function PostDetailComponent(props) {
             idUser: props.userAccountProfile.id,
             dateCommented: new Date().getTime(),
         }
-        props.commentPost(comment, (data) => {
-            props.reload()
-        })
+        stompClientModal.send("/app/comment.allComment",{},JSON.stringify(comment))
     }
 
     const calculatorDayCreated = (timeCreated) => {

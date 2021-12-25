@@ -68,9 +68,7 @@ function PostItemComponent(props) {
             idUser: props.userAccountProfile.id,
             dateCommented: new Date().getTime(),
         }
-        props.commentPost(comment, (data) => {
-            setReLoad(!reLoad)
-        })
+        props.postCmt(comment)
     }
     const calculatorDayCreated = (timeCreated) => {
         let distance = Math.round((new Date().getTime() - timeCreated) / (1000))
@@ -130,6 +128,14 @@ function PostItemComponent(props) {
                 if(mess === "success") setSaved(true)
                 setReLoad(!reLoad)
             })
+    }
+
+    const showModalDetailPost = () =>{
+        if(isVisiblePostDetail !== false ){
+            return(
+                <PostDetailComponent currentPage={props.currentPage} reload={()=>{setReLoad(!reLoad)}} post={props.post} likes={props.likes} listComment={listComment} userAccountSetting={props.userAccountSetting} visible={isVisiblePostDetail} setVisible={()=>{setIsVisiblePostDetail(!isVisiblePostDetail)}} />
+            )
+        }
     }
 
     return (
@@ -285,7 +291,9 @@ function PostItemComponent(props) {
                     </article>
                     : <Instagram/>
             }
-            <PostDetailComponent currentPage={props.currentPage} reload={()=>{setReLoad(!reLoad)}} post={props.post} likes={props.likes} listComment={listComment} userAccountSetting={props.userAccountSetting} visible={isVisiblePostDetail} setVisible={()=>{setIsVisiblePostDetail(!isVisiblePostDetail)}} />
+            {
+                showModalDetailPost()
+            }
         </div>
     )
 }
