@@ -4,15 +4,39 @@ import {connect} from "react-redux";
 import InfiniteList from "react-infinite-scroll-list";
 import PostItemComponent from "./PostItemComponent";
 import InfiniteScroll from "react-infinite-scroll-component";
+import SockJS from "sockjs-client";
+import {BASE_URL_WEBSOCKET} from "../../url";
+import Stomp from "stompjs";
 
-
+let stompClient=null
 function PostComponent(props) {
     const [page,setPage] = useState(0)
     const [size,setSize] = useState(9)
+    const [reload,setReload] = useState(true)
+
+    useEffect(()=>{
+        let sockJS = new SockJS(BASE_URL_WEBSOCKET+"/ws")
+        let header = {
+            'Authorization': localStorage.getItem('sessionToken') ? 'Bearer ' + localStorage.getItem('sessionToken') : 'Bearer ',
+            'Content-Type': 'application/json',
+        }
+        stompClient = Stomp.over(sockJS)
+        stompClient.connect(header,()=>{onConnect()}, ()=>{onError()})
+        // stompClient.debug=null
+
+        return(()=>{
+            stompClient.disconnect()
+        })
+    },[reload])
+
 
     useEffect(() => {
         props.getAllPostOfFollowing({page:0,size:size})
     }, [])
+
+    useEffect(() => {
+        props.fetchAllPostOfFollowing(page)
+    }, [reload])
 
 
     const fetchMoreData = () => {
@@ -24,6 +48,27 @@ function PostComponent(props) {
         }, 1500);
     };
 
+
+    const onError = () =>{
+        console.log("error connect to ws!")
+    }
+
+    const receive = () => {
+        //reload component
+        console.log("XXX")
+        setReload(!reload)
+    }
+
+    const onConnect = () =>{
+        //subscribe post comment
+        stompClient.subscribe('/post/allComment',()=>{receive()})
+    }
+
+    const postCmt = (comment) =>{
+        console.log("CCCC")
+        stompClient.send("/app/comment.allComment",{},JSON.stringify(comment))
+    }
+
     return (
         <div>
             <InfiniteScroll
@@ -33,7 +78,7 @@ function PostComponent(props) {
             >
                 {
                     props.listPostOfFollowing.map((item,key) =>(
-                        <PostItemComponent currentPage={page} key={key} post={item.post} likes={item.likes} userAccountSetting={item.userAccountSetting} />
+                        <PostItemComponent postCmt={(comment)=>{postCmt(comment)}} currentPage={page} key={key} post={item.post} likes={item.likes} userAccountSetting={item.userAccountSetting} />
                     ))
                 }
             </InfiniteScroll>
@@ -51,6 +96,9 @@ function mapDispatchToProps(dispatch) {
     return {
         getAllPostOfFollowing: (payload) => {
             dispatch(postActions.action.getAllPostOfFollowing(payload))
+        },
+        fetchAllPostOfFollowing: (currentPage) => {
+            dispatch(postActions.action.fetchAllPostOfFollowing(currentPage))
         },
     }
 }

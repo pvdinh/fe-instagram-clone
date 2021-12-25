@@ -1,6 +1,7 @@
 const type = {
     GET_ALL_POST_OF_FOLLOWING: "GET_ALL_POST_OF_FOLLOWING",
     GET_ALL_POST_OF_FOLLOWING_SUCCESS: "GET_ALL_POST_OF_FOLLOWING_SUCCESS",
+    FETCH_ALL_POST_OF_FOLLOWING: "FETCH_ALL_POST_OF_FOLLOWING",
     FETCH_ALL_POST_OF_FOLLOWING_SUCCESS: "FETCH_ALL_POST_OF_FOLLOWING_SUCCESS",
     LIKE_POST:"LIKE_POST",
     UNLIKE_POST:"UNLIKE_POST",
@@ -27,6 +28,12 @@ const action = {
         return {
             type: type.GET_ALL_POST_OF_FOLLOWING,
             payload:payload,
+        }
+    },
+    fetchAllPostOfFollowing:(currentPage) =>{
+        return{
+            type:type.FETCH_ALL_POST_OF_FOLLOWING,
+            currentPage:currentPage,
         }
     },
     postImageToCloudinary: (data,callback) => {

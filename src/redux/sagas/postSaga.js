@@ -19,6 +19,14 @@ function* saga_getAllPostOfFollowing(action) {
         console.log("err", e)
     }
 }
+function* saga_fetchAllPostOfFollowing(action) {
+    try {
+        const response = yield call(getAllPostInformationFollowing,{page:0,size:9+(9*action.currentPage)})
+        yield put({type:postActions.type.FETCH_ALL_POST_OF_FOLLOWING_SUCCESS,data:response.data})
+    } catch (e) {
+        console.log("err", e)
+    }
+}
 function* saga_unLikePost(action) {
     try {
         const res = yield call(unLikePost,action.id)
@@ -133,6 +141,7 @@ function *saga_endSavePost(action) {
 
 function* listen() {
     yield takeEvery(postActions.type.GET_ALL_POST_OF_FOLLOWING, saga_getAllPostOfFollowing)
+    yield takeEvery(postActions.type.FETCH_ALL_POST_OF_FOLLOWING, saga_fetchAllPostOfFollowing)
     yield takeEvery(postActions.type.LIKE_POST, saga_likePost)
     yield takeEvery(postActions.type.LIKE_POST_IN_POST_DETAIL, saga_likePostInPostDetail)
     yield takeEvery(postActions.type.UNLIKE_POST_IN_POST_DETAIL, saga_unlikePostInPostDetail)
