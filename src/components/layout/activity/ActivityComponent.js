@@ -70,7 +70,9 @@ function ActivityComponent(props) {
     }
 
     const redirectToPost = (pId) =>{
-        window.location.href = `p/${pId}`
+        let url = window.location.href;
+        let arrUrl = url.split("/");
+        window.location.href =arrUrl[0] + "//" + arrUrl[2] +  "/p/" + pId
     }
 
     const readActivity = (activity) =>{

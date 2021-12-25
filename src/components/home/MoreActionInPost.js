@@ -4,10 +4,11 @@ import homeActions from "../../redux/actions/homeActions";
 import {connect} from "react-redux";
 import postActions from "../../redux/actions/postActions";
 import StoryAction from "../../redux/actions/StoryAction";
+import ModalConfirmUnFollow from "../modal/ModalConfirmUnFollow";
 
 function MoreActionInPost(props) {
     const [isModalVisible, setIsModalVisible] = useState(false);
-
+    const [isModalUnfollowVisible,setIsModalUnfollowVisible] = useState(false)
 
 
     const showModal = () => {
@@ -21,11 +22,6 @@ function MoreActionInPost(props) {
     const handleCancel = () => {
         setIsModalVisible(false);
     };
-
-    const endFollowing = (userFollowingId)=>{
-        props.endFollowing(userFollowingId)
-        setIsModalVisible(false)
-    }
 
     const onCopyLink = (link) =>{
         let url = window.location.href;
@@ -78,13 +74,14 @@ function MoreActionInPost(props) {
                         :
                         <>
                             <button className='options-dialog__button' style={{borderBottom:"1px solid var(--border)",color:"#ed4956",fontWeight: "700"}} >Report</button>
-                            <button className='options-dialog__button' style={{borderBottom:"1px solid var(--border)",color:"#ed4956",fontWeight: "700"}} onClick={()=>{endFollowing(props.userAccountFollowing.id)}}>Unfollow</button>
+                            <button className='options-dialog__button' style={{borderBottom:"1px solid var(--border)",color:"#ed4956",fontWeight: "700"}} onClick={()=>{setIsModalVisible(false);setIsModalUnfollowVisible(true)}}>Unfollow</button>
                             <button className='options-dialog__button' style={{borderBottom:"1px solid var(--border)"}} onClick={()=>{goToPost(props.post.id)}}>Go to post</button>
                             <button className='options-dialog__button' style={{borderBottom:"1px solid var(--border)"}} onClick={()=>{onCopyLink(props.post.id)}}>Copy link</button>
                             <button className='options-dialog__button' onClick={()=>{handleCancel()}}>Cancel</button>
                         </>
                 }
             </Modal>
+            <ModalConfirmUnFollow userAccountFollowing={props.userAccountFollowing} visible={isModalUnfollowVisible} setVisible={()=>{setIsModalUnfollowVisible(false)}} />
         </>
     )
 }

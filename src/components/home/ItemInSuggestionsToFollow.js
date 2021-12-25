@@ -7,7 +7,12 @@ function ItemInSuggestionsToFollow(props) {
 
     const beginFollowing = (userFollowingId) => {
         props.beginFollowing(userFollowingId)
-        setStatusFollow("Following")
+        setStatusFollow(true)
+    }
+
+    const endFollowing = (userFollowingId)=>{
+        props.endFollowing(userFollowingId)
+        setStatusFollow(false)
     }
 
     return (
@@ -26,7 +31,7 @@ function ItemInSuggestionsToFollow(props) {
                     }}>Follow</button>
                     :
                     <button className="side-menu__suggestion-button following" onClick={() => {
-                        beginFollowing(props.item.id)
+                        endFollowing(props.item.id)
                     }}>Following</button>
             }
         </div>
@@ -42,6 +47,9 @@ function mapDispatchToProps(dispatch) {
     return {
         beginFollowing: (userFollowingId) => {
             dispatch(homeActions.action.beginFollowing(userFollowingId))
+        },
+        endFollowing: (userFollowingId) => {
+            dispatch(homeActions.action.endFollowing(userFollowingId))
         },
     }
 }
