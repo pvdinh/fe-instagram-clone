@@ -1,6 +1,6 @@
 import {all, takeEvery, call, put} from "@redux-saga/core/effects";
 import {
-    changePassword,
+    changePassword, checkFollowingUser, checkUserHavingStory,
     editUserAccountSetting,
     getPrivateInformation, getSavedPost,
     getUserProfile
@@ -65,12 +65,34 @@ function *getSavedPost_saga(action) {
         console.log("err",e)
     }
 }
+function *checkFollowingUser_saga(action) {
+    try{
+        const response= yield call(checkFollowingUser,action.id)
+        if(response.statusCode === 200){
+            yield action.callback(response.data)
+        }
+    }catch (e) {
+        console.log("err",e)
+    }
+}
+function *checkUserHavingStory_saga(action) {
+    try{
+        const response= yield call(checkUserHavingStory,action.id)
+        if(response.statusCode === 200){
+            yield put({type:profileAction.type.CHECK_USER_HAVING_STORY_SUCCESS,data:response.data})
+        }
+    }catch (e) {
+        console.log("err",e)
+    }
+}
 function *listen() {
     yield takeEvery(profileAction.type.GET_USER_PROFILE,getUserProfile_saga)
     yield takeEvery(profileAction.type.EDIT_USER_ACCOUNT_SETTING,editUserAccountSetting_saga)
     yield takeEvery(profileAction.type.GET_PRIVATE_INFORMATION,getPrivateInformation_saga)
     yield takeEvery(profileAction.type.CHANGE_PASSWORD,changePassword_saga)
     yield takeEvery(profileAction.type.GET_SAVED_POST,getSavedPost_saga)
+    yield takeEvery(profileAction.type.CHECK_FOLLOWING_USER,checkFollowingUser_saga)
+    yield takeEvery(profileAction.type.CHECK_USER_HAVING_STORY,checkUserHavingStory_saga)
 }
 function* profileSaga() {
     yield all([listen()])

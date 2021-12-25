@@ -1,6 +1,7 @@
 import {connect} from "react-redux";
 import ProfileComponent from "../components/profile/ProfileComponent";
 import profileAction from "../redux/actions/profileAction";
+import homeActions from "../redux/actions/homeActions";
 
 function mapStateToProps(state) {
     return {
@@ -8,6 +9,7 @@ function mapStateToProps(state) {
         currentUserAccountSetting:state.profile.currentUserAccountSetting,
         listPostDetails:state.profile.listPostDetails,
         listSavedPostDetails: state.profile.listSavedPostDetails,
+        isHavingStory: state.profile.isHavingStory,
     }
 }
 
@@ -18,6 +20,18 @@ function mapDispatchToProps(dispatch) {
         },
         getSavedPost: (username, callback, history) => {
             dispatch(profileAction.action.getSavedPost(username, callback, history))
+        },
+        checkFollowingUser: (userFollowingId,callback) =>{
+            dispatch(profileAction.action.checkFollowingUser(userFollowingId,callback))
+        },
+        checkUserHavingStory:(userId)=>{
+            dispatch(profileAction.action.checkUserHavingStory(userId))
+        },
+        beginFollowing: (userFollowingId) => {
+            dispatch(homeActions.action.beginFollowing(userFollowingId))
+        },
+        endFollowing: (userFollowingId) => {
+            dispatch(homeActions.action.endFollowing(userFollowingId))
         },
     }
 }

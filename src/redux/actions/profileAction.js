@@ -7,6 +7,10 @@ const type = {
     CHANGE_PASSWORD:"CHANGE_PASSWORD",
     GET_SAVED_POST:"GET_SAVED_POST",
     GET_SAVED_POST_SUCCESS:"GET_SAVED_POST_SUCCESS",
+    CHECK_FOLLOWING_USER:"CHECK_FOLLOWING_USER",
+    CHECK_FOLLOWING_USER_SUCCESS:"CHECK_FOLLOWING_USER_SUCCESS",
+    CHECK_USER_HAVING_STORY:"CHECK_USER_HAVING_STORY",
+    CHECK_USER_HAVING_STORY_SUCCESS:"CHECK_USER_HAVING_STORY_SUCCESS",
 }
 const action = {
     getUserProfile:(username,callback,history)=>{
@@ -45,5 +49,18 @@ const action = {
             history,
         }
     },
+    checkFollowingUser:(userFollowingId,callback) =>{
+        return{
+            type:type.CHECK_FOLLOWING_USER,
+            id:userFollowingId,
+            callback,
+        }
+    },
+    checkUserHavingStory:(userId)=>{
+        return{
+            type:type.CHECK_USER_HAVING_STORY,
+            id:userId,
+        }
+    }
 }
 export default {type,action}
