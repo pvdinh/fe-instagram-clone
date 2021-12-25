@@ -200,37 +200,24 @@
     justify-self: center;
   }
 
+  .bio__img-block-no-story {
+    position: relative;
+    grid-row: 1 / -1;
+    align-self: start;
+    justify-self: center;
+  }
+
   .bio__img {
     border-radius: 50%;
     width: 77px;
     height: 77px;
     object-fit: cover;
   }
-
-  .bio__img-block:before {
-    display: block;
-    position: absolute;
-    content: "";
-    width: 85px;
-    height: 85px;
+  .bio__img-no-story {
     border-radius: 50%;
-    background: var(--bg-grey);
-    z-index: -1;
-    top: -4px;
-    left: -4px;
-  }
-
-  .bio__img-block:after {
-    display: block;
-    position: absolute;
-    content: "";
-    width: 90px;
-    height: 90px;
-    border-radius: 50%;
-    background: linear-gradient(45deg, #833ab4, #c13584, #e1306c, #fd1d1d);
-    z-index: -2;
-    top: -6px;
-    left: -7px;
+    width: 77px;
+    height: 77px;
+    object-fit: cover;
   }
 
   .bio__header {
@@ -248,6 +235,7 @@
         .b11 {
           margin-left: 5px;
           .bio__follow {
+            width: 82px;
             border: 1px solid var(--border);
             cursor: pointer;
             color: var(--text-dark);
@@ -257,6 +245,10 @@
             text-align: center;
             user-select: none;
             border-radius: 4px;
+          }
+          .follow{
+            background: #0095f6;
+            color: white!important;
           }
         }
 
@@ -676,6 +668,13 @@
     }
 
     .bio__img {
+      cursor: pointer;
+      width: 150px;
+      height: 150px;
+    }
+
+    .bio__img-no-story {
+      cursor: pointer;
       width: 150px;
       height: 150px;
     }
@@ -715,6 +714,36 @@
       height: 166px;
       border-radius: 50%;
       background: linear-gradient(45deg, #833ab4, #c13584, #e1306c, #fd1d1d);
+      z-index: -2;
+      top: -8px;
+      left: -8px;
+    }
+
+    .bio__img-block-no-story {
+      align-self: center;
+    }
+
+    .bio__img-block-no-story:before {
+      display: block;
+      position: absolute;
+      content: "";
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      background: var(--bg-grey);
+      z-index: -1;
+      top: -5px;
+      left: -5px;
+    }
+
+    .bio__img-block-no-story:after {
+      display: block;
+      position: absolute;
+      content: "";
+      width: 166px;
+      height: 166px;
+      border-radius: 50%;
+      background: var(--img-border);
       z-index: -2;
       top: -8px;
       left: -8px;

@@ -3,20 +3,31 @@ import {GoVerified} from "react-icons/all";
 import {useHistory} from "react-router";
 import {Link} from "react-router-dom";
 import RouteTypeOfPost from "./RouteTypeOfPost";
+import {sanitize} from "@cloudinary/base/qualifiers/flag";
+import ModalConfirmUnFollow from "../modal/ModalConfirmUnFollow";
 
 
 function ProfileComponent(props) {
     const [currentTypeOfPost, setCurrentTypeOfPost] = useState("li posts selected")
+    const [statusFollow, setStatusFollow] = useState(false)
+    const [isModalUnfollowVisible,setIsModalUnfollowVisible] = useState(false)
+    const [pathUrl, setPathUrl] = useState("")
+    const [imageUpload, setImageUpload] = useState("")
+
     let history = useHistory()
 
     useEffect(() => {
-        props.getUserProfile(props.match.params.username, () => {
+        props.getUserProfile(props.match.params.username, (data) => {
             if (props.match.url.includes("saved")) {
                 props.getSavedPost(props.match.params.username, () => {
                 }, history)
             }
+            props.checkFollowingUser(data.userAccountSetting.id,(dt)=>{
+                setStatusFollow(dt)
+            })
+            props.checkUserHavingStory(data.userAccountSetting.id)
         }, history)
-    }, [])
+    }, [isModalUnfollowVisible])
 
 
     useEffect(() => {
@@ -41,6 +52,16 @@ function ProfileComponent(props) {
         }
     }, [props.userAccountProfile])
 
+    const beginFollowing = (userFollowingId) => {
+        props.beginFollowing(userFollowingId)
+        setStatusFollow(true)
+    }
+
+    const endFollowing = (userFollowingId)=>{
+        props.endFollowing(userFollowingId)
+        setStatusFollow(false)
+    }
+
     const setTypePost = (s) => {
         let elementSelected = document.getElementsByClassName("selected")
         console.log(elementSelected)
@@ -52,25 +73,81 @@ function ProfileComponent(props) {
         let element = document.getElementsByClassName(s)
         element[0].classList.add("selected")
     }
+
+    const displayBtnFollow = () =>{
+        if(props.currentUserAccountSetting.id !== props.userAccountProfile.id){
+            return  statusFollow
+                ?
+                <button className="bio__follow" onClick={()=>{setIsModalUnfollowVisible(true)}}>Following</button>
+                :
+                <button className="bio__follow follow" onClick={()=>{beginFollowing(props.currentUserAccountSetting.id)}}>Follow</button>
+        }
+    }
+
+    const onChangeFileUpload = (e) =>{
+        if (e.target.files[0] && (e.target.files[0].size/1024/1024 <= 40)) {
+            let data={
+                "file":e.target.files[0],
+                "upload_preset":"instagram-clone",
+            }
+            let elementAlert = document.getElementsByClassName("alertUploading")
+            elementAlert[0].classList.add("show")
+            props.postImageToCloudinary(data,(data)=>{
+                let dt={
+                    profilePhoto:data.url,
+                }
+                props.changeProfilePhoto(dt,()=>{
+                    props.getUserAccountProfile(()=>{})
+                    setPathUrl(URL.createObjectURL(e.target.files[0]))
+                    elementAlert[0].classList.remove("show")
+                })
+            })
+        } else {
+            let elementAlert = document.getElementsByClassName("alertUploadErr")
+            elementAlert[0].classList.add("show")
+            const setTimeOut = setTimeout(()=>{
+                elementAlert[0].classList.remove("show")
+            },4000)
+        }
+    }
+
     return (
         <div className="wrap-body-page-profile">
             <div style={{maxWidth: "1100px", margin: "10px auto"}}>
                 <main>
                     <section className="bio">
-                        <div className="bio__img-block">
-                            <a href><img className="bio__img" src={props.currentUserAccountSetting.profilePhoto}
-                                         alt="profile picture"/></a>
-                        </div>
+                        {
+                            props.isHavingStory ?
+                                <div className="bio__img-block">
+                                    <label htmlFor="file_upload"><img className="bio__img" src={pathUrl === "" ? props.currentUserAccountSetting.profilePhoto : pathUrl}
+                                                 alt="profile picture"/></label>
+                                </div>
+                                :
+                                <div className="bio__img-block-no-story">
+                                    <label htmlFor="file_upload"><img className="bio__img-no-story" src={pathUrl === "" ? props.currentUserAccountSetting.profilePhoto : pathUrl}
+                                                 alt="profile picture"/></label>
+                                </div>
+                        }
+                        {
+                            props.currentUserAccountSetting.id === props.userAccountProfile.id
+                            ?
+                                <input type="file" id="file_upload" accept="image/*" style={{display:"none"}} onChange={(e)=>{onChangeFileUpload(e)}} />
+                                :
+                                null
+                        }
                         <div className="bio__header">
                             <h1 className="bio__account">{props.currentUserAccountSetting.username}</h1>
                             <div className="wrap-setting">
                                 <div><span className="bio__verified"><GoVerified/></span></div>
                                 <div className="b1">
                                     <div className="b11">
-                                        <button className="bio__follow">Edit Profile</button>
+                                        {
+                                           displayBtnFollow()
+                                        }
+
                                     </div>
                                     <div className="b12">
-                                        <button className="btn-setting">
+                                        <button className="btn-setting" onClick={()=>{window.location.href="/accounts/edit"}}>
                                             <svg aria-label="Options" className="_8-yf5 " fill="#262626" height="24"
                                                  role="img"
                                                  viewBox="0 0 48 48" width="24">
@@ -258,6 +335,7 @@ function ProfileComponent(props) {
                     <span className="copyright">© 2021 Instagram from Facebook</span>
                 </footer>
             </div>
+            <ModalConfirmUnFollow userAccountFollowing={props.currentUserAccountSetting} visible={isModalUnfollowVisible} setVisible={()=>{setIsModalUnfollowVisible(false)}} />
         </div>
     )
 }

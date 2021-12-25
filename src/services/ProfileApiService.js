@@ -16,7 +16,19 @@ export const changePassword = (data) => {
     let profileRequest = new ProfileRequest()
     return profileRequest.changePassword(data)
 }
+export const changeProfilePhoto = (data) => {
+    let profileRequest = new ProfileRequest()
+    return profileRequest.changeProfilePhoto(data)
+}
 export const getSavedPost = (username) => {
     let profileRequest = new ProfileRequest()
     return profileRequest.getSavedPost(username)
+}
+export const checkFollowingUser = (id) => {
+    let profileRequest = new ProfileRequest()
+    return profileRequest.checkFollowingUser(id)
+}
+export const checkUserHavingStory = (id) => {
+    let profileRequest = new ProfileRequest()
+    return profileRequest.checkUserHavingStory(id)
 }
