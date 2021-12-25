@@ -11,6 +11,8 @@ function ProfileComponent(props) {
     const [currentTypeOfPost, setCurrentTypeOfPost] = useState("li posts selected")
     const [statusFollow, setStatusFollow] = useState(false)
     const [isModalUnfollowVisible,setIsModalUnfollowVisible] = useState(false)
+    const [pathUrl, setPathUrl] = useState("")
+    const [imageUpload, setImageUpload] = useState("")
 
     let history = useHistory()
 
@@ -82,6 +84,33 @@ function ProfileComponent(props) {
         }
     }
 
+    const onChangeFileUpload = (e) =>{
+        if (e.target.files[0] && (e.target.files[0].size/1024/1024 <= 40)) {
+            let data={
+                "file":e.target.files[0],
+                "upload_preset":"instagram-clone",
+            }
+            let elementAlert = document.getElementsByClassName("alertUploading")
+            elementAlert[0].classList.add("show")
+            props.postImageToCloudinary(data,(data)=>{
+                let dt={
+                    profilePhoto:data.url,
+                }
+                props.changeProfilePhoto(dt,()=>{
+                    props.getUserAccountProfile(()=>{})
+                    setPathUrl(URL.createObjectURL(e.target.files[0]))
+                    elementAlert[0].classList.remove("show")
+                })
+            })
+        } else {
+            let elementAlert = document.getElementsByClassName("alertUploadErr")
+            elementAlert[0].classList.add("show")
+            const setTimeOut = setTimeout(()=>{
+                elementAlert[0].classList.remove("show")
+            },4000)
+        }
+    }
+
     return (
         <div className="wrap-body-page-profile">
             <div style={{maxWidth: "1100px", margin: "10px auto"}}>
@@ -90,14 +119,21 @@ function ProfileComponent(props) {
                         {
                             props.isHavingStory ?
                                 <div className="bio__img-block">
-                                    <a href><img className="bio__img" src={props.currentUserAccountSetting.profilePhoto}
-                                                 alt="profile picture"/></a>
+                                    <label htmlFor="file_upload"><img className="bio__img" src={pathUrl === "" ? props.currentUserAccountSetting.profilePhoto : pathUrl}
+                                                 alt="profile picture"/></label>
                                 </div>
                                 :
                                 <div className="bio__img-block-no-story">
-                                    <a href><img className="bio__img-no-story" src={props.currentUserAccountSetting.profilePhoto}
-                                                 alt="profile picture"/></a>
+                                    <label htmlFor="file_upload"><img className="bio__img-no-story" src={pathUrl === "" ? props.currentUserAccountSetting.profilePhoto : pathUrl}
+                                                 alt="profile picture"/></label>
                                 </div>
+                        }
+                        {
+                            props.currentUserAccountSetting.id === props.userAccountProfile.id
+                            ?
+                                <input type="file" id="file_upload" accept="image/*" style={{display:"none"}} onChange={(e)=>{onChangeFileUpload(e)}} />
+                                :
+                                null
                         }
                         <div className="bio__header">
                             <h1 className="bio__account">{props.currentUserAccountSetting.username}</h1>

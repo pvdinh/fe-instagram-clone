@@ -11,6 +11,7 @@ const type = {
     CHECK_FOLLOWING_USER_SUCCESS:"CHECK_FOLLOWING_USER_SUCCESS",
     CHECK_USER_HAVING_STORY:"CHECK_USER_HAVING_STORY",
     CHECK_USER_HAVING_STORY_SUCCESS:"CHECK_USER_HAVING_STORY_SUCCESS",
+    CHANGE_PROFILE_PHOTO:"CHANGE_PROFILE_PHOTO",
 }
 const action = {
     getUserProfile:(username,callback,history)=>{
@@ -37,6 +38,13 @@ const action = {
     changePassword:(data,callback)=>{
         return{
             type:type.CHANGE_PASSWORD,
+            data:data,
+            callback,
+        }
+    },
+    changeProfilePhoto:(data,callback)=>{
+        return{
+            type:type.CHANGE_PROFILE_PHOTO,
             data:data,
             callback,
         }

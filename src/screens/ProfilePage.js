@@ -2,6 +2,7 @@ import {connect} from "react-redux";
 import ProfileComponent from "../components/profile/ProfileComponent";
 import profileAction from "../redux/actions/profileAction";
 import homeActions from "../redux/actions/homeActions";
+import postActions from "../redux/actions/postActions";
 
 function mapStateToProps(state) {
     return {
@@ -32,6 +33,15 @@ function mapDispatchToProps(dispatch) {
         },
         endFollowing: (userFollowingId) => {
             dispatch(homeActions.action.endFollowing(userFollowingId))
+        },
+        postImageToCloudinary: (data,callback) => {
+            dispatch(postActions.action.postImageToCloudinary(data,callback))
+        },
+        getUserAccountProfile: (callback) => {
+            dispatch(homeActions.action.getUserAccountProfile(callback))
+        },
+        changeProfilePhoto:(data,callback) =>{
+            dispatch(profileAction.action.changeProfilePhoto(data,callback))
         },
     }
 }

@@ -17,6 +17,10 @@ export class ProfileRequest extends BaseRequest{
         let url=`user-account-setting/change-password`
         return this.post(url,data)
     }
+    changeProfilePhoto(data){
+        let url=`user-account-setting/change-profile-photo`
+        return this.post(url,data)
+    }
     getSavedPost(username){
         let url=`user-account-setting/${username}/get-saved-post`
         return this.get(url,username)

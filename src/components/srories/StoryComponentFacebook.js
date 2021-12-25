@@ -116,7 +116,7 @@ function StoryComponentFacebook(props) {
                     <div className="top-top">
                         <div className="btn-close">
                             <Tooltip placement="bottom" title="Nhấn để đóng">
-                                <button className='wrap-btn-esc-facebook'>
+                                <button className='wrap-btn-esc-facebook' onClick={()=>{window.location.href = "/"}}>
                                     <svg aria-label="Close" color="#ffffff" fill="#ffffff" height="24" role="img"
                                          viewBox="0 0 48 48" width="24">
                                         <path clip-rule="evenodd"
