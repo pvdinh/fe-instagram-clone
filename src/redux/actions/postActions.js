@@ -22,6 +22,8 @@ const type = {
     CHECK_SAVED_POST:"CHECK_SAVED_POST",
     BEGIN_SAVE_POST:"BEGIN_SAVE_POST",
     END_SAVE_POST:"END_SAVE_POST",
+    GET_USER_ACCOUNT_SETTING_LIKED_POST:"GET_USER_ACCOUNT_SETTING_LIKED_POST",
+    GET_USER_ACCOUNT_SETTING_LIKED_POST_SUCCESS:"GET_USER_ACCOUNT_SETTING_LIKED_POST_SUCCESS",
 }
 const action = {
     getAllPostOfFollowing: (payload) => {
@@ -128,6 +130,13 @@ const action = {
             type:type.END_SAVE_POST,
             id:pId,
             callback,
+        }
+    },
+    getUserAccountSettingLikedPost:(pId,payload)=>{
+        return{
+            type:type.GET_USER_ACCOUNT_SETTING_LIKED_POST,
+            payload:payload,
+            id:pId,
         }
     },
 }

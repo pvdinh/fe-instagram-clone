@@ -35,6 +35,11 @@ function MessageComponent(props) {
     },[])
 
 
+    useEffect(()=>{
+        document.title="Inbox"
+    },[])
+
+
     const sendMessage = (message,type) =>{
         let data={
             sender:props.userAccountProfile.id,
@@ -64,6 +69,8 @@ function MessageComponent(props) {
     const receive = (receiver)=>{
         props.findAllBySenderAndReceiver(receiver)
         props.findAllBySender()
+        console.log(receiver)
+        console.log(props.userAccountProfile)
     }
     //chỉ có những người là receiver hoặc sender mới phải reload lại
     const receiveAllInbox = (payload,idCurrentUser)=>{

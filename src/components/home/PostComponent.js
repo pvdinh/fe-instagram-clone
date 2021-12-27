@@ -55,7 +55,6 @@ function PostComponent(props) {
 
     const receive = () => {
         //reload component
-        console.log("XXX")
         setReload(!reload)
     }
 
@@ -65,7 +64,6 @@ function PostComponent(props) {
     }
 
     const postCmt = (comment) =>{
-        console.log("CCCC")
         stompClient.send("/app/comment.allComment",{},JSON.stringify(comment))
     }
 

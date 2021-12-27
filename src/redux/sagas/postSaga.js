@@ -5,7 +5,7 @@ import {
     checkSavedPost,
     commentPost, deletePost, endSavePost,
     getAllPostInformationFollowing,
-    getCommentPost, getPostInformationFromPId,
+    getCommentPost, getPostInformationFromPId, getUserAccountSettingLikedPost,
     likePost, postImageToCloudinary, postNewPost,
     unLikePost
 } from "../../services/PostApiService";
@@ -139,6 +139,15 @@ function *saga_endSavePost(action) {
     }
 }
 
+function *saga_getUserAccountSettingLikedPost(action) {
+    try{
+        const res= yield call(getUserAccountSettingLikedPost,{pId:action.id,page:action.payload.page,size:action.payload.size})
+        yield put({type:postActions.type.GET_USER_ACCOUNT_SETTING_LIKED_POST_SUCCESS,data:res.data})
+    }catch (e) {
+        console.log("err",e)
+    }
+}
+
 function* listen() {
     yield takeEvery(postActions.type.GET_ALL_POST_OF_FOLLOWING, saga_getAllPostOfFollowing)
     yield takeEvery(postActions.type.FETCH_ALL_POST_OF_FOLLOWING, saga_fetchAllPostOfFollowing)
@@ -155,6 +164,7 @@ function* listen() {
     yield takeEvery(postActions.type.CHECK_SAVED_POST, saga_checkSavedPost)
     yield takeEvery(postActions.type.BEGIN_SAVE_POST, saga_beginSavePost)
     yield takeEvery(postActions.type.END_SAVE_POST, saga_endSavePost)
+    yield takeEvery(postActions.type.GET_USER_ACCOUNT_SETTING_LIKED_POST, saga_getUserAccountSettingLikedPost)
 }
 
 function* postSaga() {

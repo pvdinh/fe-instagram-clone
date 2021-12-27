@@ -1479,7 +1479,7 @@
 }
 .wrap-search-in-header{
   width: 375px;
-  height: 361px!important;
+  height: 461px!important;
   position: fixed!important;
   overflow: auto;
   top: 54px;
@@ -1616,4 +1616,92 @@
 
 :root.darkTheme .header__theme-button-moon {
   display: none;
+}
+.wrap-modal-display-liked-post{
+  .ant-modal-content{
+    background: var(--primary);
+    border-radius: 15px;
+    .ant-modal-header{
+      background: var(--primary);
+      border-top-left-radius: 15px;
+      border-top-right-radius: 15px;
+      padding: 8px 8px!important;
+      .ant-modal-title{
+        .wrap-title-modal-display-liked-post{
+          display: grid;
+          grid-template-columns: 50px auto 50px;
+          grid-column-gap: 10px;
+          align-items: center;
+          .content-title{
+            font-size: 16px;
+            font-weight: 600;
+            text-align: center;
+            color: var(--text-dark);
+          }
+          .icon-close{
+            color: var(--text-dark);
+            text-align: end;
+            cursor: pointer;
+            svg{
+              width: 25px;
+              height: 25px;
+            }
+          }
+        }
+      }
+    }
+    .ant-modal-body{
+      padding: 10px;
+      overflow: auto;
+      height: 500px;
+    }
+  }
+  .wrap-div-modal-display-liked-post{
+    .item-liked{
+      padding-top: 10px;
+      padding-bottom: 10px;
+      display: grid;
+      grid-template-columns: 50px auto 100px;
+      grid-column-gap: 10px;
+      align-items: center;
+      .img-liked{
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 1px solid var(--img-border);
+      }
+    }
+    .info-liked{
+      .displayname{
+        color: #8e8e8e;
+      }
+      .username{
+        font-size: 16px;
+        color: var(--text-dark);
+      }
+    }
+    .follow-liked-btn{
+      .following{
+        cursor: pointer;
+        display: block;
+        font-weight: 600;
+        padding: 5px 9px;
+        background-color: transparent;
+        border: 1px solid #dbdbdb;
+        border-radius: 4px;
+        color: var(--text-dark);
+      }
+      .follow{
+        border: 1px solid transparent;
+        background-color: #0095f6;
+        border-radius: 4px;
+        color: #fff;
+        cursor: pointer;
+        display: block;
+        font-weight: 600;
+        padding: 5px 9px;
+      }
+    }
+  }
 }

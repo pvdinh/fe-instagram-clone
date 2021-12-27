@@ -48,3 +48,7 @@ export const beginSavePost = (pId) =>{
     const postRequest = new PostRequest()
     return postRequest.beginSavePost(pId)
 }
+export const getUserAccountSettingLikedPost = (payload) =>{
+    const postRequest = new PostRequest()
+    return postRequest.getUserAccountSettingLikedPost(payload)
+}

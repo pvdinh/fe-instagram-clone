@@ -50,5 +50,9 @@ class PostRequest extends BaseRequest{
         let url = `post/${pId}/begin-save-post`
         return this.post(url,pId)
     }
+    getUserAccountSettingLikedPost(payload){
+        let url = `like/${payload.pId}?page=${payload.page}&size=${payload.size}`
+        return this.get(url)
+    }
 }
 export default PostRequest

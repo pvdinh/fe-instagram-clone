@@ -9,11 +9,13 @@ import dbLike from '../../assets/homePage/posts/red_heart.svg';
 import PostDetailComponent from "./PostDetailComponent";
 import ReactPlayer from "react-player";
 import homeActions from "../../redux/actions/homeActions";
+import ModalDisplayLikedPost from "../modal/ModalDisplayLikedPost";
 
 function PostItemComponent(props) {
     const [like, setLike] = useState(true)
     const [saved, setSaved] = useState(false)
     const [isVisiblePostDetail, setIsVisiblePostDetail] = useState(false)
+    const [isVisibleLiked, setIsVisibleLiked] = useState(false)
     const [listComment, setListComment] = useState([])
     const [contentLoader, setContentLoader] = useState(false)
     const [reLoad, setReLoad] = useState(true)
@@ -109,7 +111,7 @@ function PostItemComponent(props) {
                     <span className="likes">
               Liked by <a className='post__name--underline' href={`/${like[0]}`}>{likes[0]}</a>, <a
                         className='post__name--underline'
-                        href={`/${like[1]}`}>{likes[1]}</a> and <strong>{likes.length - 2} others</strong>
+                        href={`/${like[1]}`}>{likes[1]}</a> and <strong style={{cursor:"pointer",}} onClick={()=>{setIsVisibleLiked(true)}}>{likes.length - 2} others</strong>
             </span>
                 )
             default:
@@ -288,6 +290,7 @@ function PostItemComponent(props) {
                                 postComment(cmt)
                             }}/>
                         </div>
+                        <ModalDisplayLikedPost pId={props.post.id} visible={isVisibleLiked} setVisible={()=>{setIsVisibleLiked(false)}} />
                     </article>
                     : <Instagram/>
             }
