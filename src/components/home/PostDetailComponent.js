@@ -73,7 +73,13 @@ function PostDetailComponent(props) {
     }
 
     const onClickLike = () => {
-        like ? props.unLikePost(props.post.id,props.currentPage) : props.likePost(props.post.id,props.currentPage)
+        if (like) {
+            props.unLikePost(props.post.id, props.currentPage)
+            stompClientModal.send("/app/comment.allComment",{},JSON.stringify({}))
+        } else {
+            props.likePost(props.post.id, props.currentPage)
+            stompClientModal.send("/app/comment.allComment",{},JSON.stringify({}))
+        }
     }
     const postComment = (cmt) => {
         let comment = {
@@ -171,7 +177,7 @@ function PostDetailComponent(props) {
                             :
                             <ReactPlayer muted={true} playing height="100%" width="100%"
                                          controls={true} url={props.post.videoPath}
-                                         light={props.post.imagePath}/>
+                                         light={props.post.imagePath !== "" ? props.post.imagePath : false}/>
                     }
                 </div>
                 <div>

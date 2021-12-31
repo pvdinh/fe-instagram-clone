@@ -179,7 +179,7 @@ function StoryComponentFacebook(props) {
                                                                 :
                                                                 <ReactPlayer muted={true} style={{borderRadius:"20px"}} playing height="100%" width="100%"
                                                                              controls={true} url={value.post.videoPath}
-                                                                             light={value.post.imagePath}/>
+                                                                             light={value.post.imagePath !== "" ? value.post.imagePath : false}/>
                                                         }
                                                         <div className="footer-story">
                                                         </div>

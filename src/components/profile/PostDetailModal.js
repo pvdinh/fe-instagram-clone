@@ -92,9 +92,11 @@ function PostDetailModal(props) {
         if(like){
             setLike(false)
             props.unlikePostInPostDetail(post.id)
+            stompClientModal.send("/app/comment.allComment",{},JSON.stringify({}))
         }else {
             setLike(true)
             props.likePostInPostDetail(post.id)
+            stompClientModal.send("/app/comment.allComment",{},JSON.stringify({}))
         }
     }
     const postComment = (cmt) => {
@@ -193,7 +195,7 @@ function PostDetailModal(props) {
                             :
                             <ReactPlayer muted={true} playing height="100%" width="100%"
                                          controls={true} url={post.videoPath}
-                                         light={post.imagePath}/>
+                                         light={post.imagePath !== "" ? post.imagePath : false}/>
                     }
                 </div>
                 <div>

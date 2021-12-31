@@ -51,7 +51,15 @@ function PostItemComponent(props) {
     }, [reLoad,props.post])
 
     const onClickLike = () => {
-        like ? props.unLikePost(props.post.id,props.currentPage) : props.likePost(props.post.id,props.currentPage)
+        if (like) {
+            props.unLikePost(props.post.id, props.currentPage)
+            props.postCmt({})
+        }
+    else
+        {
+            props.likePost(props.post.id, props.currentPage)
+            props.postCmt({})
+        }
     }
 
     const onDoubleClick = () => {
@@ -169,7 +177,7 @@ function PostItemComponent(props) {
                                         :
                                             <ReactPlayer muted={true} playing height="780px" width="auto"
                                                          controls={true} url={props.post.videoPath}
-                                                         light={props.post.imagePath}/>
+                                                         light={props.post.imagePath !== "" ? props.post.imagePath : false}/>
                                     }
                                 </LazyLoad>
                                 <img src={dbLike} className={classdbClick}/>

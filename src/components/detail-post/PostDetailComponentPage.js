@@ -90,9 +90,11 @@ function PostDetailComponentPage(props) {
         if(like){
             setLike(false)
             props.unlikePostInPostDetail(post.id)
+            stompClient.send("/app/comment.allComment",{},JSON.stringify({}))
         }else {
             setLike(true)
             props.likePostInPostDetail(post.id)
+            stompClient.send("/app/comment.allComment",{},JSON.stringify({}))
         }
     }
     const postComment = (cmt) => {
@@ -193,7 +195,7 @@ function PostDetailComponentPage(props) {
                                 :
                                 <ReactPlayer muted={true} playing height="100%" width="100%"
                                              controls={true} url={post.videoPath}
-                                             light={post.imagePath}/>
+                                             light={post.imagePath !== "" ? props.imagePath : false}/>
                         }
                     </div>
                     <div style={{border: "1px solid var(--border)"}}>

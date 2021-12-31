@@ -43,7 +43,7 @@ function HavePostsComponents(props) {
             {
                 props.listPostDetails.map((value,index)=>(
                     <div className="wrap-post">
-                        <a className="i1" href><img className="i11" src={value.post.imagePath} alt="bill murray post picture" /></a>
+                        <a className="i1" href><img className="i11" src={value.post.imagePath !== "" ? value.post.imagePath : "https://res.cloudinary.com/dinhpv/image/upload/v1640940571/instargram-clone/playicon_qqb2pf.jpg"} alt="bill murray post picture" /></a>
                         <div className="wrap-post-info" onClick={()=>{onClickPost(value)}}>
                             <div className="post-info">
                                 <div className="likes">
