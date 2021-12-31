@@ -177,7 +177,7 @@ function StoryComponentFacebook(props) {
                                                             value.post.type === "image" ?
                                                                 <img className="img-story" alt="picture" src={value.post.imagePath} />
                                                                 :
-                                                                <ReactPlayer muted={true} playing height="100%" width="100%"
+                                                                <ReactPlayer muted={true} style={{borderRadius:"20px"}} playing height="100%" width="100%"
                                                                              controls={true} url={value.post.videoPath}
                                                                              light={value.post.imagePath}/>
                                                         }

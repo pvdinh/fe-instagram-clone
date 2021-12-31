@@ -131,7 +131,7 @@ function HomeComponent() {
                 <button className="navbar__button profile-button">
                     <div className="profile-button__border"></div>
                     <div className="profile-button__picture">
-                        <img src="https://res.cloudinary.com/dinhpv/image/upload/v1631533078/instargram-clone/lanh_vnizam.jpg" alt="User Picture"/>
+                        <img src="https://res.cloudinary.com/dinhpv/image/upload/v1639995035/instargram-clone/u0bzzpthtzw9lik72gy6.jpg" alt="User Picture"/>
                     </div>
                 </button>
             </nav>
