@@ -14,6 +14,9 @@ function ProfileComponent(props) {
     const [pathUrl, setPathUrl] = useState("")
     const [imageUpload, setImageUpload] = useState("")
 
+    const [page,setPage] = useState(0)
+    const [size,setSize] = useState(10)
+
     let history = useHistory()
 
     useEffect(() => {
@@ -21,6 +24,10 @@ function ProfileComponent(props) {
             if (props.match.url.includes("saved")) {
                 props.getSavedPost(props.match.params.username, () => {
                 }, history)
+            }
+            if (props.match.url.includes("video")) {
+                props.getPostVideo(props.match.params.username, () => {
+                }, history, {page:page,size:size})
             }
             props.checkFollowingUser(data.userAccountSetting.id,(dt)=>{
                 setStatusFollow(dt)
@@ -35,7 +42,7 @@ function ProfileComponent(props) {
             case props.match.url.includes("saved"):
                 setCurrentTypeOfPost("li saved selected")
                 break;
-            case props.match.url.includes("igtv"):
+            case props.match.url.includes("video"):
                 setCurrentTypeOfPost("li igtv selected")
                 break;
             case props.match.url.includes("tagged"):
@@ -210,7 +217,7 @@ function ProfileComponent(props) {
                                             </Link>
                                         </li>
                                         <li className={currentTypeOfPost.includes("igtv") ? currentTypeOfPost : "li igtv"}>
-                                            <Link to={`/${props.match.params.username}/igtv`} onClick={() => {
+                                            <Link to={`/${props.match.params.username}/video`} onClick={() => {
                                                 setTypePost("li igtv")
                                             }} className="tab-link">
                                                 <div className="wrap-type-post">
@@ -220,7 +227,7 @@ function ProfileComponent(props) {
                                                         <path
                                                             d="M41 10c-2.2-2.1-4.8-3.5-10.4-3.5h-3.3L30.5 3c.6-.6.5-1.6-.1-2.1-.6-.6-1.6-.5-2.1.1L24 5.6 19.7 1c-.6-.6-1.5-.6-2.1-.1-.6.6-.7 1.5-.1 2.1l3.2 3.5h-3.3C11.8 6.5 9.2 7.9 7 10c-2.1 2.2-3.5 4.8-3.5 10.4v13.1c0 5.7 1.4 8.3 3.5 10.5 2.2 2.1 4.8 3.5 10.4 3.5h13.1c5.7 0 8.3-1.4 10.5-3.5 2.1-2.2 3.5-4.8 3.5-10.4V20.5c0-5.7-1.4-8.3-3.5-10.5zm.5 23.6c0 5.2-1.3 7-2.6 8.3-1.4 1.3-3.2 2.6-8.4 2.6H17.4c-5.2 0-7-1.3-8.3-2.6-1.3-1.4-2.6-3.2-2.6-8.4v-13c0-5.2 1.3-7 2.6-8.3 1.4-1.3 3.2-2.6 8.4-2.6h13.1c5.2 0 7 1.3 8.3 2.6 1.3 1.4 2.6 3.2 2.6 8.4v13zM34.6 25l-9.1 2.8v-3.7c0-.5-.2-.9-.6-1.2-.4-.3-.9-.4-1.3-.2l-11.1 3.4c-.8.2-1.2 1.1-1 1.9.2.8 1.1 1.2 1.9 1l9.1-2.8v3.7c0 .5.2.9.6 1.2.3.2.6.3.9.3.1 0 .3 0 .4-.1l11.1-3.4c.8-.2 1.2-1.1 1-1.9s-1.1-1.2-1.9-1z"></path>
                                                     </svg>
-                                                    <span className="tab-link-text"> IGTV</span>
+                                                    <span className="tab-link-text"> VIDEO</span>
                                                 </div>
                                             </Link>
                                         </li>
@@ -239,27 +246,29 @@ function ProfileComponent(props) {
                                                 </div>
                                             </Link>
                                         </li>
-                                        <li className={currentTypeOfPost.includes("tagged") ? currentTypeOfPost : "li tagged"}>
-                                            <Link to={`/${props.match.params.username}/tagged`} onClick={() => {
-                                                setTypePost("li tagged")
-                                            }} className="tab-link">
-                                                <div className="wrap-type-post">
-                                                    <svg aria-label="" className="_8-yf5 " fill="#8e8e8e" height="12"
-                                                         role="img"
-                                                         viewBox="0 0 48 48" width="12">
-                                                        <path
-                                                            d="M41.5 5.5H30.4c-.5 0-1-.2-1.4-.6l-4-4c-.6-.6-1.5-.6-2.1 0l-4 4c-.4.4-.9.6-1.4.6h-11c-3.3 0-6 2.7-6 6v30c0 3.3 2.7 6 6 6h35c3.3 0 6-2.7 6-6v-30c0-3.3-2.7-6-6-6zm-29.4 39c-.6 0-1.1-.6-1-1.2.7-3.2 3.5-5.6 6.8-5.6h12c3.4 0 6.2 2.4 6.8 5.6.1.6-.4 1.2-1 1.2H12.1zm32.4-3c0 1.7-1.3 3-3 3h-.6c-.5 0-.9-.4-1-.9-.6-5-4.8-8.9-9.9-8.9H18c-5.1 0-9.4 3.9-9.9 8.9-.1.5-.5.9-1 .9h-.6c-1.7 0-3-1.3-3-3v-30c0-1.7 1.3-3 3-3h11.1c1.3 0 2.6-.5 3.5-1.5L24 4.1 26.9 7c.9.9 2.2 1.5 3.5 1.5h11.1c1.7 0 3 1.3 3 3v30zM24 12.5c-5.3 0-9.6 4.3-9.6 9.6s4.3 9.6 9.6 9.6 9.6-4.3 9.6-9.6-4.3-9.6-9.6-9.6zm0 16.1c-3.6 0-6.6-2.9-6.6-6.6 0-3.6 2.9-6.6 6.6-6.6s6.6 2.9 6.6 6.6c0 3.6-3 6.6-6.6 6.6z"></path>
-                                                    </svg>
-                                                    <span className="tab-link-text"> Tagged</span>
-                                                </div>
-                                            </Link>
-                                        </li>
+                                        {/*<li className={currentTypeOfPost.includes("tagged") ? currentTypeOfPost : "li tagged"}>*/}
+                                        {/*    <Link to={`/${props.match.params.username}/tagged`} onClick={() => {*/}
+                                        {/*        setTypePost("li tagged")*/}
+                                        {/*    }} className="tab-link">*/}
+                                        {/*        <div className="wrap-type-post">*/}
+                                        {/*            <svg aria-label="" className="_8-yf5 " fill="#8e8e8e" height="12"*/}
+                                        {/*                 role="img"*/}
+                                        {/*                 viewBox="0 0 48 48" width="12">*/}
+                                        {/*                <path*/}
+                                        {/*                    d="M41.5 5.5H30.4c-.5 0-1-.2-1.4-.6l-4-4c-.6-.6-1.5-.6-2.1 0l-4 4c-.4.4-.9.6-1.4.6h-11c-3.3 0-6 2.7-6 6v30c0 3.3 2.7 6 6 6h35c3.3 0 6-2.7 6-6v-30c0-3.3-2.7-6-6-6zm-29.4 39c-.6 0-1.1-.6-1-1.2.7-3.2 3.5-5.6 6.8-5.6h12c3.4 0 6.2 2.4 6.8 5.6.1.6-.4 1.2-1 1.2H12.1zm32.4-3c0 1.7-1.3 3-3 3h-.6c-.5 0-.9-.4-1-.9-.6-5-4.8-8.9-9.9-8.9H18c-5.1 0-9.4 3.9-9.9 8.9-.1.5-.5.9-1 .9h-.6c-1.7 0-3-1.3-3-3v-30c0-1.7 1.3-3 3-3h11.1c1.3 0 2.6-.5 3.5-1.5L24 4.1 26.9 7c.9.9 2.2 1.5 3.5 1.5h11.1c1.7 0 3 1.3 3 3v30zM24 12.5c-5.3 0-9.6 4.3-9.6 9.6s4.3 9.6 9.6 9.6 9.6-4.3 9.6-9.6-4.3-9.6-9.6-9.6zm0 16.1c-3.6 0-6.6-2.9-6.6-6.6 0-3.6 2.9-6.6 6.6-6.6s6.6 2.9 6.6 6.6c0 3.6-3 6.6-6.6 6.6z"></path>*/}
+                                        {/*            </svg>*/}
+                                        {/*            <span className="tab-link-text"> Tagged</span>*/}
+                                        {/*        </div>*/}
+                                        {/*    </Link>*/}
+                                        {/*</li>*/}
                                     </ul>
                                     :
 
-                                    <ul className="tabbed-pane__header__other">
-                                        <li>
-                                            <a href className="tab-link">
+                                    <ul className="tabbed-pane__header">
+                                        <li className={currentTypeOfPost.includes("posts") ? currentTypeOfPost : "li posts"}>
+                                            <Link to={`/${props.match.params.username}`} onClick={() => {
+                                                setTypePost("li posts")
+                                            }} className="tab-link">
                                                 <div className="wrap-type-post">
                                                     <svg aria-label="" className="_8-yf5 " fill="#262626" height="12"
                                                          role="img"
@@ -270,10 +279,12 @@ function ProfileComponent(props) {
                                                     </svg>
                                                     <span className="tab-link-text"> Posts</span>
                                                 </div>
-                                            </a>
+                                            </Link>
                                         </li>
-                                        <li>
-                                            <a href className="tab-link">
+                                        <li className={currentTypeOfPost.includes("igtv") ? currentTypeOfPost : "li igtv"}>
+                                            <Link to={`/${props.match.params.username}/video`} onClick={() => {
+                                                setTypePost("li igtv")
+                                            }} className="tab-link">
                                                 <div className="wrap-type-post">
                                                     <svg aria-label="" className="_8-yf5 " fill="#8e8e8e" height="12"
                                                          role="img"
@@ -281,9 +292,9 @@ function ProfileComponent(props) {
                                                         <path
                                                             d="M41 10c-2.2-2.1-4.8-3.5-10.4-3.5h-3.3L30.5 3c.6-.6.5-1.6-.1-2.1-.6-.6-1.6-.5-2.1.1L24 5.6 19.7 1c-.6-.6-1.5-.6-2.1-.1-.6.6-.7 1.5-.1 2.1l3.2 3.5h-3.3C11.8 6.5 9.2 7.9 7 10c-2.1 2.2-3.5 4.8-3.5 10.4v13.1c0 5.7 1.4 8.3 3.5 10.5 2.2 2.1 4.8 3.5 10.4 3.5h13.1c5.7 0 8.3-1.4 10.5-3.5 2.1-2.2 3.5-4.8 3.5-10.4V20.5c0-5.7-1.4-8.3-3.5-10.5zm.5 23.6c0 5.2-1.3 7-2.6 8.3-1.4 1.3-3.2 2.6-8.4 2.6H17.4c-5.2 0-7-1.3-8.3-2.6-1.3-1.4-2.6-3.2-2.6-8.4v-13c0-5.2 1.3-7 2.6-8.3 1.4-1.3 3.2-2.6 8.4-2.6h13.1c5.2 0 7 1.3 8.3 2.6 1.3 1.4 2.6 3.2 2.6 8.4v13zM34.6 25l-9.1 2.8v-3.7c0-.5-.2-.9-.6-1.2-.4-.3-.9-.4-1.3-.2l-11.1 3.4c-.8.2-1.2 1.1-1 1.9.2.8 1.1 1.2 1.9 1l9.1-2.8v3.7c0 .5.2.9.6 1.2.3.2.6.3.9.3.1 0 .3 0 .4-.1l11.1-3.4c.8-.2 1.2-1.1 1-1.9s-1.1-1.2-1.9-1z"></path>
                                                     </svg>
-                                                    <span className="tab-link-text"> IGTV</span>
+                                                    <span className="tab-link-text"> VIDEO</span>
                                                 </div>
-                                            </a>
+                                            </Link>
                                         </li>
                                     </ul>
                             }

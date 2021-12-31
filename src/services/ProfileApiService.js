@@ -24,6 +24,10 @@ export const getSavedPost = (username) => {
     let profileRequest = new ProfileRequest()
     return profileRequest.getSavedPost(username)
 }
+export const getPostVideo = (payload) => {
+    let profileRequest = new ProfileRequest()
+    return profileRequest.getPostVideo(payload)
+}
 export const checkFollowingUser = (id) => {
     let profileRequest = new ProfileRequest()
     return profileRequest.checkFollowingUser(id)

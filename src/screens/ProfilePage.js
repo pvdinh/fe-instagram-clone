@@ -10,6 +10,7 @@ function mapStateToProps(state) {
         currentUserAccountSetting:state.profile.currentUserAccountSetting,
         listPostDetails:state.profile.listPostDetails,
         listSavedPostDetails: state.profile.listSavedPostDetails,
+        listPostVideos: state.profile.listPostVideos,
         isHavingStory: state.profile.isHavingStory,
     }
 }
@@ -21,6 +22,9 @@ function mapDispatchToProps(dispatch) {
         },
         getSavedPost: (username, callback, history) => {
             dispatch(profileAction.action.getSavedPost(username, callback, history))
+        },
+        getPostVideo: (username, callback, history, payload) => {
+            dispatch(profileAction.action.getPostVideo(username, callback, history,payload))
         },
         checkFollowingUser: (userFollowingId,callback) =>{
             dispatch(profileAction.action.checkFollowingUser(userFollowingId,callback))

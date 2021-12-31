@@ -3,11 +3,16 @@ import {BsFillHeartFill, FaComment} from "react-icons/all";
 import {connect} from "react-redux";
 import PostDetailModal from "./PostDetailModal";
 import profileAction from "../../redux/actions/profileAction";
+import {useHistory} from "react-router";
 
 
 function HavePostsComponents(props) {
     const [isVisiblePostDetail, setIsVisiblePostDetail] = useState(false)
     const [post, setPost] = useState({})
+    const [page,setPage] = useState(0)
+    const [size,setSize] = useState(10)
+
+    let history = useHistory()
 
     useEffect(()=>{
         props.getUserProfile(props.currentUserAccountSetting.username,()=>{})
@@ -15,6 +20,11 @@ function HavePostsComponents(props) {
 
     useEffect(()=>{
         props.getSavedPost(props.currentUserAccountSetting.username,()=>{})
+    },[isVisiblePostDetail])
+
+    useEffect(()=>{
+        props.getPostVideo(props.currentUserAccountSetting.username, () => {
+        }, history, {page:page,size:size})
     },[isVisiblePostDetail])
 
     const onClickPost = (p) =>{
@@ -83,6 +93,9 @@ function mapDispatchToProps(dispatch) {
         },
         getSavedPost: (username, callback, history) => {
             dispatch(profileAction.action.getSavedPost(username, callback, history))
+        },
+        getPostVideo: (username, callback, history, payload) => {
+            dispatch(profileAction.action.getPostVideo(username, callback, history,payload))
         },
     }
 }

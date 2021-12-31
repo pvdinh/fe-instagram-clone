@@ -7,6 +7,8 @@ const type = {
     CHANGE_PASSWORD:"CHANGE_PASSWORD",
     GET_SAVED_POST:"GET_SAVED_POST",
     GET_SAVED_POST_SUCCESS:"GET_SAVED_POST_SUCCESS",
+    GET_POST_VIDEO:"GET_POST_VIDEO",
+    GET_POST_VIDEO_SUCCESS:"GET_POST_VIDEO_SUCCESS",
     CHECK_FOLLOWING_USER:"CHECK_FOLLOWING_USER",
     CHECK_FOLLOWING_USER_SUCCESS:"CHECK_FOLLOWING_USER_SUCCESS",
     CHECK_USER_HAVING_STORY:"CHECK_USER_HAVING_STORY",
@@ -55,6 +57,15 @@ const action = {
             username:username,
             callback,
             history,
+        }
+    },
+    getPostVideo:(username,callback,history,payload)=>{
+        return{
+            type:type.GET_POST_VIDEO,
+            username:username,
+            callback,
+            history,
+            payload:payload,
         }
     },
     checkFollowingUser:(userFollowingId,callback) =>{

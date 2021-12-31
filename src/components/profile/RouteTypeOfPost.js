@@ -27,8 +27,14 @@ function RouteTypeOfPost(props) {
                         <HaveNotPostsComponents/>
                 }
             </Route>
-            <Route exact path={"/:username/igtv"}>
-                <div>igtv</div>
+            <Route exact path={"/:username/video"}>
+                {
+                    props.listPostVideos.length > 0 ?
+                        <HavePostsComponents listPostDetails={props.listPostVideos}
+                                             currentUserAccountSetting={props.currentUserAccountSetting}/>
+                        :
+                        <HaveNotPostsComponents/>
+                }
             </Route>
             <Route exact path={"/:username/tagged"}>
                 <div>tagged</div>
@@ -44,6 +50,7 @@ function mapStateToProps(state) {
         currentUserAccountSetting: state.profile.currentUserAccountSetting,
         listPostDetails: state.profile.listPostDetails,
         listSavedPostDetails: state.profile.listSavedPostDetails,
+        listPostVideos: state.profile.listPostVideos,
     }
 }
 

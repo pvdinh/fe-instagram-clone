@@ -57,7 +57,7 @@ function ActivityComponent(props) {
         const bottom = e.target.scrollHeight - Math.floor(e.target.scrollTop) === e.target.clientHeight;
         if(bottom){
             setPage(page+1)
-            console.log(page+1)
+            props.getAllActivity({page:page+1,size:size})
         }
     }
 

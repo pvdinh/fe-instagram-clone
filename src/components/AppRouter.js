@@ -38,7 +38,7 @@ function AppRouter() {
                             <ProtectedRoute path={"/p/:pId"} exact render={(props)=>{return <PostDetailPage {...props} />}}></ProtectedRoute>
                             <ProtectedRoute path={"/:username"} exact render={(props)=>{return <ProfilePage {...props} />}}></ProtectedRoute>
                             <ProtectedRoute path={"/:username/saved"} exact render={(props)=>{return <ProfilePage {...props} />}}></ProtectedRoute>
-                            <ProtectedRoute path={"/:username/igtv"} exact render={(props)=>{return <ProfilePage {...props} />}}></ProtectedRoute>
+                            <ProtectedRoute path={"/:username/video"} exact render={(props)=>{return <ProfilePage {...props} />}}></ProtectedRoute>
                             <ProtectedRoute path={"/:username/tagged"} exact render={(props)=>{return <ProfilePage {...props} />}}></ProtectedRoute>
                             <ProtectedRoute path={"/accounts/edit"} exact render={()=>{return <SettingAccountPage />}}></ProtectedRoute>
                             <Route> <ErrorPage/> </Route>
