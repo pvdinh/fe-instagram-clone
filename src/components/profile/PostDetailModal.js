@@ -8,6 +8,7 @@ import ReactPlayer from "react-player";
 import SockJS from "sockjs-client"
 import Stomp from "stompjs"
 import {BASE_URL_WEBSOCKET} from "../../url";
+import {FullScreen, useFullScreenHandle} from "react-full-screen";
 
 
 let stompClientModal=null
@@ -19,6 +20,8 @@ function PostDetailModal(props) {
     const [listCmt, setListCmt] = useState([])
     const [listLike, setListLike] = useState([])
     const [ownerPost, setOwnerPost] = useState([])
+
+    const handle = useFullScreenHandle();
 
     useEffect(()=>{
         let sockJS = new SockJS(BASE_URL_WEBSOCKET+"/ws")
@@ -191,7 +194,11 @@ function PostDetailModal(props) {
                 <div className="wrap-image-post-detail">
                     {
                         post.type === "image" ?
-                            <img className="image-post-detail" alt="picture" src={post.imagePath} />
+                            <FullScreen  handle={handle}>
+                                <img onDoubleClick={()=>{
+                                    handle.active === true ? handle.exit() :
+                                    handle.enter()}} className="image-post-detail" alt="picture" src={post.imagePath} />
+                            </FullScreen>
                             :
                             <ReactPlayer muted={true} playing height="100%" width="100%"
                                          controls={true} url={post.videoPath}

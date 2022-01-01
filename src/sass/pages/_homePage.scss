@@ -1177,6 +1177,9 @@
       .wrap-image-post-detail{
         border-right: 1px solid var(--border);
         width: 100%;
+        .fullscreen{
+          height: 100%;
+        }
         video{
           object-fit: cover;
         }

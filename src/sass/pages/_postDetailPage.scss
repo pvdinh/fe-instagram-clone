@@ -11,6 +11,9 @@
     height: 600px;
     .wrap-image-post-detail{
       width: 100%;
+      .fullscreen{
+        height: 100%;
+      }
       video{
         object-fit: cover;
       }
