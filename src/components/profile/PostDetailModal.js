@@ -57,7 +57,7 @@ function PostDetailModal(props) {
             data.likes.includes(props.userAccountProfile.username) ? setLike(true) : setLike(false)
             setListLike(data.likes)
         })
-    },[like])
+    },[like,reload])
 
     useEffect(()=>{
         props.getCommentPost(props.postId,(data)=>{

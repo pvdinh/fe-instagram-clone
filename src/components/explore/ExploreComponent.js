@@ -5,7 +5,7 @@ import PostDetailModal from "../profile/PostDetailModal";
 
 function ExploreComponent(props) {
     const [page,setPage] = useState(0)
-    const [size,setSize] = useState(9)
+    const [size,setSize] = useState(12)
     const [isVisiblePostDetail, setIsVisiblePostDetail] = useState(true)
     const [post,setPost] = useState({})
 
@@ -16,7 +16,7 @@ function ExploreComponent(props) {
 
 
     useEffect(()=>{
-        props.fetchExplorePosts({page:0,size:9+(9*page)})
+        props.fetchExplorePosts({page:0,size:12+(12*page)})
     },[isVisiblePostDetail])
 
     const fetchMoreData = () => {
@@ -61,7 +61,7 @@ function ExploreComponent(props) {
                             {
                                 props.listExplorePosts.map((value,index)=>(
                                     <div className="item" onClick={()=>{onClickPost(value.post)}}>
-                                        <img src={value.post.imagePath} />
+                                        <img src={value.post.imagePath !== "" ? value.post.imagePath : "https://res.cloudinary.com/dinhpv/image/upload/v1640940571/instargram-clone/playicon_qqb2pf.jpg"} />
                                         <div className="wrap-post-info">
                                             <div className="post-info">
                                                 <div className="likes">

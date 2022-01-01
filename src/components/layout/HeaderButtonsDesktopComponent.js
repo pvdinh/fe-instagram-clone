@@ -134,7 +134,7 @@ function HeaderButtonsDesktopComponent(props) {
                         </svg>
                 }
             </a>
-            <a href="#" onClick={()=>{setCurrentPage('Explore')}}>
+            <a href="/explore" onClick={()=>{setCurrentPage('Explore')}}>
                 {
                     localStorage.getItem("currentPage") === 'Explore' ?
                         <svg aria-label="Find People" className="_8-yf5 " fill="#262626" height="22" role="img"

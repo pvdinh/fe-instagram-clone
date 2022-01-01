@@ -15,7 +15,7 @@ function ProfileComponent(props) {
     const [imageUpload, setImageUpload] = useState("")
 
     const [page,setPage] = useState(0)
-    const [size,setSize] = useState(10)
+    const [size,setSize] = useState(9)
 
     let history = useHistory()
 
@@ -116,6 +116,14 @@ function ProfileComponent(props) {
                 elementAlert[0].classList.remove("show")
             },4000)
         }
+    }
+
+    const fetchMorePostVideo = () =>{
+        setPage(page+1)
+        setTimeout(()=>{
+            props.getPostVideo(props.match.params.username, () => {
+            }, history, {page:page+1,size:size})
+        },1500)
     }
 
     return (
@@ -301,7 +309,7 @@ function ProfileComponent(props) {
 
                         </nav>
 
-                        <RouteTypeOfPost/>
+                        <RouteTypeOfPost fetchMorePostVideo={()=>{fetchMorePostVideo()}} currentPage={page} size={size}/>
 
                     </section>
                 </main>

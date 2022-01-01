@@ -9,8 +9,6 @@ import {useHistory} from "react-router";
 function HavePostsComponents(props) {
     const [isVisiblePostDetail, setIsVisiblePostDetail] = useState(false)
     const [post, setPost] = useState({})
-    const [page,setPage] = useState(0)
-    const [size,setSize] = useState(10)
 
     let history = useHistory()
 
@@ -23,8 +21,10 @@ function HavePostsComponents(props) {
     },[isVisiblePostDetail])
 
     useEffect(()=>{
-        props.getPostVideo(props.currentUserAccountSetting.username, () => {
-        }, history, {page:page,size:size})
+        props.fetchPostVideo(props.currentUserAccountSetting.username, () => {
+        }, history, {page:0,size:props.size+(props.currentPage*props.size)})
+        console.log(props.currentPage)
+        console.log(props.size)
     },[isVisiblePostDetail])
 
     const onClickPost = (p) =>{
@@ -96,6 +96,9 @@ function mapDispatchToProps(dispatch) {
         },
         getPostVideo: (username, callback, history, payload) => {
             dispatch(profileAction.action.getPostVideo(username, callback, history,payload))
+        },
+        fetchPostVideo: (username, callback, history, payload) => {
+            dispatch(profileAction.action.fetchPostVideo(username, callback, history,payload))
         },
     }
 }

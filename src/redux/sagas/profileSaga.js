@@ -85,6 +85,18 @@ function *getPostVideo_saga(action) {
         console.log("err",e)
     }
 }
+function *fetchPostVideo_saga(action) {
+    try{
+        const response= yield call(getPostVideo,{username:action.username,...action.payload})
+        if(response.statusCode === 200){
+            yield put({type:profileAction.type.FETCH_POST_VIDEO_SUCCESS,data:response.data})
+        }else {
+            action.history.replace("/error")
+        }
+    }catch (e) {
+        console.log("err",e)
+    }
+}
 function *checkFollowingUser_saga(action) {
     try{
         const response= yield call(checkFollowingUser,action.id)
@@ -113,6 +125,7 @@ function *listen() {
     yield takeEvery(profileAction.type.CHANGE_PROFILE_PHOTO,changeProfilePhoto_saga)
     yield takeEvery(profileAction.type.GET_SAVED_POST,getSavedPost_saga)
     yield takeEvery(profileAction.type.GET_POST_VIDEO,getPostVideo_saga)
+    yield takeEvery(profileAction.type.FETCH_POST_VIDEO,fetchPostVideo_saga)
     yield takeEvery(profileAction.type.CHECK_FOLLOWING_USER,checkFollowingUser_saga)
     yield takeEvery(profileAction.type.CHECK_USER_HAVING_STORY,checkUserHavingStory_saga)
 }

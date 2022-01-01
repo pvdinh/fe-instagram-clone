@@ -26,6 +26,9 @@ function mapDispatchToProps(dispatch) {
         getPostVideo: (username, callback, history, payload) => {
             dispatch(profileAction.action.getPostVideo(username, callback, history,payload))
         },
+        fetchPostVideo: (username, callback, history, payload) => {
+            dispatch(profileAction.action.fetchPostVideo(username, callback, history,payload))
+        },
         checkFollowingUser: (userFollowingId,callback) =>{
             dispatch(profileAction.action.checkFollowingUser(userFollowingId,callback))
         },

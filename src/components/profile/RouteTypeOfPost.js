@@ -3,6 +3,7 @@ import {connect} from "react-redux";
 import {Route, Switch, Redirect, useHistory} from "react-router-dom";
 import HavePostsComponents from "./HavePostsComponents";
 import HaveNotPostsComponents from "./HaveNotPostsComponents";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 
 function RouteTypeOfPost(props) {
@@ -30,8 +31,14 @@ function RouteTypeOfPost(props) {
             <Route exact path={"/:username/video"}>
                 {
                     props.listPostVideos.length > 0 ?
-                        <HavePostsComponents listPostDetails={props.listPostVideos}
-                                             currentUserAccountSetting={props.currentUserAccountSetting}/>
+                        <InfiniteScroll
+                            dataLength={props.listPostVideos.length}
+                            next={()=>{props.fetchMorePostVideo()}}
+                            hasMore={true}
+                        >
+                            <HavePostsComponents listPostDetails={props.listPostVideos} currentPage={props.currentPage} size={props.size}
+                                                 currentUserAccountSetting={props.currentUserAccountSetting}/>
+                        </InfiniteScroll>
                         :
                         <HaveNotPostsComponents/>
                 }
