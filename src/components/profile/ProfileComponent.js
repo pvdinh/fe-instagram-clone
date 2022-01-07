@@ -5,6 +5,8 @@ import {Link} from "react-router-dom";
 import RouteTypeOfPost from "./RouteTypeOfPost";
 import {sanitize} from "@cloudinary/base/qualifiers/flag";
 import ModalConfirmUnFollow from "../modal/ModalConfirmUnFollow";
+import ModalDisplayFollowers from "../modal/profile-page/ModalDisplayFollowers";
+import ModalDisplayFollowing from "../modal/profile-page/ModalDisplayFollowing";
 
 
 function ProfileComponent(props) {
@@ -13,6 +15,8 @@ function ProfileComponent(props) {
     const [isModalUnfollowVisible,setIsModalUnfollowVisible] = useState(false)
     const [pathUrl, setPathUrl] = useState("")
     const [imageUpload, setImageUpload] = useState("")
+    const [isVisibleFollowers, setIsVisibleFollowers] = useState(false)
+    const [isVisibleFollowing, setIsVisibleFollowing] = useState(false)
 
     const [page,setPage] = useState(0)
     const [size,setSize] = useState(9)
@@ -34,7 +38,7 @@ function ProfileComponent(props) {
             })
             props.checkUserHavingStory(data.userAccountSetting.id)
         }, history)
-    }, [isModalUnfollowVisible])
+    }, [isModalUnfollowVisible,isVisibleFollowers,isVisibleFollowing])
 
 
     useEffect(() => {
@@ -175,13 +179,25 @@ function ProfileComponent(props) {
                                 </div>
                             </div>
                         </div>
-                        <div className="bio__stats">
-                            <span className="bio__posts stats"><strong>{props.currentUserAccountSetting.posts}</strong> posts</span>
-                            <span
-                                className="bio_followers stats"><strong>{props.currentUserAccountSetting.followers}</strong> followers</span>
-                            <span
-                                className="bio__following stats"><strong>{props.currentUserAccountSetting.following}</strong> following</span>
-                        </div>
+                        {
+                            props.currentUserAccountSetting.id === props.userAccountProfile.id
+                            ?
+                                <div className="bio__stats">
+                                    <span className="bio__posts stats"><strong>{props.currentUserAccountSetting.posts}</strong> posts</span>
+                                    <span
+                                        className="bio_followers stats" onClick={()=>{setIsVisibleFollowers(true)}}><strong>{props.currentUserAccountSetting.followers - 1}</strong> followers</span>
+                                    <span
+                                        className="bio__following stats"  onClick={()=>{setIsVisibleFollowing(true)}}><strong>{props.currentUserAccountSetting.following - 1}</strong> following</span>
+                                </div>
+                                :
+                                <div className="bio__stats">
+                                    <span className="bio__posts stats"><strong>{props.currentUserAccountSetting.posts}</strong> posts</span>
+                                    <span
+                                        className="bio_followers stats" ><strong>{props.currentUserAccountSetting.followers - 1}</strong> followers</span>
+                                    <span
+                                        className="bio__following stats"  ><strong>{props.currentUserAccountSetting.following - 1}</strong> following</span>
+                                </div>
+                        }
                         <div className="bio_blurb">
                             <h2 className="bio__name">{props.currentUserAccountSetting.displayName}</h2>
                             <h2 className="bio__name">{props.currentUserAccountSetting.description}</h2>
@@ -354,6 +370,8 @@ function ProfileComponent(props) {
                     <span className="copyright">© 2021 Instagram from Facebook</span>
                 </footer>
             </div>
+            <ModalDisplayFollowers visible={isVisibleFollowers} setVisible={()=>{setIsVisibleFollowers(false)}} />
+            <ModalDisplayFollowing visible={isVisibleFollowing} setVisible={()=>{setIsVisibleFollowing(false)}} />
             <ModalConfirmUnFollow userAccountFollowing={props.currentUserAccountSetting} visible={isModalUnfollowVisible} setVisible={()=>{setIsModalUnfollowVisible(false)}} />
         </div>
     )

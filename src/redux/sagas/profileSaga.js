@@ -1,7 +1,7 @@
 import {all, takeEvery, call, put} from "@redux-saga/core/effects";
 import {
     changePassword, changeProfilePhoto, checkFollowingUser, checkUserHavingStory,
-    editUserAccountSetting, getPostVideo,
+    editUserAccountSetting, findFollowersByCurrentUser, findFollowingByCurrentUser, getPostVideo,
     getPrivateInformation, getSavedPost,
     getUserProfile
 } from "../../services/ProfileApiService";
@@ -117,6 +117,26 @@ function *checkUserHavingStory_saga(action) {
         console.log("err",e)
     }
 }
+function *findFollowingByCurrentUser_saga(action) {
+    try{
+        const response= yield call(findFollowingByCurrentUser,action.payload)
+        if(response.statusCode === 200){
+            yield put({type:profileAction.type.FIND_FOLLOWING_BY_CURRENT_USER_SUCCESS,data:response.data})
+        }
+    }catch (e) {
+        console.log("err",e)
+    }
+}
+function *findFollowersByCurrentUser_saga(action) {
+    try{
+        const response= yield call(findFollowersByCurrentUser,action.payload)
+        if(response.statusCode === 200){
+            yield put({type:profileAction.type.FIND_FOLLOWERS_BY_CURRENT_USER_SUCCESS,data:response.data})
+        }
+    }catch (e) {
+        console.log("err",e)
+    }
+}
 function *listen() {
     yield takeEvery(profileAction.type.GET_USER_PROFILE,getUserProfile_saga)
     yield takeEvery(profileAction.type.EDIT_USER_ACCOUNT_SETTING,editUserAccountSetting_saga)
@@ -128,6 +148,8 @@ function *listen() {
     yield takeEvery(profileAction.type.FETCH_POST_VIDEO,fetchPostVideo_saga)
     yield takeEvery(profileAction.type.CHECK_FOLLOWING_USER,checkFollowingUser_saga)
     yield takeEvery(profileAction.type.CHECK_USER_HAVING_STORY,checkUserHavingStory_saga)
+    yield takeEvery(profileAction.type.FIND_FOLLOWING_BY_CURRENT_USER,findFollowingByCurrentUser_saga)
+    yield takeEvery(profileAction.type.FIND_FOLLOWERS_BY_CURRENT_USER,findFollowersByCurrentUser_saga)
 }
 function* profileSaga() {
     yield all([listen()])

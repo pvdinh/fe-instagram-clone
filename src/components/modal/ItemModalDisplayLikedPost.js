@@ -3,16 +3,18 @@ import {connect} from "react-redux";
 import profileAction from "../../redux/actions/profileAction";
 import ModalConfirmUnFollow from "./ModalConfirmUnFollow";
 import homeActions from "../../redux/actions/homeActions";
+import ModalConfirmRemoveFollow from "./profile-page/ModalConfirmRemoveFollow";
 
 function ItemModalDisplayLikedPost(props) {
     const [statusFollow, setStatusFollow] = useState(false)
     const [isModalUnfollowVisible,setIsModalUnfollowVisible] = useState(false)
+    const [isModalRemoveFollowVisible,setIsModalRemoveFollowVisible] = useState(false)
 
     useEffect(() => {
         props.checkFollowingUser(props.item.id, (dt) => {
             setStatusFollow(dt)
         })
-    }, [props.item,statusFollow,isModalUnfollowVisible])
+    }, [props.item,statusFollow,isModalUnfollowVisible,isModalRemoveFollowVisible])
 
     const beginFollowing = (userFollowingId) => {
         props.beginFollowing(userFollowingId)
@@ -38,12 +40,24 @@ function ItemModalDisplayLikedPost(props) {
                 <div className="username">{props.item.username}</div>
                 <div className="displayname">{props.item.displayName}</div>
             </div>
+            {
+                props.remove !== undefined
+                ?
+                    <div className="follow-liked-btn">
+                        {
+                            <button className="following" onClick={()=>{setIsModalRemoveFollowVisible(true)}}>Remove</button>
+                        }
+                    </div>
+                    :
+                    null
+            }
             <div className="follow-liked-btn">
                 {
                     displayBtn()
                 }
             </div>
             <ModalConfirmUnFollow userAccountFollowing={props.item} visible={isModalUnfollowVisible} setVisible={()=>{setStatusFollow(false);setIsModalUnfollowVisible(false)}} />
+            <ModalConfirmRemoveFollow userAccountFollowing={props.item} visible={isModalRemoveFollowVisible} setVisible={()=>{setIsModalRemoveFollowVisible(false)}} />
         </div>
     )
 }
@@ -58,6 +72,9 @@ function mapDispatchToProps(dispatch) {
     return {
         checkFollowingUser: (userFollowingId, callback) => {
             dispatch(profileAction.action.checkFollowingUser(userFollowingId, callback))
+        },
+        removeFollowing: (id) => {
+            dispatch(homeActions.action.removeFollowing(id))
         },
         beginFollowing: (userFollowingId) => {
             dispatch(homeActions.action.beginFollowing(userFollowingId))

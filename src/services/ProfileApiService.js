@@ -36,3 +36,11 @@ export const checkUserHavingStory = (id) => {
     let profileRequest = new ProfileRequest()
     return profileRequest.checkUserHavingStory(id)
 }
+export const findFollowingByCurrentUser = (payload) => {
+    let profileRequest = new ProfileRequest()
+    return profileRequest.findFollowingByCurrentUser(payload)
+}
+export const findFollowersByCurrentUser = (payload) => {
+    let profileRequest = new ProfileRequest()
+    return profileRequest.findFollowersByCurrentUser(payload)
+}

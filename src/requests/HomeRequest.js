@@ -17,6 +17,10 @@ export default class HomeRequest extends BaseRequest{
         let url = `follow/${userFollowingId}/end`
         return this.delete(url)
     }
+    removeFollowing(id){
+        let url = `follow/${id}/remove`
+        return this.delete(url)
+    }
     getHistorySearchUser(){
         let url=`history-search-user`
         return this.get(url)

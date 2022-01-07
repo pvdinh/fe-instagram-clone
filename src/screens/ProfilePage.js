@@ -50,6 +50,12 @@ function mapDispatchToProps(dispatch) {
         changeProfilePhoto:(data,callback) =>{
             dispatch(profileAction.action.changeProfilePhoto(data,callback))
         },
+        findFollowingByCurrentUser: (payload) => {
+            dispatch(profileAction.action.findFollowingByCurrentUser(payload))
+        },
+        findFollowersByCurrentUser: (payload) => {
+            dispatch(profileAction.action.findFollowersByCurrentUser(payload))
+        },
     }
 }
 export default connect(mapStateToProps,mapDispatchToProps)(ProfileComponent)

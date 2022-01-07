@@ -4,8 +4,9 @@ import {
     beginFollowing,
     endFollowing, getHistorySearchUser,
     getSuggestionsToFollow,
-    getUserAccountProfile, saveUserHistory
+    getUserAccountProfile, removeFollowing, saveUserHistory
 } from "../../services/HomeApiService";
+import profileAction from "../actions/profileAction";
 
 function* saga_getUserAccountProfile(action) {
     try {
@@ -38,6 +39,14 @@ function* saga_endFollowing(action) {
         console.log('err', e)
     }
 }
+function* saga_removeFollowing(action) {
+    try {
+        const response = yield call(removeFollowing,action.id)
+        yield put({type:homeActions.type.REMOVE_FOLLOWING_SUCCESS})
+    } catch (e) {
+        console.log('err', e)
+    }
+}
 
 function* saga_getHistorySearchUser(action) {
     try {
@@ -61,6 +70,7 @@ function* listen() {
     yield takeEvery(homeActions.type.GET_SUGGESTIONS_TO_FOLLOW, saga_getSuggestionsToFollow)
     yield takeEvery(homeActions.type.BEGIN_FOLLOWING, saga_beginFollowing)
     yield takeEvery(homeActions.type.END_FOLLOWING, saga_endFollowing)
+    yield takeEvery(homeActions.type.REMOVE_FOLLOWING, saga_removeFollowing)
     yield takeEvery(homeActions.type.GET_HISTORY_SEARCH_USER, saga_getHistorySearchUser)
     yield takeEvery(homeActions.type.SAVE_USER_HISTORY, saga_saveUserHistory)
 }
