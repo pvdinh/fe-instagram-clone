@@ -5,6 +5,8 @@ const type = {
     GET_SUGGESTIONS_TO_FOLLOW_SUCCESS: "GET_SUGGESTIONS_TO_FOLLOW_SUCCESS",
     BEGIN_FOLLOWING:"BEGIN_FOLLOWING",
     END_FOLLOWING:"END_FOLLOWING",
+    REMOVE_FOLLOWING:"REMOVE_FOLLOWING",
+    REMOVE_FOLLOWING_SUCCESS:"REMOVE_FOLLOWING_SUCCESS",
     GET_HISTORY_SEARCH_USER:"GET_HISTORY_SEARCH_USER",
     GET_HISTORY_SEARCH_USER_SUCCESS:"GET_HISTORY_SEARCH_USER_SUCCESS",
     SAVE_USER_HISTORY:"SAVE_USER_HISTORY",
@@ -32,6 +34,12 @@ const action = {
         return {
             type: type.END_FOLLOWING,
             id:userFollowingId,
+        }
+    },
+    removeFollowing: (id) => {
+        return {
+            type: type.REMOVE_FOLLOWING,
+            id:id,
         }
     },
     getHistorySearchUser: () => {

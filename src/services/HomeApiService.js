@@ -16,6 +16,10 @@ export const endFollowing = (userFollowingId) => {
     const homeRequest = new HomeRequest()
     return homeRequest.endFollowing(userFollowingId)
 }
+export const removeFollowing = (id) => {
+    const homeRequest = new HomeRequest()
+    return homeRequest.removeFollowing(id)
+}
 export const getHistorySearchUser = () => {
     const homeRequest = new HomeRequest()
     return homeRequest.getHistorySearchUser()

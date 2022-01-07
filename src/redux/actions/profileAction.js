@@ -16,6 +16,10 @@ const type = {
     CHECK_USER_HAVING_STORY:"CHECK_USER_HAVING_STORY",
     CHECK_USER_HAVING_STORY_SUCCESS:"CHECK_USER_HAVING_STORY_SUCCESS",
     CHANGE_PROFILE_PHOTO:"CHANGE_PROFILE_PHOTO",
+    FIND_FOLLOWING_BY_CURRENT_USER:"FIND_FOLLOWING_BY_CURRENT_USER",
+    FIND_FOLLOWING_BY_CURRENT_USER_SUCCESS:"FIND_FOLLOWING_BY_CURRENT_USER_SUCCESS",
+    FIND_FOLLOWERS_BY_CURRENT_USER:"FIND_FOLLOWERS_BY_CURRENT_USER",
+    FIND_FOLLOWERS_BY_CURRENT_USER_SUCCESS:"FIND_FOLLOWERS_BY_CURRENT_USER_SUCCESS",
 }
 const action = {
     getUserProfile:(username,callback,history)=>{
@@ -91,6 +95,19 @@ const action = {
             type:type.CHECK_USER_HAVING_STORY,
             id:userId,
         }
-    }
+    },
+    findFollowersByCurrentUser:(payload)=>{
+        return{
+            type:type.FIND_FOLLOWERS_BY_CURRENT_USER,
+            payload:payload,
+        }
+    },
+    findFollowingByCurrentUser:(payload)=>{
+        return{
+            type:type.FIND_FOLLOWING_BY_CURRENT_USER,
+            payload:payload,
+        }
+    },
+
 }
 export default {type,action}

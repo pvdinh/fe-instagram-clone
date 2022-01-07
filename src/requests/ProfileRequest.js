@@ -37,4 +37,12 @@ export class ProfileRequest extends BaseRequest{
         let url=`user-account-setting/${id}/checkStory`
         return this.get(url)
     }
+    findFollowingByCurrentUser(payload){
+        let url=`follow/following?page=${payload.page}&size=${payload.size}`
+        return this.get(url)
+    }
+    findFollowersByCurrentUser(payload){
+        let url=`follow/followers?page=${payload.page}&size=${payload.size}`
+        return this.get(url)
+    }
 }

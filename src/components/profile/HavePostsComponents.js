@@ -21,10 +21,15 @@ function HavePostsComponents(props) {
     },[isVisiblePostDetail])
 
     useEffect(()=>{
-        props.fetchPostVideo(props.currentUserAccountSetting.username, () => {
-        }, history, {page:0,size:props.size+(props.currentPage*props.size)})
-        console.log(props.currentPage)
+        if(props.currentPage !== undefined){
+            props.fetchPostVideo(props.currentUserAccountSetting.username, () => {
+            }, history, {page:0,size:props.size+(props.currentPage*props.size)})
+        }else {
+            props.fetchPostVideo(props.currentUserAccountSetting.username, () => {
+            }, history, {page:0,size:10})
+        }
         console.log(props.size)
+        console.log(props.currentPage)
     },[isVisiblePostDetail])
 
     const onClickPost = (p) =>{
