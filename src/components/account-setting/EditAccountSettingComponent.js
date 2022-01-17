@@ -3,6 +3,7 @@ import {connect} from "react-redux";
 import {Form} from 'antd';
 import profileAction from "../../redux/actions/profileAction";
 import homeActions from "../../redux/actions/homeActions";
+import postActions from "../../redux/actions/postActions";
 
 function EditAccountSettingComponent(props) {
     const [name, setName] = useState("")
@@ -12,6 +13,9 @@ function EditAccountSettingComponent(props) {
     const [email, setEmail] = useState("")
     const [phoneNumber, setPhoneNumber] = useState("")
     const [checkSubmit, setCheckSubmit] = useState(false)
+
+    const [pathUrl, setPathUrl] = useState("")
+
 
     useEffect(()=>{
         props.getPrivateInformation((data)=>{
@@ -84,6 +88,33 @@ function EditAccountSettingComponent(props) {
         },4000)
     }
 
+    const onChangeFileUpload = (e) =>{
+        if (e.target.files[0] && (e.target.files[0].size/1024/1024 <= 40)) {
+            let data={
+                "file":e.target.files[0],
+                "upload_preset":"instagram-clone",
+            }
+            let elementAlert = document.getElementsByClassName("alertUploading")
+            elementAlert[0].classList.add("show")
+            props.postImageToCloudinary(data,(data)=>{
+                let dt={
+                    profilePhoto:data.url,
+                }
+                props.changeProfilePhoto(dt,()=>{
+                    props.getUserAccountProfile(()=>{})
+                    setPathUrl(URL.createObjectURL(e.target.files[0]))
+                    elementAlert[0].classList.remove("show")
+                })
+            })
+        } else {
+            let elementAlert = document.getElementsByClassName("alertUploadErr")
+            elementAlert[0].classList.add("show")
+            const setTimeOut = setTimeout(()=>{
+                elementAlert[0].classList.remove("show")
+            },4000)
+        }
+    }
+
     return (
         <div>
             <div className="wrap-body-edit-account-setting">
@@ -92,13 +123,14 @@ function EditAccountSettingComponent(props) {
                         <div className="form-group">
                             <div style={{display: "flex", justifyContent: "flex-end"}}>
                                 <div className="wrap-avatar">
-                                    <img className="avatar" src={props.userAccountProfile.profilePhoto}/>
+                                    <img className="avatar" src={pathUrl === "" ? props.userAccountProfile.profilePhoto : pathUrl}/>
                                 </div>
                             </div>
                             <div className="username">{props.userAccountProfile.displayName}
-                                <div className="below-username"><a>Change Profile Photo</a></div>
+                                <div className="below-username"><label style={{cursor:"pointer"}} htmlFor="file_upload">Change Profile Photo</label></div>
                             </div>
                         </div>
+                        <input type="file" id="file_upload" accept="image/*" style={{display:"none"}} onChange={(e)=>{onChangeFileUpload(e)}} />
                         <div className="form-group">
                             <div className="wrap-label"><label className="label">Name</label>
                             </div>
@@ -214,6 +246,12 @@ function mapDispatchToProps(dispatch) {
         },
         getPrivateInformation:(callback) =>{
             dispatch(profileAction.action.getPrivateInformation(callback))
+        },
+        postImageToCloudinary: (data,callback) => {
+            dispatch(postActions.action.postImageToCloudinary(data,callback))
+        },
+        changeProfilePhoto:(data,callback) =>{
+            dispatch(profileAction.action.changeProfilePhoto(data,callback))
         },
     }
 }
