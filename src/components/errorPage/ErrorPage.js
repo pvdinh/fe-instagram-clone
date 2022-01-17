@@ -1,6 +1,10 @@
-import React from "react";
+import React, {useState} from "react";
+import ModalFeedback from "../modal/feedback/ModalFeedback";
 
 function ErrorPage() {
+    const [isModalFeedbackVisible,setIsModalFeedbackVisible] = useState(false)
+
+
     return(
         <div className="wrap-error-page">
             <div className="body-error-page">
@@ -11,14 +15,15 @@ function ErrorPage() {
                 <footer className="site-footer">
                     <nav>
                         <ul>
+                            <li><a onClick={()=>{setIsModalFeedbackVisible(true)}}>Feedback</a></li>
                             <li>
-                                <a href="https://about.instagram.com/about-us" rel="nofollow noopener noreferrer" target="_blank">About</a>
+                                <a href="#" rel="nofollow noopener noreferrer" target="_blank">About</a>
                             </li>
                             <li>
-                                <a href="https://help.instagram.com/" target="_blank">Help</a>
+                                <a href="#" target="_blank">Help</a>
                             </li>
                             <li>
-                                <a href="https://instagram-press.com/" target="_blank">Press</a>
+                                <a href="#" target="_blank">Press</a>
                             </li>
                             <li><a href="#">API</a></li>
                             <li><a href="#">Jobs</a></li>
@@ -48,6 +53,7 @@ function ErrorPage() {
                     <span className="copyright">© 2021 Instagram from Facebook</span>
                 </footer>
             </div>
+            <ModalFeedback visible={isModalFeedbackVisible} setVisible={()=>{setIsModalFeedbackVisible(false)}} />
         </div>
     )
 }

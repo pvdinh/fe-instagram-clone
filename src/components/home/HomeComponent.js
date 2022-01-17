@@ -1,9 +1,13 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import PostComponent from "./PostComponent";
 import UserProfileComponent from "./UserProfileComponent";
 import SuggestionsToFollow from "./SuggestionsToFollow";
 import StoryComponent from "./story/StoryComponent";
+import ModalFeedback from "../modal/feedback/ModalFeedback";
 function HomeComponent() {
+
+    const [isModalFeedbackVisible,setIsModalFeedbackVisible] = useState(false)
+
 
     useEffect(()=>{
         localStorage.setItem("currentPage","Home")
@@ -40,6 +44,9 @@ function HomeComponent() {
                         <div className="side-menu__footer">
                             <div className="side-menu__footer-links">
                                 <ul className="side-menu__footer-list">
+                                    <li className="side-menu__footer-item">
+                                        <a className="side-menu__footer-link" onClick={()=>{setIsModalFeedbackVisible(true)}}>Feedback</a>
+                                    </li>
                                     <li className="side-menu__footer-item">
                                         <a className="side-menu__footer-link" href="#">About</a>
                                     </li>
@@ -78,6 +85,7 @@ function HomeComponent() {
 
                             <span className="side-menu__footer-copyright">&copy; 2021 instagram from facebook</span>
                         </div>
+                        <ModalFeedback visible={isModalFeedbackVisible} setVisible={()=>{setIsModalFeedbackVisible(false)}} />
                     </section>
                 </section>
             </main>

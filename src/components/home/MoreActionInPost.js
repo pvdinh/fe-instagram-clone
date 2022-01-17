@@ -5,10 +5,13 @@ import {connect} from "react-redux";
 import postActions from "../../redux/actions/postActions";
 import StoryAction from "../../redux/actions/StoryAction";
 import ModalConfirmUnFollow from "../modal/ModalConfirmUnFollow";
+import ModalReport from "../modal/report/ModalReport";
 
 function MoreActionInPost(props) {
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [isModalUnfollowVisible,setIsModalUnfollowVisible] = useState(false)
+    const [isModalReportVisible, setIsModalReportVisible] = useState(false);
+
 
 
     const showModal = () => {
@@ -73,7 +76,7 @@ function MoreActionInPost(props) {
                         </>
                         :
                         <>
-                            <button className='options-dialog__button' style={{borderBottom:"1px solid var(--border)",color:"#ed4956",fontWeight: "700"}} >Report</button>
+                            <button className='options-dialog__button' style={{borderBottom:"1px solid var(--border)",color:"#ed4956",fontWeight: "700"}} onClick={()=>{setIsModalReportVisible(true)}}>Report</button>
                             <button className='options-dialog__button' style={{borderBottom:"1px solid var(--border)",color:"#ed4956",fontWeight: "700"}} onClick={()=>{setIsModalVisible(false);setIsModalUnfollowVisible(true)}}>Unfollow</button>
                             <button className='options-dialog__button' style={{borderBottom:"1px solid var(--border)"}} onClick={()=>{goToPost(props.post.id)}}>Go to post</button>
                             <button className='options-dialog__button' style={{borderBottom:"1px solid var(--border)"}} onClick={()=>{onCopyLink(props.post.id)}}>Copy link</button>
@@ -82,6 +85,7 @@ function MoreActionInPost(props) {
                 }
             </Modal>
             <ModalConfirmUnFollow userAccountFollowing={props.userAccountFollowing} visible={isModalUnfollowVisible} setVisible={()=>{setIsModalUnfollowVisible(false)}} />
+            <ModalReport userAccountFollowing={props.userAccountFollowing} visible={isModalReportVisible} setVisible={()=>{setIsModalReportVisible(false)}} />
         </>
     )
 }

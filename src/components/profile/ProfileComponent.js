@@ -7,6 +7,7 @@ import {sanitize} from "@cloudinary/base/qualifiers/flag";
 import ModalConfirmUnFollow from "../modal/ModalConfirmUnFollow";
 import ModalDisplayFollowers from "../modal/profile-page/ModalDisplayFollowers";
 import ModalDisplayFollowing from "../modal/profile-page/ModalDisplayFollowing";
+import ModalFeedback from "../modal/feedback/ModalFeedback";
 
 
 function ProfileComponent(props) {
@@ -17,6 +18,9 @@ function ProfileComponent(props) {
     const [imageUpload, setImageUpload] = useState("")
     const [isVisibleFollowers, setIsVisibleFollowers] = useState(false)
     const [isVisibleFollowing, setIsVisibleFollowing] = useState(false)
+
+    const [isModalFeedbackVisible,setIsModalFeedbackVisible] = useState(false)
+
 
     const [page,setPage] = useState(0)
     const [size,setSize] = useState(9)
@@ -332,15 +336,16 @@ function ProfileComponent(props) {
                 <footer className="site-footer">
                     <nav>
                         <ul>
+                            <li><a onClick={()=>{setIsModalFeedbackVisible(true)}}>Feedback</a></li>
                             <li>
-                                <a href="https://about.instagram.com/about-us" rel="nofollow noopener noreferrer"
+                                <a href="#" rel="nofollow noopener noreferrer"
                                    target="_blank">About</a>
                             </li>
                             <li>
-                                <a href="https://help.instagram.com/" target="_blank">Help</a>
+                                <a href="#" target="_blank">Help</a>
                             </li>
                             <li>
-                                <a href="https://instagram-press.com/" target="_blank">Press</a>
+                                <a href="#" target="_blank">Press</a>
                             </li>
                             <li><a href="#">API</a></li>
                             <li><a href="#">Jobs</a></li>
@@ -369,6 +374,7 @@ function ProfileComponent(props) {
                     </nav>
                     <span className="copyright">© 2021 Instagram from Facebook</span>
                 </footer>
+                <ModalFeedback visible={isModalFeedbackVisible} setVisible={()=>{setIsModalFeedbackVisible(false)}} />
             </div>
             <ModalDisplayFollowers visible={isVisibleFollowers} setVisible={()=>{setIsVisibleFollowers(false)}} />
             <ModalDisplayFollowing visible={isVisibleFollowing} setVisible={()=>{setIsVisibleFollowing(false)}} />
