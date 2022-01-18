@@ -85,7 +85,7 @@ function MoreActionInPost(props) {
                 }
             </Modal>
             <ModalConfirmUnFollow userAccountFollowing={props.userAccountFollowing} visible={isModalUnfollowVisible} setVisible={()=>{setIsModalUnfollowVisible(false)}} />
-            <ModalReport userAccountFollowing={props.userAccountFollowing} visible={isModalReportVisible} setVisible={()=>{setIsModalReportVisible(false)}} />
+            <ModalReport idPost={props.post.id} userAccountFollowing={props.userAccountFollowing} visible={isModalReportVisible} setVisible={()=>{setIsModalReportVisible(false)}} />
         </>
     )
 }
