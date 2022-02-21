@@ -8,6 +8,7 @@ import MorePostComponent from "./MorePostComponent";
 import ReactPlayer from "react-player";
 import {BASE_URL_WEBSOCKET} from "../../url";
 import ModalFeedback from "../modal/feedback/ModalFeedback";
+import ModalDeleteComment from "../modal/ModalDeleteComment";
 
 let stompClient=null
 function PostDetailComponentPage(props) {
@@ -21,6 +22,8 @@ function PostDetailComponentPage(props) {
     const [ownerPost, setOwnerPost] = useState([])
 
     const [isModalFeedbackVisible,setIsModalFeedbackVisible] = useState(false)
+    const [isVisibleModalDeleteComment,setIsVisibleModalDeleteComment] = useState(false)
+    const [commentClick,setCommentClick] = useState({})
 
 
     useEffect(()=>{
@@ -108,9 +111,14 @@ function PostDetailComponentPage(props) {
             idPost: post.id,
             idUser: props.userAccountProfile.id,
             dateCommented: new Date().getTime(),
+            sessionToken: localStorage.getItem('sessionToken') ? 'Bearer ' + localStorage.getItem('sessionToken') : 'Bearer ',
         }
         console.log(comment)
         stompClient.send("/app/comment.allComment",{},JSON.stringify(comment))
+    }
+
+    const deleteCmt = (comment) =>{
+        stompClient.send("/app/comment.deleteComment",{},JSON.stringify(comment))
     }
 
     const calculatorDayCreated = (timeCreated) => {
@@ -188,6 +196,19 @@ function PostDetailComponentPage(props) {
             })
     }
 
+    const deleteComment = () => {
+        commentClick.sessionToken = localStorage.getItem('sessionToken') ? 'Bearer ' + localStorage.getItem('sessionToken') : 'Bearer ';
+        deleteCmt(commentClick)
+    }
+
+    const showModalDeleteComment = () =>{
+        if(isVisibleModalDeleteComment){
+            return(
+                <ModalDeleteComment deleteComment={()=>{deleteComment()}} idUserPost={ownerPost.id} comment={commentClick} visible={isVisibleModalDeleteComment} setVisible={()=>{setIsVisibleModalDeleteComment(false)}} />
+            )
+        }
+    }
+
     return(
         <div className="wrap-body-page-post-detail">
             <div className="body-page-post-detail">
@@ -224,7 +245,25 @@ function PostDetailComponentPage(props) {
                                         <div className="content-comment">
                                             <a href={`/${value.userAccountSetting.displayName}`} className="displayname-user">{value.userAccountSetting.displayName}</a>
                                             <span>{value.comment.content}</span>
-                                            <div className="time-commented">{calculatorDayCommented(value.comment.dateCommented)}</div>
+                                            <div className="time-commented-x">
+                                                <div>
+                                                    {calculatorDayCommented(value.comment.dateCommented)}
+                                                </div>
+                                                <div>
+                                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                         xmlns="http://www.w3.org/2000/svg"
+                                                         style={{cursor: "pointer"}}
+                                                         onClick={()=>{setCommentClick(value.comment);setIsVisibleModalDeleteComment(true)}}
+                                                    >
+                                                        <circle cx="6.5" cy="11.5" r="1.5"
+                                                                fill="var(--text-dark)"></circle>
+                                                        <circle cx="12" cy="11.5" r="1.5"
+                                                                fill="var(--text-dark)"></circle>
+                                                        <circle cx="17.5" cy="11.5" r="1.5"
+                                                                fill="var(--text-dark)"></circle>
+                                                    </svg>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 ))
@@ -365,6 +404,9 @@ function PostDetailComponentPage(props) {
                 </footer>
             </div>
             <ModalFeedback visible={isModalFeedbackVisible} setVisible={()=>{setIsModalFeedbackVisible(false)}} />
+            {
+                showModalDeleteComment()
+            }
         </div>
     )
 }

@@ -67,6 +67,10 @@ function PostComponent(props) {
         stompClient.send("/app/comment.allComment",{},JSON.stringify(comment))
     }
 
+    const deleteCmt = (comment) =>{
+        stompClient.send("/app/comment.deleteComment",{},JSON.stringify(comment))
+    }
+
     return (
         <div>
             <InfiniteScroll
@@ -76,7 +80,7 @@ function PostComponent(props) {
             >
                 {
                     props.listPostOfFollowing.map((item,key) =>(
-                        <PostItemComponent postCmt={(comment)=>{postCmt(comment)}} currentPage={page} key={key} post={item.post} likes={item.likes} userAccountSetting={item.userAccountSetting} />
+                        <PostItemComponent deleteCmt={(comment)=>{deleteCmt(comment)}} postCmt={(comment)=>{postCmt(comment)}} currentPage={page} key={key} post={item.post} likes={item.likes} userAccountSetting={item.userAccountSetting} />
                     ))
                 }
             </InfiniteScroll>

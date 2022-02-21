@@ -9,6 +9,7 @@ import SockJS from "sockjs-client"
 import Stomp from "stompjs"
 import {BASE_URL_WEBSOCKET} from "../../url";
 import {FullScreen, useFullScreenHandle} from "react-full-screen";
+import ModalDeleteComment from "../modal/ModalDeleteComment";
 
 
 let stompClientModal=null
@@ -20,6 +21,8 @@ function PostDetailModal(props) {
     const [listCmt, setListCmt] = useState([])
     const [listLike, setListLike] = useState([])
     const [ownerPost, setOwnerPost] = useState([])
+    const [isVisibleModalDeleteComment,setIsVisibleModalDeleteComment] = useState(false)
+    const [commentClick,setCommentClick] = useState({})
 
     const handle = useFullScreenHandle();
 
@@ -109,8 +112,13 @@ function PostDetailModal(props) {
             idPost: post.id,
             idUser: props.userAccountProfile.id,
             dateCommented: new Date().getTime(),
+            sessionToken: localStorage.getItem('sessionToken') ? 'Bearer ' + localStorage.getItem('sessionToken') : 'Bearer ',
         }
         stompClientModal.send("/app/comment.allComment",{},JSON.stringify(comment))
+    }
+
+    const deleteCmt = (comment) =>{
+        stompClientModal.send("/app/comment.deleteComment",{},JSON.stringify(comment))
     }
 
     const calculatorDayCreated = (timeCreated) => {
@@ -188,6 +196,19 @@ function PostDetailModal(props) {
             })
     }
 
+    const deleteComment = () => {
+        commentClick.sessionToken = localStorage.getItem('sessionToken') ? 'Bearer ' + localStorage.getItem('sessionToken') : 'Bearer ';
+        deleteCmt(commentClick)
+    }
+
+    const showModalDeleteComment = () =>{
+        if(isVisibleModalDeleteComment){
+            return(
+                <ModalDeleteComment deleteComment={()=>{deleteComment()}} idUserPost={ownerPost.id} comment={commentClick} visible={isVisibleModalDeleteComment} setVisible={()=>{setIsVisibleModalDeleteComment(false)}} />
+            )
+        }
+    }
+
     return(
         <Modal className="wrap-home-post-detail" closable={false} footer={null} visible={props.visible} onCancel={()=>{props.setVisible()}} centered >
             <div className="wrap-post-detail">
@@ -227,7 +248,25 @@ function PostDetailModal(props) {
                                     <div className="content-comment">
                                         <a href={`/${value.userAccountSetting.displayName}`} className="displayname-user">{value.userAccountSetting.displayName}</a>
                                         <span>{value.comment.content}</span>
-                                        <div className="time-commented">{calculatorDayCommented(value.comment.dateCommented)}</div>
+                                        <div className="time-commented">
+                                            <div>
+                                                {calculatorDayCommented(value.comment.dateCommented)}
+                                            </div>
+                                            <div>
+                                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                     xmlns="http://www.w3.org/2000/svg"
+                                                     style={{cursor: "pointer"}}
+                                                     onClick={()=>{setCommentClick(value.comment);setIsVisibleModalDeleteComment(true)}}
+                                                >
+                                                    <circle cx="6.5" cy="11.5" r="1.5"
+                                                            fill="var(--text-dark)"></circle>
+                                                    <circle cx="12" cy="11.5" r="1.5"
+                                                            fill="var(--text-dark)"></circle>
+                                                    <circle cx="17.5" cy="11.5" r="1.5"
+                                                            fill="var(--text-dark)"></circle>
+                                                </svg>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             ))
@@ -314,6 +353,9 @@ function PostDetailModal(props) {
                     </div>
                 </div>
             </div>
+            {
+                showModalDeleteComment()
+            }
         </Modal>
     )
 }

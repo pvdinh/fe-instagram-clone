@@ -10,6 +10,7 @@ import PostDetailComponent from "./PostDetailComponent";
 import ReactPlayer from "react-player";
 import homeActions from "../../redux/actions/homeActions";
 import ModalDisplayLikedPost from "../modal/ModalDisplayLikedPost";
+import ModalDeleteComment from "../modal/ModalDeleteComment";
 
 function PostItemComponent(props) {
     const [like, setLike] = useState(true)
@@ -20,6 +21,8 @@ function PostItemComponent(props) {
     const [contentLoader, setContentLoader] = useState(false)
     const [reLoad, setReLoad] = useState(true)
     const [classdbClick, setClassdbClick] = useState("pop")
+    const [isVisibleModalDeleteComment,setIsVisibleModalDeleteComment] = useState(false)
+    const [commentClick,setCommentClick] = useState({})
 
     useEffect(() => {
         const setTimeOut = setTimeout(() => {
@@ -77,9 +80,16 @@ function PostItemComponent(props) {
             idPost: props.post.id,
             idUser: props.userAccountProfile.id,
             dateCommented: new Date().getTime(),
+            sessionToken: localStorage.getItem('sessionToken') ? 'Bearer ' + localStorage.getItem('sessionToken') : 'Bearer ',
         }
         props.postCmt(comment)
     }
+
+    const deleteComment = () => {
+        commentClick.sessionToken = localStorage.getItem('sessionToken') ? 'Bearer ' + localStorage.getItem('sessionToken') : 'Bearer ';
+        props.deleteCmt(commentClick)
+    }
+
     const calculatorDayCreated = (timeCreated) => {
         let distance = Math.round((new Date().getTime() - timeCreated) / (1000))
         switch (true) {
@@ -144,6 +154,14 @@ function PostItemComponent(props) {
         if(isVisiblePostDetail !== false ){
             return(
                 <PostDetailComponent currentPage={props.currentPage} reload={()=>{setReLoad(!reLoad)}} post={props.post} likes={props.likes} listComment={listComment} userAccountSetting={props.userAccountSetting} visible={isVisiblePostDetail} setVisible={()=>{setIsVisiblePostDetail(!isVisiblePostDetail)}} />
+            )
+        }
+    }
+
+    const showModalDeleteComment = () =>{
+        if(isVisibleModalDeleteComment){
+            return(
+                <ModalDeleteComment deleteComment={()=>{deleteComment()}} idUserPost={props.userAccountSetting.id} comment={commentClick} visible={isVisibleModalDeleteComment} setVisible={()=>{setIsVisibleModalDeleteComment(false)}} />
             )
         }
     }
@@ -274,6 +292,20 @@ function PostItemComponent(props) {
                                                             <a href={`/${item.userAccountSetting.username}`}
                                                                 style={{fontWeight: "600",color:"var(--text-dark)"}}>{item.userAccountSetting.username}</a>
                                                         <span> {item.comment.content}</span>
+                                                        <div className="action">
+                                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                                 xmlns="http://www.w3.org/2000/svg"
+                                                                 style={{cursor: "pointer"}}
+                                                                 onClick={()=>{setCommentClick(item.comment);setIsVisibleModalDeleteComment(true)}}
+                                                            >
+                                                                <circle cx="6.5" cy="11.5" r="1.5"
+                                                                        fill="var(--text-dark)"></circle>
+                                                                <circle cx="12" cy="11.5" r="1.5"
+                                                                        fill="var(--text-dark)"></circle>
+                                                                <circle cx="17.5" cy="11.5" r="1.5"
+                                                                        fill="var(--text-dark)"></circle>
+                                                            </svg>
+                                                        </div>
                                                     </div>
                                                 ))
                                             }
@@ -285,6 +317,20 @@ function PostItemComponent(props) {
                                                             <a href={`/${item.userAccountSetting.username}`}
                                                                 style={{fontWeight: "600",color:"var(--text-dark)"}}>{item.userAccountSetting.username}</a>
                                                         <span> {item.comment.content}</span>
+                                                        <div>
+                                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                                 xmlns="http://www.w3.org/2000/svg"
+                                                                 style={{cursor: "pointer"}}
+                                                                 onClick={()=>{setCommentClick(item.comment);setIsVisibleModalDeleteComment(true)}}
+                                                            >
+                                                                <circle cx="6.5" cy="11.5" r="1.5"
+                                                                        fill="var(--text-dark)"></circle>
+                                                                <circle cx="12" cy="11.5" r="1.5"
+                                                                        fill="var(--text-dark)"></circle>
+                                                                <circle cx="17.5" cy="11.5" r="1.5"
+                                                                        fill="var(--text-dark)"></circle>
+                                                            </svg>
+                                                        </div>
                                                     </div>
                                                 ))
                                             }
@@ -304,6 +350,9 @@ function PostItemComponent(props) {
             }
             {
                 showModalDetailPost()
+            }
+            {
+                showModalDeleteComment()
             }
         </div>
     )
