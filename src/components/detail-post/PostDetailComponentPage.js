@@ -400,7 +400,7 @@ function PostDetailComponentPage(props) {
                             </li>
                         </ul>
                     </nav>
-                    <span className="copyright">© 2021 Instagram from Facebook</span>
+                    <span className="copyright">© 2022 Meta from Meta</span>
                 </footer>
             </div>
             <ModalFeedback visible={isModalFeedbackVisible} setVisible={()=>{setIsModalFeedbackVisible(false)}} />

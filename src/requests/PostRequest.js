@@ -54,5 +54,21 @@ class PostRequest extends BaseRequest{
         let url = `like/${payload.pId}?page=${payload.page}&size=${payload.size}`
         return this.get(url)
     }
+    getTop1Like(){
+        let url = `post/top-1-like`
+        return this.get(url)
+    }
+    getTop1Comment(){
+        let url = `post/top-1-comment`
+        return this.get(url)
+    }
+    getTop1Save(){
+        let url = `post/top-1-save`
+        return this.get(url)
+    }
+    getTop1Popular(){
+        let url = `post/top-1-popular`
+        return this.get(url)
+    }
 }
 export default PostRequest

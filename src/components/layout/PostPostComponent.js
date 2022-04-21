@@ -212,7 +212,7 @@ function PostPostComponent(props) {
                                     fill="currentColor"></path>
                             </svg>
                         </div>
-                        <div className="wrap-title">Drag photos and videos here</div>
+                        <div className="wrap-title">Select photos and videos</div>
                         <div className="wrap-btn"><label className="btn"  htmlFor="file-upload">Select from computer</label></div>
                         <input id="file-upload" type="file" accept="video/mp4,video/x-m4v,video/*,image/*" onClick={(event) => {
                             event.target.value = null

@@ -41,6 +41,9 @@ function ProfileComponent(props) {
                 setStatusFollow(dt)
             })
             props.checkUserHavingStory(data.userAccountSetting.id)
+
+            document.title=data.userAccountSetting.displayName + "(@" + data.userAccountSetting.username + ")"
+
         }, history)
     }, [isModalUnfollowVisible,isVisibleFollowers,isVisibleFollowing])
 
@@ -372,7 +375,7 @@ function ProfileComponent(props) {
                             </li>
                         </ul>
                     </nav>
-                    <span className="copyright">© 2021 Instagram from Facebook</span>
+                    <span className="copyright">© 2022 Meta from Meta</span>
                 </footer>
                 <ModalFeedback visible={isModalFeedbackVisible} setVisible={()=>{setIsModalFeedbackVisible(false)}} />
             </div>

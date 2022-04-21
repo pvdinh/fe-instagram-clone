@@ -14,7 +14,7 @@ function SuggestionsToFollow(props) {
         <div className="side-menu__suggestions-section">
             <div className="side-menu__suggestions-header">
                 <h2>Suggestions for You</h2>
-                <button>See All</button>
+                {/*<button>See All</button>*/}
             </div>
             <div className="side-menu__suggestions-content">
                 {

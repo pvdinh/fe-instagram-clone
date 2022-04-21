@@ -52,3 +52,19 @@ export const getUserAccountSettingLikedPost = (payload) =>{
     const postRequest = new PostRequest()
     return postRequest.getUserAccountSettingLikedPost(payload)
 }
+export const getTop1Like = () =>{
+    const postRequest = new PostRequest()
+    return postRequest.getTop1Like()
+}
+export const getTop1Comment = () =>{
+    const postRequest = new PostRequest()
+    return postRequest.getTop1Comment()
+}
+export const getTop1Save = () =>{
+    const postRequest = new PostRequest()
+    return postRequest.getTop1Save()
+}
+export const getTop1Popular = () =>{
+    const postRequest = new PostRequest()
+    return postRequest.getTop1Popular()
+}

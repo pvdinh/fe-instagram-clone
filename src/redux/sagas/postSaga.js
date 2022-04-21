@@ -3,10 +3,20 @@ import postActions from "../actions/postActions";
 import {
     beginSavePost,
     checkSavedPost,
-    commentPost, deletePost, endSavePost,
+    commentPost,
+    deletePost,
+    endSavePost,
     getAllPostInformationFollowing,
-    getCommentPost, getPostInformationFromPId, getUserAccountSettingLikedPost,
-    likePost, postImageToCloudinary, postNewPost,
+    getCommentPost,
+    getPostInformationFromPId,
+    getTop1Comment,
+    getTop1Like,
+    getTop1Popular,
+    getTop1Save,
+    getUserAccountSettingLikedPost,
+    likePost,
+    postImageToCloudinary,
+    postNewPost,
     unLikePost
 } from "../../services/PostApiService";
 import {getUserProfile} from "../../services/ProfileApiService";
@@ -148,6 +158,50 @@ function *saga_getUserAccountSettingLikedPost(action) {
     }
 }
 
+function *saga_getTop1Save(action) {
+    try{
+        const res= yield call(getTop1Save)
+        if(res.statusCode === 200) {
+            yield action.callback(res.data)
+        }
+    }catch (e) {
+        console.log("err",e)
+    }
+}
+
+function *saga_getTop1Like(action) {
+    try{
+        const res= yield call(getTop1Like)
+        if(res.statusCode === 200) {
+            yield action.callback(res.data)
+        }
+    }catch (e) {
+        console.log("err",e)
+    }
+}
+
+function *saga_getTop1Comment(action) {
+    try{
+        const res= yield call(getTop1Comment)
+        if(res.statusCode === 200) {
+            yield action.callback(res.data)
+        }
+    }catch (e) {
+        console.log("err",e)
+    }
+}
+
+function *saga_getTop1Popular(action) {
+    try{
+        const res= yield call(getTop1Popular)
+        if(res.statusCode === 200) {
+            yield action.callback(res.data)
+        }
+    }catch (e) {
+        console.log("err",e)
+    }
+}
+
 function* listen() {
     yield takeEvery(postActions.type.GET_ALL_POST_OF_FOLLOWING, saga_getAllPostOfFollowing)
     yield takeEvery(postActions.type.FETCH_ALL_POST_OF_FOLLOWING, saga_fetchAllPostOfFollowing)
@@ -165,6 +219,10 @@ function* listen() {
     yield takeEvery(postActions.type.BEGIN_SAVE_POST, saga_beginSavePost)
     yield takeEvery(postActions.type.END_SAVE_POST, saga_endSavePost)
     yield takeEvery(postActions.type.GET_USER_ACCOUNT_SETTING_LIKED_POST, saga_getUserAccountSettingLikedPost)
+    yield takeEvery(postActions.type.GET_TOP_1_LIKE, saga_getTop1Like)
+    yield takeEvery(postActions.type.GET_TOP_1_COMMENT, saga_getTop1Comment)
+    yield takeEvery(postActions.type.GET_TOP_1_POPULAR, saga_getTop1Popular)
+    yield takeEvery(postActions.type.GET_TOP_1_SAVE, saga_getTop1Save)
 }
 
 function* postSaga() {

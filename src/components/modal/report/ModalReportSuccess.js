@@ -25,7 +25,7 @@ function ModalReportSuccess(props) {
                             </svg>
                         </div>
                         <div className="w2">Thanks for letting us know</div>
-                        <div className="w3">Your feedback is important in helping us keep the Instagram community safe.</div>
+                        <div className="w3">Your feedback is important in helping us keep the Meta community safe.</div>
                     </div>
                     <div className="wrap-item-report-success-modal" onClick={()=>{}}>
                         <div className="wrap-content" onClick={()=>{onCancel();setIsModalUnfollowVisible(true)}}>Unfollow {props.userAccountFollowing.username}?</div>

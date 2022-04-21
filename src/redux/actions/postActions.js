@@ -24,6 +24,10 @@ const type = {
     END_SAVE_POST:"END_SAVE_POST",
     GET_USER_ACCOUNT_SETTING_LIKED_POST:"GET_USER_ACCOUNT_SETTING_LIKED_POST",
     GET_USER_ACCOUNT_SETTING_LIKED_POST_SUCCESS:"GET_USER_ACCOUNT_SETTING_LIKED_POST_SUCCESS",
+    GET_TOP_1_LIKE:"GET_TOP_1_LIKE",
+    GET_TOP_1_COMMENT:"GET_TOP_1_COMMENT",
+    GET_TOP_1_POPULAR:"GET_TOP_1_POPULAR",
+    GET_TOP_1_SAVE:"GET_TOP_1_SAVE",
 }
 const action = {
     getAllPostOfFollowing: (payload) => {
@@ -137,6 +141,30 @@ const action = {
             type:type.GET_USER_ACCOUNT_SETTING_LIKED_POST,
             payload:payload,
             id:pId,
+        }
+    },
+    getTop1Like:(callback)=>{
+        return{
+            type:type.GET_TOP_1_LIKE,
+            callback,
+        }
+    },
+    getTop1Comment:(callback)=>{
+        return{
+            type:type.GET_TOP_1_COMMENT,
+            callback,
+        }
+    },
+    getTop1Popular:(callback)=>{
+        return{
+            type:type.GET_TOP_1_POPULAR,
+            callback,
+        }
+    },
+    getTop1Save:(callback)=>{
+        return{
+            type:type.GET_TOP_1_SAVE,
+            callback,
         }
     },
 }

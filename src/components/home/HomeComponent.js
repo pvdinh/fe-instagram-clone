@@ -4,6 +4,7 @@ import UserProfileComponent from "./UserProfileComponent";
 import SuggestionsToFollow from "./SuggestionsToFollow";
 import StoryComponent from "./story/StoryComponent";
 import ModalFeedback from "../modal/feedback/ModalFeedback";
+import SideMenuLeftComponent from "./SideMenuLeftComponent";
 function HomeComponent() {
 
     const [isModalFeedbackVisible,setIsModalFeedbackVisible] = useState(false)
@@ -29,6 +30,11 @@ function HomeComponent() {
         <div className="wrap-home-page-body">
             <main className="main-container">
                 <section className="content-container">
+
+
+
+                    <SideMenuLeftComponent />
+
                     <div className="content">
                         <StoryComponent />
                         <PostComponent />
@@ -83,7 +89,7 @@ function HomeComponent() {
                                 </ul>
                             </div>
 
-                            <span className="side-menu__footer-copyright">&copy; 2021 instagram from facebook</span>
+                            <span className="side-menu__footer-copyright">&copy; 2022 Meta from Meta</span>
                         </div>
                         <ModalFeedback visible={isModalFeedbackVisible} setVisible={()=>{setIsModalFeedbackVisible(false)}} />
                     </section>
