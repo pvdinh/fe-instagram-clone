@@ -10,6 +10,10 @@ import Stomp from "stompjs"
 import {BASE_URL_WEBSOCKET} from "../../url";
 import {FullScreen, useFullScreenHandle} from "react-full-screen";
 import ModalDeleteComment from "../modal/ModalDeleteComment";
+import ReactCommentComponent from "../home/ReactCommentComponent";
+import ModalDisplayLikedPost from "../modal/ModalDisplayLikedPost";
+import {calculatorDayCommented} from "../../utils/formatNumber";
+import ListReplyCommentComponent from "../detail-post/ListReplyCommentComponent";
 
 
 let stompClientModal=null
@@ -23,6 +27,7 @@ function PostDetailModal(props) {
     const [ownerPost, setOwnerPost] = useState([])
     const [isVisibleModalDeleteComment,setIsVisibleModalDeleteComment] = useState(false)
     const [commentClick,setCommentClick] = useState({})
+    const [isVisibleLiked, setIsVisibleLiked] = useState(false)
 
     const handle = useFullScreenHandle();
 
@@ -117,8 +122,28 @@ function PostDetailModal(props) {
         stompClientModal.send("/app/comment.allComment",{},JSON.stringify(comment))
     }
 
+    const postReplyComment = (content,idComment) =>{
+        let comment = {
+            id: "",
+            content: content,
+            idPost: post.id,
+            idUser: props.userAccountProfile.id,
+            dateCommented: new Date().getTime(),
+            idComment:idComment,
+        }
+        console.log(comment)
+        stompClientModal.send("/app/comment.replyComment",{},JSON.stringify(comment))
+    }
+
     const deleteCmt = (comment) =>{
-        stompClientModal.send("/app/comment.deleteComment",{},JSON.stringify(comment))
+        if(comment.idComment){
+            console.log(comment)
+            stompClientModal.send("/app/comment.deleteReplyComment",{},JSON.stringify(comment))
+        }else stompClientModal.send("/app/comment.deleteComment",{},JSON.stringify(comment))
+    }
+
+    const onClickLikeComment = () => {
+        stompClientModal.send("/app/comment.allComment", {}, JSON.stringify({}))
     }
 
     const calculatorDayCreated = (timeCreated) => {
@@ -136,21 +161,6 @@ function PostDetailModal(props) {
                 return Math.round(distance / (60 * 60)) + " HOURS AGO"
             case 3600 * 24 <= distance :
                 return Math.round((distance / (60 * 60 * 24))) + " DAYS AGO"
-            default:
-                break;
-        }
-    }
-    const calculatorDayCommented = (timeComment) => {
-        let distance = Math.round((new Date().getTime() - timeComment) / (1000))
-        switch (true) {
-            case 0 <= distance && distance <= 59:
-                return distance + "s"
-            case 60 <= distance && distance < 3600:
-                return Math.round(distance / 60) + "m"
-            case 3600 <= distance && distance < (3600 * 24):
-                return Math.round(distance / (60 * 60)) + "h"
-            case 3600 * 24 <= distance :
-                return Math.round((distance / (60 * 60 * 24))) + "d"
             default:
                 break;
         }
@@ -175,7 +185,7 @@ function PostDetailModal(props) {
                     <span className="likes">
               Liked by <a className='post__name--underline' href="#">{likes[0]}</a>, <a
                         className='post__name--underline'
-                        href="#">{likes[1]}</a> and <strong>{likes.length - 2} others</strong>
+                        href="#">{likes[1]}</a> and <strong style={{cursor:"pointer",}} onClick={()=>{setIsVisibleLiked(true)}}>{likes.length - 2} others</strong>
             </span>
                 )
             default:
@@ -209,6 +219,11 @@ function PostDetailModal(props) {
         }
     }
 
+    const setCommentClickF = (cmt,b) =>{
+        setCommentClick(cmt)
+        setIsVisibleModalDeleteComment(b)
+    }
+
     return(
         <Modal className="wrap-home-post-detail" closable={false} footer={null} visible={props.visible} onCancel={()=>{props.setVisible()}} centered >
             <div className="wrap-post-detail">
@@ -240,35 +255,11 @@ function PostDetailModal(props) {
                     </div>
                     <div className="post-detail-body-comment" id="chats-body">
                         {
-                            listCmt.map((value,index)=>(
-                                <div className="comment">
-                                    <div className="avatar-user">
-                                        <Avatar src={value.userAccountSetting.profilePhoto} alt="picture"></Avatar>
-                                    </div>
-                                    <div className="content-comment">
-                                        <a href={`/${value.userAccountSetting.displayName}`} className="displayname-user">{value.userAccountSetting.displayName}</a>
-                                        <span>{value.comment.content}</span>
-                                        <div className="time-commented">
-                                            <div>
-                                                {calculatorDayCommented(value.comment.dateCommented)}
-                                            </div>
-                                            <div>
-                                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                                     xmlns="http://www.w3.org/2000/svg"
-                                                     style={{cursor: "pointer"}}
-                                                     onClick={()=>{setCommentClick(value.comment);setIsVisibleModalDeleteComment(true)}}
-                                                >
-                                                    <circle cx="6.5" cy="11.5" r="1.5"
-                                                            fill="var(--text-dark)"></circle>
-                                                    <circle cx="12" cy="11.5" r="1.5"
-                                                            fill="var(--text-dark)"></circle>
-                                                    <circle cx="17.5" cy="11.5" r="1.5"
-                                                            fill="var(--text-dark)"></circle>
-                                                </svg>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                            listCmt.map((value, index) => (
+                                <ListReplyCommentComponent onClickLikeComment={()=>{onClickLikeComment()}} reload={reload} postReplyComment={(content,idComment)=>{postReplyComment(content,idComment)}} userAccountSetting={value.userAccountSetting}
+                                                           comment={value.comment} setCommentClick={(cmt, b) => {
+                                    setCommentClickF(cmt, b)
+                                }}/>
                             ))
                         }
                     </div>
@@ -356,6 +347,7 @@ function PostDetailModal(props) {
             {
                 showModalDeleteComment()
             }
+            <ModalDisplayLikedPost pId={props.postId} visible={isVisibleLiked} setVisible={()=>{setIsVisibleLiked(false)}} />
         </Modal>
     )
 }

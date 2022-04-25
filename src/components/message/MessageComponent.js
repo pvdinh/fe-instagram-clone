@@ -8,6 +8,8 @@ let stompClient=null
 let stompClientAllInbox=null
 function MessageComponent(props) {
     const [isVisible,setIsVisible] = useState(false)
+    const [page,setPage] = useState(0)
+    const [size,setSize] = useState(2147483647)
 
     useEffect(()=>{
         props.getUserAccountProfile((data)=>{
@@ -67,7 +69,7 @@ function MessageComponent(props) {
         console.log("error connect web socket!")
     }
     const receive = (receiver)=>{
-        props.findAllBySenderAndReceiver(receiver)
+        props.findAllBySenderAndReceiver(receiver,{page:page,size:size})
         props.findAllBySender()
         console.log(receiver)
         console.log(props.userAccountProfile)
@@ -90,7 +92,7 @@ function MessageComponent(props) {
     //stompClient.connect khi connect thành công, truyền vào id receiver để thực hiện lắng nghe tin nhắn
     const openInboxCurrentReceiver = (id) => {
         if(stompClient !== null) stompClient.disconnect()
-        props.findAllBySenderAndReceiver(id,(data)=>{
+        props.findAllBySenderAndReceiver(id,{page:page,size:size},(data)=>{
             console.log(data)
             let sockjs = new SockJS(BASE_URL_WEBSOCKET+"/ws")
             let headers = {

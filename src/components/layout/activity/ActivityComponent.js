@@ -155,6 +155,66 @@ function ActivityComponent(props) {
                                                 displayNoti(value.activity.status)
                                             }
                                         </div>
+                                        :
+                                        value.activity.typeActivity === "likeComment"
+                                            ?
+                                            <div className="wrap-item-activity" onClick={()=>{redirectToPost(value.post.id);readActivity(value.activity)}}>
+                                                <div className="wrap-image-activity" onClick={()=>{}}>
+                                                    <img className="video-activity" src={value.post.imagePath}/>
+                                                </div>
+                                                {
+                                                    value.post.type === "video"
+                                                        ?
+                                                        <div className="wrap-content-activity">{displayLikes(value.comments,value.activity)} liked comment your video.</div>
+                                                        :
+                                                        <div className="wrap-content-activity">{displayLikes(value.comments,value.activity)} liked comment your photo.</div>
+                                                }
+
+                                                <div className="wrap-date-activity">{calculatorDayActivity(value.activity.dateActivity)}</div>
+                                                {
+                                                    displayNoti(value.activity.status)
+                                                }
+                                            </div>
+                                            :
+                                            value.activity.typeActivity === "replyComment"
+                                                ?
+                                                <div className="wrap-item-activity" onClick={()=>{redirectToPost(value.post.id);readActivity(value.activity)}}>
+                                                    <div className="wrap-image-activity" onClick={()=>{}}>
+                                                        <img className="video-activity" src={value.post.imagePath}/>
+                                                    </div>
+                                                    {
+                                                        value.post.type === "video"
+                                                            ?
+                                                            <div className="wrap-content-activity">{displayLikes(value.comments,value.activity)} reply comment your video.</div>
+                                                            :
+                                                            <div className="wrap-content-activity">{displayLikes(value.comments,value.activity)} reply comment your photo.</div>
+                                                    }
+
+                                                    <div className="wrap-date-activity">{calculatorDayActivity(value.activity.dateActivity)}</div>
+                                                    {
+                                                        displayNoti(value.activity.status)
+                                                    }
+                                                </div>
+                                                :
+                                                value.activity.typeActivity === "likeReplyComment"
+                                                    ?
+                                                    <div className="wrap-item-activity" onClick={()=>{redirectToPost(value.post.id);readActivity(value.activity)}}>
+                                                        <div className="wrap-image-activity" onClick={()=>{}}>
+                                                            <img className="video-activity" src={value.post.imagePath}/>
+                                                        </div>
+                                                        {
+                                                            value.post.type === "video"
+                                                                ?
+                                                                <div className="wrap-content-activity">{displayLikes(value.comments,value.activity)} liked reply comment your video.</div>
+                                                                :
+                                                                <div className="wrap-content-activity">{displayLikes(value.comments,value.activity)} liked reply comment your photo.</div>
+                                                        }
+
+                                                        <div className="wrap-date-activity">{calculatorDayActivity(value.activity.dateActivity)}</div>
+                                                        {
+                                                            displayNoti(value.activity.status)
+                                                        }
+                                                    </div>
                                 :
                                 null
                         ))

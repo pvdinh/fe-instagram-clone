@@ -14,6 +14,17 @@ function MorePostComponent(props) {
         props.getUserProfile(props.username,()=>{},history)
     },[props.username,props.reload])
 
+    // useEffect(()=>{
+    //     window.onscroll = function(ev) {
+    //         let pageSc = document.getElementsByClassName("wrap-body-page-post-detail")[0].offsetHeight;
+    //         console.log(pageSc)
+    //         console.log(window.scrollY)
+    //         console.log(window.innerHeight)
+    //         if ((window.innerHeight + window.scrollY) > pageSc -100) {
+    //             console.log("XXXXXXXXXXXXXXXXXXXXXXXx")
+    //         }
+    //     };
+    // },[])
 
     return(
         <div>

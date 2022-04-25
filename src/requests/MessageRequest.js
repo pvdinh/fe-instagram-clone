@@ -5,8 +5,8 @@ export default class MessageRequest extends BaseRequest{
         let url = 'message/sender'
         return this.get(url)
     }
-    findAllBySenderAndReceiver(receiver){
-        let url = `message/${receiver}/receiver`
+    findAllBySenderAndReceiver(payload){
+        let url = `message/${payload.receiver}/receiver?page=${payload.page}&size=${payload.size}`
         return this.get(url)
     }
     postMessage(message){

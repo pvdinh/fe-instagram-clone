@@ -4,15 +4,16 @@ import {connect} from "react-redux";
 import {Modal} from "antd";
 import postActions from "../../redux/actions/postActions";
 import ItemModalDisplayLikedPost from "./ItemModalDisplayLikedPost";
+import comment from "../../redux/actions/comment";
 
-function ModalDisplayLikedPost(props) {
+function ModalDisplayLikedCommentPost(props) {
 
     const [page,setPage] = useState(0)
     const [size,setSize] = useState(2147483647)
 
 
     useEffect(()=>{
-        props.getUserAccountSettingLikedPost(props.pId,{page:page,size:size,})
+        props.getUserAccountSettingLikedCommentPost(props.idComment,{page:page,size:size,})
     },[props.visible])
 
     const onCancel = () =>{
@@ -37,7 +38,7 @@ function ModalDisplayLikedPost(props) {
                footer={null} closable={false}>
             <div className="wrap-div-modal-display-liked-post">
                 {
-                    props.listUserAccountSettingLikedPost.map((value,index)=>(
+                    props.listUserAccountSettingLikedCommentPost.map((value,index)=>(
                         <ItemModalDisplayLikedPost item={value} />
                     ))
                 }
@@ -48,7 +49,7 @@ function ModalDisplayLikedPost(props) {
 
 function mapStateToProps(state) {
     return {
-        listUserAccountSettingLikedPost:state.post.listUserAccountSettingLikedPost,
+        listUserAccountSettingLikedCommentPost:state.comment.listUserAccountSettingLikedCommentPost,
     }
 }
 
@@ -57,10 +58,10 @@ function mapDispatchToProps(dispatch) {
         endFollowing: (userFollowingId) => {
             dispatch(homeActions.action.endFollowing(userFollowingId))
         },
-        getUserAccountSettingLikedPost:(pId,payload)=>{
-          dispatch(postActions.action.getUserAccountSettingLikedPost(pId,payload))
+        getUserAccountSettingLikedCommentPost:(idComment,payload)=>{
+          dispatch(comment.action.getUserAccountSettingLikedCommentPost(idComment,payload))
         },
     }
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(ModalDisplayLikedPost)
+export default connect(mapStateToProps,mapDispatchToProps)(ModalDisplayLikedCommentPost)

@@ -4,11 +4,11 @@
   padding-top: 85px;
 .body-page-post-detail {
   margin: 0px auto;
-  max-width: 915px!important;
+  max-width: 1015px!important;
   padding-bottom: 55px;
   border-bottom: 1px solid var(--border);
   .wrap-post-detail{
-    height: 600px;
+    height: 700px;
     .wrap-image-post-detail{
       width: 100%;
       .fullscreen{
@@ -75,10 +75,36 @@
       background-color: var(--primary);
       border-bottom: 1px solid var(--border);
       overflow: auto;
-      height: 372px;
+      height: 472px;
       .comment{
-        display: flex;
+        display: grid;
+        grid-template-columns: 35px auto 25px;
         padding: 16px;
+        &:hover{
+          .more-action-in-comment{
+            display: block;
+          }
+        }
+        .more-action-in-comment{
+          display: none;
+        }
+        .wrap-reply-comment{
+          display: grid;
+          grid-template-columns: 35px auto 25px;
+          margin-left: 80px;
+          margin-top: 15px;
+          .content-comment{
+            margin-right: 47px;
+          }
+          &:hover{
+            .more-action-in-comment{
+              display: block;
+            }
+          }
+          .more-action-in-comment{
+            display: none;
+          }
+        }
         .content-comment{
           margin-left: 12px;
           font-size: 13px;
@@ -86,7 +112,7 @@
           .displayname-user{
             font-size: 14px;
             color: var(--text-dark);
-            font-weight: 500;
+            font-weight: 600;
             text-decoration: none;
             text-transform: lowercase;
             margin-right: 4px;
@@ -97,7 +123,35 @@
             margin-top: 10px;
             display: grid;
             grid-template-columns: 50px auto;
+            align-items: center;
+            .wrap-reply-comment-label{
+              display: flex;
+              align-items: center;
+              cursor: pointer;
+              .reply-comment-label{
+                margin-right: 10px;
+              }
+              &:hover{
+                text-decoration: underline;
+              }
+            }
           }
+        }
+        .text-number-like{
+          font-size: 12px;
+          margin-right: 2px;
+          cursor: pointer;
+        }
+        .text-number-like:hover{
+          text-decoration: underline;
+        }
+        .text-number-like-none{
+          font-size: 12px;
+          margin-right: 20px;
+          cursor: pointer;
+        }
+        .margin-bt-4{
+          margin-bottom: 4px!important;
         }
       }
     }

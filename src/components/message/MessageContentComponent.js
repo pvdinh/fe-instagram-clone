@@ -11,6 +11,8 @@ function MessageContentComponent(props) {
     const [type, setType] = useState("")
     const [imageUpload, setImageUpload] = useState("")
     const [imageDisplay, setImageDisplay] = useState("")
+    const [page,setPage] = useState(0)
+    const [size,setSize] = useState(20)
 
 
     const onChangeMessage = (e) => {
@@ -29,12 +31,6 @@ function MessageContentComponent(props) {
             setType("text")
         }
         setMessage(text)
-    }
-
-    function auto_grow(element) {
-        let ag = window.document.getElementById("auto_grow")
-        ag.style.height = "5px";
-        ag.style.height = (ag.scrollHeight) + "px";
     }
 
     const convertTimeStampToDate = (timeStamp) => {
@@ -73,6 +69,12 @@ function MessageContentComponent(props) {
         }
     }
 
+    const fetchMessage = (e) =>{
+        if(e.target.scrollTop === 0){
+            console.log("XXXXX")
+        }
+    }
+
     return (
         <div className="chats">
             <div className="chat-banner">
@@ -83,7 +85,7 @@ function MessageContentComponent(props) {
                 </div>
                 <div><i className="fas fa-info"/></div>
             </div>
-            <div className="chats-body" id="chats-body">
+            <div className="chats-body" id="chats-body" onScroll={(e)=>{fetchMessage(e)}}>
                 {
                     props.messages.map((value, index) => (
                         <div>

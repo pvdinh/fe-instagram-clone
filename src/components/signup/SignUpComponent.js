@@ -8,7 +8,9 @@ function SignUpComponent(props) {
 
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
+    const [verifyPassword, setVerifyPassword] = useState("")
     const [validatePassword, setValidatePassword] = useState("")
+    const [validateVerifyPassword, setValidateVerifyPassword] = useState("")
     const [phone, setPhone] = useState("")
     const [email, setEmail] = useState("")
     const [fullname, setFullname] = useState("")
@@ -29,6 +31,7 @@ function SignUpComponent(props) {
             && props.checkEmail === "success"
             && validateFullname === "success"
             && validatePassword === "success"
+            && validateVerifyPassword === "success"
             && props.checkUsername === "success") {
             setCheckLogin(true)
             return true
@@ -76,12 +79,23 @@ function SignUpComponent(props) {
             setValidatePassword("success") : setValidatePassword("error")
     }
 
+    const checkVerifyPassword = ()=>{
+        console.log(verifyPassword)
+        console.log(password)
+        verifyPassword === password ?
+            setValidateVerifyPassword("success") : setValidateVerifyPassword("error")
+    }
+
     const onChangeUsername = (e) => {
         setUsername(e.target.value)
     }
     const onChangePassword = (e) => {
         setPassword(e.target.value)
         checkPassword()
+    }
+    const onChangeVerifyPassword = (e) => {
+        setVerifyPassword(e.target.value)
+        checkVerifyPassword()
     }
     const onChangeFullname = (e) => {
         setFullname(e.target.value)
@@ -183,6 +197,20 @@ function SignUpComponent(props) {
                                                                onChangePassword(e)
                                                            }}
                                                            onBlur={()=>{checkPassword()}}
+                                                           placeholder="Password" aria-describedby maxLength={30}
+                                                           aria-required="true" autoCapitalize="off" autoCorrect="off"
+                                                           required/>
+                                                </Form.Item>
+
+                                            </div>
+
+                                            <div className="input-box" >
+                                                <Form.Item hasFeedback validateStatus={validateVerifyPassword}>
+                                                    <input type="password" name="verifyPassword" value={verifyPassword} id="verifyPassword"
+                                                           onChange={(e) => {
+                                                               onChangeVerifyPassword(e)
+                                                           }}
+                                                           onBlur={()=>{checkVerifyPassword()}}
                                                            placeholder="Password" aria-describedby maxLength={30}
                                                            aria-required="true" autoCapitalize="off" autoCorrect="off"
                                                            required/>
