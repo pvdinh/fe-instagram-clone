@@ -49,7 +49,7 @@ function SideMenuLeftComponent(props) {
 
             <div className="side-menu__suggestions-section">
                 <div className="side-menu__suggestions-header">
-                    <h2>Nhóm cá nhân</h2>
+                    <h2>Group personal</h2>
                 </div>
             </div>
 
@@ -59,7 +59,7 @@ function SideMenuLeftComponent(props) {
                         <img src="https://static.xx.fbcdn.net/rsrc.php/v3/y5/r/PrjLkDYpYbH.png" alt="Picture"/>
                     </a>
                     <div className="">
-                        <a href="#" style={{textTransform:"none",marginLeft:"5px"}}>Nhóm</a>
+                        <a href="#" style={{textTransform:"none",marginLeft:"5px"}}>Group</a>
                     </div>
                 </div>
             </div>
@@ -76,7 +76,7 @@ function SideMenuLeftComponent(props) {
                         <img src="https://res.cloudinary.com/dinhpv/image/upload/v1650516249/instargram-clone/pngwing.com_hiy5cd.png" alt="Picture"/>
                     </p>
                     <div className="">
-                        <p style={{textTransform:"none",marginLeft:"5px"}}>Bài đăng có nhiều lượt thích nhất</p>
+                        <p style={{textTransform:"none",marginLeft:"5px"}}>The post with the most likes</p>
                     </div>
                 </div>
             </div>
@@ -87,7 +87,7 @@ function SideMenuLeftComponent(props) {
                         <img src="https://res.cloudinary.com/dinhpv/image/upload/v1650516337/instargram-clone/pngwing.com_1_gko1bt.png" alt="Picture"/>
                     </p>
                     <div className="">
-                        <p style={{textTransform:"none",marginLeft:"5px"}}>Bài đăng có nhiều lượt bình luận nhât</p>
+                        <p style={{textTransform:"none",marginLeft:"5px"}}>The post with the most comments</p>
                     </div>
                 </div>
             </div>
@@ -98,7 +98,7 @@ function SideMenuLeftComponent(props) {
                         <img src="https://res.cloudinary.com/dinhpv/image/upload/v1650516844/instargram-clone/pngwing.com_2_j5ierz.png" alt="Picture"/>
                     </p>
                     <div className="">
-                        <p href="#" style={{textTransform:"none",marginLeft:"5px"}}>Bài đăng có nhiều tương tác nhất</p>
+                        <p href="#" style={{textTransform:"none",marginLeft:"5px"}}>Posts with the most interactions</p>
                     </div>
                 </div>
             </div>
@@ -109,7 +109,7 @@ function SideMenuLeftComponent(props) {
                         <img src="https://static.xx.fbcdn.net/rsrc.php/v3/yD/r/lVijPkTeN-r.png" alt="Picture"/>
                     </p>
                     <div className="">
-                        <p style={{textTransform:"none",marginLeft:"5px"}}>Bài đăng có nhiều lượt lưu nhất</p>
+                        <p style={{textTransform:"none",marginLeft:"5px"}}>The post with the most saves</p>
                     </div>
                 </div>
             </div>

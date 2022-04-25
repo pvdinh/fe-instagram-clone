@@ -13,6 +13,8 @@ import ModalDisplayLikedPost from "../modal/ModalDisplayLikedPost";
 import ModalDeleteComment from "../modal/ModalDeleteComment";
 import {f, fData, fNumber, fShortenNumber} from "../../utils/formatNumber";
 import ReactCommentComponent from "./ReactCommentComponent";
+import ModalSelectReceiverComponent from "../message/ModalSelectReceiverComponent";
+import ModalShareMessengerComponent from "../modal/ModalShareMessengerComponent";
 
 function PostItemComponent(props) {
     const [like, setLike] = useState(true)
@@ -25,6 +27,9 @@ function PostItemComponent(props) {
     const [classdbClick, setClassdbClick] = useState("pop")
     const [isVisibleModalDeleteComment,setIsVisibleModalDeleteComment] = useState(false)
     const [commentClick,setCommentClick] = useState({})
+
+    const [isVisibleSendMessage,setIsVisibleSendMessage] = useState(false)
+
 
     useEffect(() => {
         const setTimeOut = setTimeout(() => {
@@ -168,6 +173,14 @@ function PostItemComponent(props) {
         }
     }
 
+    const showModalSendMessage = () =>{
+        if(isVisibleSendMessage){
+            return(
+                <ModalShareMessengerComponent idPost={props.post.id} isVisible={isVisibleSendMessage} setIsVisible={()=>{setIsVisibleSendMessage(!isVisibleSendMessage)}} />
+            )
+        }
+    }
+
     return (
         <div>
             {
@@ -238,7 +251,7 @@ function PostItemComponent(props) {
                                               fill="var(--text-dark)" stroke="var(--text-dark)" stroke-width="0.7"/>
                                     </svg>
                                 </button>
-                                <button className="post__button__other">
+                                <button className="post__button__other" onClick={()=>{setIsVisibleSendMessage(true)}}>
                                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
                                          xmlns="http://www.w3.org/2000/svg">
                                         <path fill-rule="evenodd" clip-rule="evenodd"
@@ -357,6 +370,9 @@ function PostItemComponent(props) {
             }
             {
                 showModalDeleteComment()
+            }
+            {
+                showModalSendMessage()
             }
         </div>
     )

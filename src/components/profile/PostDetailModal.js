@@ -14,6 +14,7 @@ import ReactCommentComponent from "../home/ReactCommentComponent";
 import ModalDisplayLikedPost from "../modal/ModalDisplayLikedPost";
 import {calculatorDayCommented} from "../../utils/formatNumber";
 import ListReplyCommentComponent from "../detail-post/ListReplyCommentComponent";
+import ModalShareMessengerComponent from "../modal/ModalShareMessengerComponent";
 
 
 let stompClientModal=null
@@ -28,6 +29,9 @@ function PostDetailModal(props) {
     const [isVisibleModalDeleteComment,setIsVisibleModalDeleteComment] = useState(false)
     const [commentClick,setCommentClick] = useState({})
     const [isVisibleLiked, setIsVisibleLiked] = useState(false)
+
+    const [isVisibleSendMessage,setIsVisibleSendMessage] = useState(false)
+
 
     const handle = useFullScreenHandle();
 
@@ -219,6 +223,14 @@ function PostDetailModal(props) {
         }
     }
 
+    const showModalSendMessage = () =>{
+        if(isVisibleSendMessage){
+            return(
+                <ModalShareMessengerComponent idPost={props.postId} isVisible={isVisibleSendMessage} setIsVisible={()=>{setIsVisibleSendMessage(!isVisibleSendMessage)}} />
+            )
+        }
+    }
+
     const setCommentClickF = (cmt,b) =>{
         setCommentClick(cmt)
         setIsVisibleModalDeleteComment(b)
@@ -298,7 +310,7 @@ function PostDetailModal(props) {
                                               fill="var(--text-dark)" stroke="var(--text-dark)" stroke-width="0.7"/>
                                     </svg>
                                 </button>
-                                <button className="post__button__other">
+                                <button className="post__button__other" onClick={()=>{setIsVisibleSendMessage(true)}}>
                                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
                                          xmlns="http://www.w3.org/2000/svg">
                                         <path fill-rule="evenodd" clip-rule="evenodd"
@@ -346,6 +358,9 @@ function PostDetailModal(props) {
             </div>
             {
                 showModalDeleteComment()
+            }
+            {
+                showModalSendMessage()
             }
             <ModalDisplayLikedPost pId={props.postId} visible={isVisibleLiked} setVisible={()=>{setIsVisibleLiked(false)}} />
         </Modal>

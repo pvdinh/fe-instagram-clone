@@ -78,7 +78,13 @@ function ModalSelectReceiverComponent(props) {
                                 </div>
                             ))
                         }
-                        <input className="s21" autoComplete="off" value={searchValue} onChange={(event)=>{onSearch(event)}} placeholder="Search..."/>
+                        {
+                            receiver.length < 1
+                            ?
+                                <input className="s21" autoComplete="off" value={searchValue} onChange={(event)=>{onSearch(event)}} placeholder="Search..."/>
+                                :
+                                null
+                        }
                     </div>
                 </div>
                 <div className="suggested">

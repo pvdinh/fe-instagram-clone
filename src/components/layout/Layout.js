@@ -161,6 +161,9 @@ function Layout(props) {
             <div className="alertUploadErr">
                 <div className="alert-text">File size must be less than 40MB</div>
             </div>
+            <div className="alertShareToMessage">
+                <div className="alert-text">Shared to message</div>
+            </div>
         </div>
     )
 }

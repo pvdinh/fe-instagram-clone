@@ -11,6 +11,7 @@ import ModalFeedback from "../modal/feedback/ModalFeedback";
 import ModalDeleteComment from "../modal/ModalDeleteComment";
 import ModalDisplayLikedPost from "../modal/ModalDisplayLikedPost";
 import ListReplyCommentComponent from "./ListReplyCommentComponent";
+import ModalShareMessengerComponent from "../modal/ModalShareMessengerComponent";
 
 let stompClient=null
 function PostDetailComponentPage(props) {
@@ -27,6 +28,9 @@ function PostDetailComponentPage(props) {
     const [isVisibleModalDeleteComment,setIsVisibleModalDeleteComment] = useState(false)
     const [commentClick,setCommentClick] = useState({})
     const [isVisibleLiked, setIsVisibleLiked] = useState(false)
+
+    const [isVisibleSendMessage,setIsVisibleSendMessage] = useState(false)
+
 
 
     useEffect(()=>{
@@ -224,6 +228,14 @@ function PostDetailComponentPage(props) {
         setIsVisibleModalDeleteComment(b)
     }
 
+    const showModalSendMessage = () =>{
+        if(isVisibleSendMessage){
+            return(
+                <ModalShareMessengerComponent idPost={props.match.params.pId} isVisible={isVisibleSendMessage} setIsVisible={()=>{setIsVisibleSendMessage(!isVisibleSendMessage)}} />
+            )
+        }
+    }
+
     return(
         <div className="wrap-body-page-post-detail">
             <div className="body-page-post-detail">
@@ -295,7 +307,7 @@ function PostDetailComponentPage(props) {
                                                   fill="var(--text-dark)" stroke="var(--text-dark)" stroke-width="0.7"/>
                                         </svg>
                                     </button>
-                                    <button className="post__button__other">
+                                    <button className="post__button__other" onClick={()=>{setIsVisibleSendMessage(true)}}>
                                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
                                              xmlns="http://www.w3.org/2000/svg">
                                             <path fill-rule="evenodd" clip-rule="evenodd"
@@ -397,6 +409,9 @@ function PostDetailComponentPage(props) {
             <ModalFeedback visible={isModalFeedbackVisible} setVisible={()=>{setIsModalFeedbackVisible(false)}} />
             {
                 showModalDeleteComment()
+            }
+            {
+                showModalSendMessage()
             }
             <ModalDisplayLikedPost pId={props.match.params.pId} visible={isVisibleLiked} setVisible={()=>{setIsVisibleLiked(false)}} />
         </div>

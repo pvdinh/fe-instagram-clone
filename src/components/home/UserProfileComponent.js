@@ -15,7 +15,7 @@ function UserProfileComponent(props) {
             <a href={`/${props.userAccountProfile.username}`} target="_blank">{props.userAccountProfile.username}</a>
             <span>{props.userAccountProfile.displayName}</span>
         </div>
-        <button className="side-menu__user-button">Switch</button>
+        <button className="side-menu__user-button"></button>
     </div>
     )
 }
