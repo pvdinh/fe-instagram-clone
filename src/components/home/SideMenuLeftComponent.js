@@ -66,7 +66,7 @@ function SideMenuLeftComponent(props) {
 
             <div className="side-menu__suggestions-section">
                 <div className="side-menu__suggestions-header">
-                    <h2>Tin nổi bật</h2>
+                    <h2>Hot news</h2>
                 </div>
             </div>
 

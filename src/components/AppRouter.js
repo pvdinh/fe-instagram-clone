@@ -13,6 +13,8 @@ import PostDetailPage from "../screens/PostDetailPage";
 import SettingAccountPage from "../screens/SettingAccountPage";
 import StoryPage from "../screens/StoryPage";
 import ExplorePage from "../screens/ExplorePage";
+import GroupPage from "../screens/GroupPage";
+import GroupDetailComponent from "./group/group-detail/GroupDetailComponent";
 
 function AppRouter() {
     return (
@@ -32,6 +34,8 @@ function AppRouter() {
                     <Layout>
                         <Switch>
                             <ProtectedRoute path={"/"} exact render={()=>{return <HomePage />}}></ProtectedRoute>
+                            <ProtectedRoute path={"/g/group"} exact render={()=>{return <GroupPage />}}></ProtectedRoute>
+                            <ProtectedRoute path={"/g/:gId"} exact render={()=>{return <GroupDetailComponent />}}></ProtectedRoute>
                             <ProtectedRoute path={"/message"} exact render={()=>{return <MessagePage />}}></ProtectedRoute>
                             <ProtectedRoute path={"/explore"} exact render={()=>{return <ExplorePage />}}></ProtectedRoute>
                             <ProtectedRoute path={"/error"} exact render={()=>{return <ErrorPage />}}></ProtectedRoute>
