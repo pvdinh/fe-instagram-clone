@@ -55,11 +55,11 @@ function SideMenuLeftComponent(props) {
 
             <div className="side-menu__user-profile">
                 <div className="item-menu-left">
-                    <a href="#" className="">
+                    <a href="/g/group" className="">
                         <img src="https://static.xx.fbcdn.net/rsrc.php/v3/y5/r/PrjLkDYpYbH.png" alt="Picture"/>
                     </a>
                     <div className="">
-                        <a href="#" style={{textTransform:"none",marginLeft:"5px"}}>Group</a>
+                        <a href="/g/group" style={{textTransform:"none",marginLeft:"5px"}}>Groups</a>
                     </div>
                 </div>
             </div>

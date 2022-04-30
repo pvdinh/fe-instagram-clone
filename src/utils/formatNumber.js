@@ -26,6 +26,7 @@ export function fData(number) {
 export function f(number) {
   return new Intl.NumberFormat().format(number);
 }
+
 export const calculatorDayCommented = (timeComment) => {
   let distance = Math.round((new Date().getTime() - timeComment) / (1000))
   switch (true) {
@@ -40,4 +41,12 @@ export const calculatorDayCommented = (timeComment) => {
     default:
       break;
   }
+}
+
+
+export const convertTimeStampToDateDMY = (timeStamp) => {
+  let time = new Date(timeStamp)
+  let months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  let minute = time.getMinutes() < 10 ? "0" + time.getMinutes() : time.getMinutes()
+  return time.getDate() + " " + months[time.getMonth()] + " " + time.getFullYear();
 }

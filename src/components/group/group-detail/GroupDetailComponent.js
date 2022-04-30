@@ -4,6 +4,7 @@ import PostComponent from "../../home/PostComponent";
 import StoryComponent from "../../home/story/StoryComponent";
 import LeftGroupDetailComponent from "./LeftGroupDetailComponent";
 import {AiFillEyeInvisible, AiOutlineHistory, FaLock} from "react-icons/all";
+import RouteTypeMember from "../RouteTypeMember";
 
 
 function GroupDetailComponent() {
@@ -38,7 +39,7 @@ function GroupDetailComponent() {
 
                     <div className="content">
                         <StoryComponent/>
-                        <PostComponent/>
+                        <RouteTypeMember />
                     </div>
 
 

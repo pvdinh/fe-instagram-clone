@@ -35,7 +35,9 @@ function AppRouter() {
                         <Switch>
                             <ProtectedRoute path={"/"} exact render={()=>{return <HomePage />}}></ProtectedRoute>
                             <ProtectedRoute path={"/g/group"} exact render={()=>{return <GroupPage />}}></ProtectedRoute>
-                            <ProtectedRoute path={"/g/:gId"} exact render={()=>{return <GroupDetailComponent />}}></ProtectedRoute>
+                            <ProtectedRoute path={"/g/:gId"} exact render={(props)=>{return <GroupDetailComponent {...props} />}}></ProtectedRoute>
+                            <ProtectedRoute path={"/g/:gId/requests"} exact render={(props)=>{return <GroupDetailComponent {...props} />}}></ProtectedRoute>
+                            <ProtectedRoute path={"/g/:gId/members"} exact render={(props)=>{return <GroupDetailComponent {...props} />}}></ProtectedRoute>
                             <ProtectedRoute path={"/message"} exact render={()=>{return <MessagePage />}}></ProtectedRoute>
                             <ProtectedRoute path={"/explore"} exact render={()=>{return <ExplorePage />}}></ProtectedRoute>
                             <ProtectedRoute path={"/error"} exact render={()=>{return <ErrorPage />}}></ProtectedRoute>

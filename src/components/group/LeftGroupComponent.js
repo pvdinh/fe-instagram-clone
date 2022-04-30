@@ -4,6 +4,7 @@ import postActions from "../../redux/actions/postActions";
 import PostDetailModal from "../profile/PostDetailModal";
 
 import { AutoComplete } from 'antd';
+import ModalCreateGroup from "./ModalCreateGroup";
 
 const { Option } = AutoComplete;
 
@@ -11,6 +12,7 @@ function LeftGroupComponent(props) {
     const [pId,setPId] = useState("");
     const [isVisiblePostDetail, setIsVisiblePostDetail] = useState(false)
     const [result, setResult] = useState([]);
+    const [isVisibleModalAddGroup, setIsVisibleModalAddGroup] = useState(false);
 
     const handleSearch = (value) => {
         let res = [1,11,22,33,11];
@@ -74,7 +76,7 @@ function LeftGroupComponent(props) {
                 ))}
             </AutoComplete>
 
-            <button className="button-create-side-menu-left-group">+ Create a new group </button>
+            <button className="button-create-side-menu-left-group" onClick={()=>{setIsVisibleModalAddGroup(true)}}>+ Create new group </button>
 
             <div id="group-personal" style={{height:"700px", overflowY: "scroll"}} onScroll={(e)=>{fetchMoreGroup(e)}}>
                 <div className="side-menu__suggestions-section">
@@ -187,6 +189,7 @@ function LeftGroupComponent(props) {
             {
                 showModal()
             }
+            <ModalCreateGroup visible={isVisibleModalAddGroup} setVisible={()=>{setIsVisibleModalAddGroup(false)}} />
         </section>
     )
 }

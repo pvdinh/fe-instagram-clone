@@ -1,6 +1,7 @@
 import {connect} from "react-redux";
 import homeActions from "../../redux/actions/homeActions";
 import {useEffect, useState} from "react";
+import {convertTimeStampToDateDMY} from "../../utils/formatNumber";
 
 function ItemInSuggestionsToFollow(props) {
     const [statusFollow, setStatusFollow] = useState(false)
@@ -22,7 +23,7 @@ function ItemInSuggestionsToFollow(props) {
             </a>
             <div className="side-menu__suggestion-info">
                 <a href={`/${props.item.displayName}`}>{props.item.displayName}</a>
-                <span>Followed by user1, user2 and 9 others</span>
+                <span>Joined meta on {convertTimeStampToDateDMY(props.item.dateCreated)}</span>
             </div>
             {
                 !statusFollow ?

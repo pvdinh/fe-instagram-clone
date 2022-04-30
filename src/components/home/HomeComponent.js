@@ -37,7 +37,7 @@ function HomeComponent() {
 
                     <div className="content">
                         <StoryComponent />
-                        <PostComponent />
+                        <PostComponent type="home"/>
                     </div>
 
 

@@ -7,6 +7,8 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import SockJS from "sockjs-client";
 import {BASE_URL_WEBSOCKET} from "../../url";
 import Stomp from "stompjs";
+import NotHavePostInGroup from "../not-have-post/NotHavePostInGroup";
+import NotHavePostInHome from "../not-have-post/NotHavePostInHome";
 
 let stompClient=null
 function PostComponent(props) {
@@ -73,17 +75,32 @@ function PostComponent(props) {
 
     return (
         <div>
-            <InfiniteScroll
-                dataLength={props.listPostOfFollowing.length}
-                next={()=>{fetchMoreData()}}
-                hasMore={true}
-            >
-                {
-                    props.listPostOfFollowing.map((item,key) =>(
-                        <PostItemComponent deleteCmt={(comment)=>{deleteCmt(comment)}} postCmt={(comment)=>{postCmt(comment)}} currentPage={page} key={key} post={item.post} likes={item.likes} userAccountSetting={item.userAccountSetting} />
-                    ))
-                }
-            </InfiniteScroll>
+            {
+                props.listPostOfFollowing.length > 0
+                    ?
+                    <InfiniteScroll
+                        dataLength={props.listPostOfFollowing.length}
+                        next={() => {
+                            fetchMoreData()
+                        }}
+                        hasMore={true}
+                    >
+                        {
+                            props.listPostOfFollowing.map((item, key) => (
+                                <PostItemComponent deleteCmt={(comment) => {
+                                    deleteCmt(comment)
+                                }} postCmt={(comment) => {
+                                    postCmt(comment)
+                                }} currentPage={page} key={key} post={item.post} likes={item.likes}
+                                                   userAccountSetting={item.userAccountSetting}/>
+                            ))
+                        }
+                    </InfiniteScroll>
+                    : props.type === "group"
+                    ?
+                    <NotHavePostInGroup/>
+                    : <NotHavePostInHome/>
+            }
         </div>
     )
 }

@@ -38,7 +38,7 @@ function GroupComponent() {
 
                     <div className="content">
                         <StoryComponent />
-                        <PostComponent />
+                        <PostComponent type="group" />
                     </div>
 
 

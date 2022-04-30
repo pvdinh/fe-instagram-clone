@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import {connect} from "react-redux";
 import PostDetailModal from "../../profile/PostDetailModal";
 import postActions from "../../../redux/actions/postActions";
+import {Link} from "react-router-dom";
 
 function LeftGroupDetailComponent(props) {
     const [pId,setPId] = useState("");
@@ -54,7 +55,9 @@ function LeftGroupDetailComponent(props) {
     return (
         <section className="side-menu-left">
 
-            <div className="label-side-menu-left-group">Group</div>
+            <Link to={`/g/3453e3eww33`} >
+                <div className="label-side-menu-left-group">Group</div>
+            </Link>
 
             <div className="image-side-menu-left-group">
                 <img className="image-group" src="https://www.facebook.com/images/groups/groups-default-cover-photo-2x.png" alt="image"/>
@@ -73,25 +76,29 @@ function LeftGroupDetailComponent(props) {
                 </div>
 
                 <div className="side-menu__user-profile">
+                    <Link to={`/g/3453e3eww33/requests`} >
                     <div className="item-menu-left">
                         <a href="#" className="" >
                             <img src="https://res.cloudinary.com/dinhpv/image/upload/v1650987339/instargram-clone/pngwing.com_4_uhvqng.png" alt="Picture"/>
                         </a>
                         <div className="">
-                            <a href="#" style={{textTransform:"none",marginLeft:"5px"}}>Request membership</a>
+                                <a href="#" style={{textTransform:"none",marginLeft:"5px"}}>Request membership</a>
                         </div>
                     </div>
+                    </Link>
                 </div>
 
                 <div className="side-menu__user-profile">
-                    <div className="item-menu-left" style={{marginLeft:"7px",marginRight:"7px"}}>
-                        <a href="#" className="">
-                            <img src="https://static.xx.fbcdn.net/rsrc.php/v3/y5/r/PrjLkDYpYbH.png" alt="Picture"/>
-                        </a>
-                        <div className="">
-                            <a href="#" style={{textTransform:"none",marginLeft:"10px"}}>Membership</a>
+                    <Link to={`/g/3453e3eww33/members`} >
+                        <div className="item-menu-left" style={{marginLeft:"7px",marginRight:"7px"}}>
+                            <a href="#" className="">
+                                <img src="https://static.xx.fbcdn.net/rsrc.php/v3/y5/r/PrjLkDYpYbH.png" alt="Picture"/>
+                            </a>
+                            <div className="">
+                                <a href="#" style={{textTransform:"none",marginLeft:"10px"}}>Membership</a>
+                            </div>
                         </div>
-                    </div>
+                    </Link>
                 </div>
 
 
