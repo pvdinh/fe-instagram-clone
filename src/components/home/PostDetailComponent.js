@@ -14,6 +14,8 @@ import ReactCommentComponent from "./ReactCommentComponent";
 import ModalDisplayLikedPost from "../modal/ModalDisplayLikedPost";
 import {calculatorDayCommented} from "../../utils/formatNumber";
 import ListReplyCommentComponent from "../detail-post/ListReplyCommentComponent";
+import ModalShareMessengerComponent from "../modal/ModalShareMessengerComponent";
+import {MdPlayArrow} from "react-icons/all";
 
 let stompClientModal=null
 function PostDetailComponent(props) {
@@ -24,6 +26,8 @@ function PostDetailComponent(props) {
     const [isVisibleModalDeleteComment,setIsVisibleModalDeleteComment] = useState(false)
     const [commentClick,setCommentClick] = useState({})
     const [isVisibleLiked, setIsVisibleLiked] = useState(false)
+
+    const [isVisibleSendMessage,setIsVisibleSendMessage] = useState(false)
 
 
 
@@ -210,6 +214,14 @@ function PostDetailComponent(props) {
         setIsVisibleModalDeleteComment(b)
     }
 
+    const showModalSendMessage = () =>{
+        if(isVisibleSendMessage){
+            return(
+                <ModalShareMessengerComponent idPost={props.post.id} isVisible={isVisibleSendMessage} setIsVisible={()=>{setIsVisibleSendMessage(!isVisibleSendMessage)}} />
+            )
+        }
+    }
+
     return(
         <Modal className="wrap-home-post-detail" closable={false} footer={null} visible={props.visible} onCancel={()=>{props.setVisible()}} centered >
             <div className="wrap-post-detail">
@@ -235,6 +247,16 @@ function PostDetailComponent(props) {
                             </a>
                             <a href={`/${props.userAccountSetting.username}`}
                                className="post__user">{props.userAccountSetting.username}</a>
+                            {
+                                props.group !== null ?
+                                    <>
+                                        <MdPlayArrow />
+                                        <a href={`/g/${props.group.id}`}
+                                           className="post__user">{props.group.name}</a>
+                                    </>
+                                    :
+                                    null
+                            }
                         </div>
 
                         <MoreActionInPost post={props.post} userAccountFollowing={props.userAccountSetting}/>
@@ -284,7 +306,7 @@ function PostDetailComponent(props) {
                                               fill="var(--text-dark)" stroke="var(--text-dark)" stroke-width="0.7"/>
                                     </svg>
                                 </button>
-                                <button className="post__button__other">
+                                <button className="post__button__other" onClick={()=>{setIsVisibleSendMessage(true)}}>
                                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
                                          xmlns="http://www.w3.org/2000/svg">
                                         <path fill-rule="evenodd" clip-rule="evenodd"
@@ -332,6 +354,9 @@ function PostDetailComponent(props) {
             </div>
             {
                 showModalDeleteComment()
+            }
+            {
+                showModalSendMessage()
             }
             <ModalDisplayLikedPost pId={props.post.id} visible={isVisibleLiked} setVisible={()=>{setIsVisibleLiked(false)}} />
         </Modal>

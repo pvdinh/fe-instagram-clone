@@ -12,7 +12,7 @@ function RouteTypeMember(props) {
         <Switch>
             <Route exact path={"/g/:gId"}>
                 {
-                    <PostComponent type="group" />
+                    <PostComponent type="group-child" idGroup={props.idGroup} />
                 }
             </Route>
             <Route exact path={"/g/:gId/requests"}>

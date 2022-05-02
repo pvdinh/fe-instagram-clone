@@ -164,6 +164,15 @@ function Layout(props) {
             <div className="alertShareToMessage">
                 <div className="alert-text">Shared to message</div>
             </div>
+            <div className="alertSendInviteToGroup">
+                <div className="alert-text">Send invite</div>
+            </div>
+            <div className="alertSendInviteToGroupDuplicate">
+                <div className="alert-text">User is currently in the group </div>
+            </div>
+            <div className="alertCreateGroupDuplicate">
+                <div className="alert-text">Name group exists </div>
+            </div>
         </div>
     )
 }

@@ -8,6 +8,7 @@ import storyReducer from "./storyReducer";
 import exploreReducer from "./exploreReducer";
 import activityReducer from "./activityReducer";
 import commentReducer from "./commentReducer";
+import groupReducer from "./groupReducer";
 
 const rootReducer = combineReducers({
     login:LoginReducer,
@@ -19,5 +20,6 @@ const rootReducer = combineReducers({
     explore:exploreReducer,
     activity:activityReducer,
     comment:commentReducer,
+    group:groupReducer,
 })
 export default rootReducer

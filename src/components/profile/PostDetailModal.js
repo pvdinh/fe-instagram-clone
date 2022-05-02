@@ -15,6 +15,7 @@ import ModalDisplayLikedPost from "../modal/ModalDisplayLikedPost";
 import {calculatorDayCommented} from "../../utils/formatNumber";
 import ListReplyCommentComponent from "../detail-post/ListReplyCommentComponent";
 import ModalShareMessengerComponent from "../modal/ModalShareMessengerComponent";
+import {MdPlayArrow} from "react-icons/all";
 
 
 let stompClientModal=null
@@ -29,6 +30,7 @@ function PostDetailModal(props) {
     const [isVisibleModalDeleteComment,setIsVisibleModalDeleteComment] = useState(false)
     const [commentClick,setCommentClick] = useState({})
     const [isVisibleLiked, setIsVisibleLiked] = useState(false)
+    const [group, setGroup] = useState(false)
 
     const [isVisibleSendMessage,setIsVisibleSendMessage] = useState(false)
 
@@ -55,6 +57,7 @@ function PostDetailModal(props) {
             setListLike(data.likes)
             setOwnerPost(data.userAccountSetting)
             setPost(data.post)
+            setGroup(data.group)
         })
     },[props.postId,props])
 
@@ -261,6 +264,16 @@ function PostDetailModal(props) {
                             </a>
                             <a href={`/${ownerPost.username}`}
                                className="post__user">{ownerPost.username}</a>
+                            {
+                                group !== null ?
+                                    <>
+                                        <MdPlayArrow />
+                                        <a href={`/g/${group.id}`}
+                                           className="post__user">{group.name}</a>
+                                    </>
+                                    :
+                                    null
+                            }
                         </div>
 
                         <MoreActionInPost post={post} userAccountFollowing={ownerPost}/>

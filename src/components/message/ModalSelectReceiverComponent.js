@@ -102,9 +102,15 @@ function ModalSelectReceiverComponent(props) {
                                 <div className="s1">Suggested</div>
                                 <div className="s2">
                                     {
-                                        props.receiverExisting.map((value,index)=>(
-                                            <ItemUserInSuggested item={value.userAccountSettingReceiver} listSelected={receiver} onRemoveReceiver={(username)=>{onRemoveReceiver(username)}} onSelectReceiver={(username)=>{onSelectReceiver(username)}} />
-                                        ))
+                                        receiver.length < 1 ?
+
+                                            props.receiverExisting.map((value,index)=>(
+                                                <ItemUserInSuggested item={value.userAccountSettingReceiver} listSelected={receiver} onRemoveReceiver={(username)=>{onRemoveReceiver(username)}} onSelectReceiver={(username)=>{onSelectReceiver(username)}} />
+                                            ))
+
+                                            :
+
+                                            null
                                     }
                                 </div>
                             </div>

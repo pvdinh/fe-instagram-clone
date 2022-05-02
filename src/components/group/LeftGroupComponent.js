@@ -1,52 +1,41 @@
 import React, {useEffect, useState} from "react";
 import {connect} from "react-redux";
-import postActions from "../../redux/actions/postActions";
 import PostDetailModal from "../profile/PostDetailModal";
 
 import { AutoComplete } from 'antd';
 import ModalCreateGroup from "./ModalCreateGroup";
+import groupAction from "../../redux/actions/groupAction";
 
 const { Option } = AutoComplete;
 
 function LeftGroupComponent(props) {
+    const [page, setPage] = useState(0)
+    const [size, setSize] = useState(2147483647)
     const [pId,setPId] = useState("");
     const [isVisiblePostDetail, setIsVisiblePostDetail] = useState(false)
     const [result, setResult] = useState([]);
     const [isVisibleModalAddGroup, setIsVisibleModalAddGroup] = useState(false);
+    const [listGroupManager,setListGroupManager] = useState([])
+    const [listGroupMember,setListGroupMember] = useState([])
+    const [reload,setReload] = useState(false)
+
+    useEffect(()=>{
+        console.log("XX")
+        props.getGroupByRole({role:"ADMIN",page:page,size:size},(data)=>{
+            setListGroupManager([...data])
+        })
+    },[isVisibleModalAddGroup,reload])
+
+    useEffect(()=>{
+        props.getGroupByRole({role:"MEMBER",page:page,size:size},(data)=>{
+            setListGroupMember([...data])
+        })
+    },[isVisibleModalAddGroup])
 
     const handleSearch = (value) => {
         let res = [1,11,22,33,11];
         setResult([...res])
     };
-
-
-    const getTop1Like = () =>{
-        props.getTop1Like((data)=>{
-            setPId(data.id)
-            setIsVisiblePostDetail(true)
-        })
-    }
-
-    const getTop1Comment = () =>{
-        props.getTop1Comment((data)=>{
-            setPId(data.id)
-            setIsVisiblePostDetail(true)
-        })
-    }
-
-    const getTop1Popular = () =>{
-        props.getTop1Popular((data)=>{
-            setPId(data.id)
-            setIsVisiblePostDetail(true)
-        })
-    }
-
-    const getTop1Save = () =>{
-        props.getTop1Save((data)=>{
-            setPId(data.id)
-            setIsVisiblePostDetail(true)
-        })
-    }
 
     const showModal = () =>{
         if(pId !== ""){
@@ -84,37 +73,20 @@ function LeftGroupComponent(props) {
                         <h2>Groups managed by you</h2>
                     </div>
                 </div>
-
-                <div className="side-menu__user-profile">
-                    <div className="item-menu-left">
-                        <a href="#" className="">
-                            <img src="https://static.xx.fbcdn.net/rsrc.php/v3/y5/r/PrjLkDYpYbH.png" alt="Picture"/>
-                        </a>
-                        <div className="">
-                            <a href="#" style={{textTransform:"none",marginLeft:"5px"}}>Group</a>
+                {
+                    listGroupManager.map((value,index) =>(
+                        <div className="side-menu__user-profile">
+                            <div className="item-menu-left">
+                                <a href={`/g/${value.id}`} className="wrap-image-cover-image-group">
+                                    <img src={value.imageCover} alt="Picture"/>
+                                </a>
+                                <div className="">
+                                    <a href={`/g/${value.id}`} style={{textTransform:"none",marginLeft:"5px"}}>{value.name}</a>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                <div className="side-menu__user-profile">
-                    <div className="item-menu-left">
-                        <a href="#" className="">
-                            <img src="https://static.xx.fbcdn.net/rsrc.php/v3/y5/r/PrjLkDYpYbH.png" alt="Picture"/>
-                        </a>
-                        <div className="">
-                            <a href="#" style={{textTransform:"none",marginLeft:"5px"}}>Group</a>
-                        </div>
-                    </div>
-                </div>
-                <div className="side-menu__user-profile">
-                    <div className="item-menu-left">
-                        <a href="#" className="">
-                            <img src="https://static.xx.fbcdn.net/rsrc.php/v3/y5/r/PrjLkDYpYbH.png" alt="Picture"/>
-                        </a>
-                        <div className="">
-                            <a href="#" style={{textTransform:"none",marginLeft:"5px"}}>Group</a>
-                        </div>
-                    </div>
-                </div>
+                    ))
+                }
 
                 <div className="side-menu__suggestions-section">
                     <div className="side-menu__suggestions-header">
@@ -122,74 +94,27 @@ function LeftGroupComponent(props) {
                     </div>
                 </div>
 
-                <div className="side-menu__user-profile">
-                    <div className="item-menu-left">
-                        <a href="#" className="">
-                            <img src="https://static.xx.fbcdn.net/rsrc.php/v3/y5/r/PrjLkDYpYbH.png" alt="Picture"/>
-                        </a>
-                        <div className="">
-                            <a href="#" style={{textTransform:"none",marginLeft:"5px"}}>Group</a>
+                {
+                    listGroupMember.map((value,index) =>(
+                        <div className="side-menu__user-profile">
+                            <div className="item-menu-left">
+                                <a href={`/g/${value.id}`} className="wrap-image-cover-image-group">
+                                    <img src={value.imageCover} alt="Picture"/>
+                                </a>
+                                <div className="">
+                                    <a href={`/g/${value.id}`} style={{textTransform:"none",marginLeft:"5px"}}>{value.name}</a>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                <div className="side-menu__user-profile">
-                    <div className="item-menu-left">
-                        <a href="#" className="">
-                            <img src="https://static.xx.fbcdn.net/rsrc.php/v3/y5/r/PrjLkDYpYbH.png" alt="Picture"/>
-                        </a>
-                        <div className="">
-                            <a href="#" style={{textTransform:"none",marginLeft:"5px"}}>Group</a>
-                        </div>
-                    </div>
-                </div>
-                <div className="side-menu__user-profile">
-                    <div className="item-menu-left">
-                        <a href="#" className="">
-                            <img src="https://static.xx.fbcdn.net/rsrc.php/v3/y5/r/PrjLkDYpYbH.png" alt="Picture"/>
-                        </a>
-                        <div className="">
-                            <a href="#" style={{textTransform:"none",marginLeft:"5px"}}>Group</a>
-                        </div>
-                    </div>
-                </div>
-                <div className="side-menu__user-profile">
-                    <div className="item-menu-left">
-                        <a href="#" className="">
-                            <img src="https://static.xx.fbcdn.net/rsrc.php/v3/y5/r/PrjLkDYpYbH.png" alt="Picture"/>
-                        </a>
-                        <div className="">
-                            <a href="#" style={{textTransform:"none",marginLeft:"5px"}}>Group</a>
-                        </div>
-                    </div>
-                </div>
-                <div className="side-menu__user-profile">
-                    <div className="item-menu-left">
-                        <a href="#" className="">
-                            <img src="https://static.xx.fbcdn.net/rsrc.php/v3/y5/r/PrjLkDYpYbH.png" alt="Picture"/>
-                        </a>
-                        <div className="">
-                            <a href="#" style={{textTransform:"none",marginLeft:"5px"}}>Group</a>
-                        </div>
-                    </div>
-                </div>
-                <div className="side-menu__user-profile">
-                    <div className="item-menu-left">
-                        <a href="#" className="">
-                            <img src="https://static.xx.fbcdn.net/rsrc.php/v3/y5/r/PrjLkDYpYbH.png" alt="Picture"/>
-                        </a>
-                        <div className="">
-                            <a href="#" style={{textTransform:"none",marginLeft:"5px"}}>Group</a>
-                        </div>
-                    </div>
-                </div>
-
+                    ))
+                }
 
             </div>
 
             {
                 showModal()
             }
-            <ModalCreateGroup visible={isVisibleModalAddGroup} setVisible={()=>{setIsVisibleModalAddGroup(false)}} />
+            <ModalCreateGroup reload={()=>{setReload(!reload)}} visible={isVisibleModalAddGroup} setVisible={()=>{setIsVisibleModalAddGroup(false)}} />
         </section>
     )
 }
@@ -200,17 +125,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        getTop1Like: (callback) => {
-            dispatch(postActions.action.getTop1Like(callback))
-        },
-        getTop1Comment: (callback) => {
-            dispatch(postActions.action.getTop1Comment(callback))
-        },
-        getTop1Popular: (callback) => {
-            dispatch(postActions.action.getTop1Popular(callback))
-        },
-        getTop1Save: (callback) => {
-            dispatch(postActions.action.getTop1Save(callback))
+        getGroupByRole:(payload,callback) =>{
+          dispatch(groupAction.action.getGroupByRole(payload,callback))
         },
     }
 }

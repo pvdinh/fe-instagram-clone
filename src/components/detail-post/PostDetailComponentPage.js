@@ -12,6 +12,7 @@ import ModalDeleteComment from "../modal/ModalDeleteComment";
 import ModalDisplayLikedPost from "../modal/ModalDisplayLikedPost";
 import ListReplyCommentComponent from "./ListReplyCommentComponent";
 import ModalShareMessengerComponent from "../modal/ModalShareMessengerComponent";
+import {MdPlayArrow} from "react-icons/all";
 
 let stompClient=null
 function PostDetailComponentPage(props) {
@@ -23,6 +24,7 @@ function PostDetailComponentPage(props) {
     const [listCmt, setListCmt] = useState([])
     const [listLike, setListLike] = useState([])
     const [ownerPost, setOwnerPost] = useState([])
+    const [group, setGroup] = useState(null)
 
     const [isModalFeedbackVisible,setIsModalFeedbackVisible] = useState(false)
     const [isVisibleModalDeleteComment,setIsVisibleModalDeleteComment] = useState(false)
@@ -54,6 +56,7 @@ function PostDetailComponentPage(props) {
                 setListLike(data.likes)
                 setOwnerPost(data.userAccountSetting)
                 setPost(data.post)
+                setGroup(data.group)
             })
         })
     },[props.match.params.pId])
@@ -258,6 +261,16 @@ function PostDetailComponentPage(props) {
                                 </a>
                                 <a href={`/${ownerPost.username}`}
                                    className="post__user">{ownerPost.username}</a>
+                                {
+                                    group !== null ?
+                                        <>
+                                            <MdPlayArrow />
+                                            <a href={`/g/${group.id}`}
+                                               className="post__user">{group.name}</a>
+                                        </>
+                                        :
+                                        null
+                                }
                             </div>
 
                             <MoreActionInPost post={post} userAccountFollowing={ownerPost}/>

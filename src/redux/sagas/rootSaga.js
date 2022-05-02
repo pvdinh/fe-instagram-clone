@@ -10,7 +10,8 @@ import activitySaga from "./activitySaga";
 import reportSaga from "./reportSaga";
 import feedbackSaga from "./feedbackSaga";
 import commentSaga from "./commentSaga";
+import groupSaga from "./groupSaga";
 
 export default function* rootSaga() {
-    yield all([loginSaga(), homeSaga(), postSaga(), messageSaga(), profileSaga(), storySaga(), exploreSaga(), activitySaga(), reportSaga(), feedbackSaga(), commentSaga(),])
+    yield all([loginSaga(), homeSaga(), postSaga(), messageSaga(), profileSaga(), storySaga(), exploreSaga(), activitySaga(), reportSaga(), feedbackSaga(), commentSaga(),groupSaga(),])
 }

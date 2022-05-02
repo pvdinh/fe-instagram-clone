@@ -1,4 +1,4 @@
-import ReportRequest from "../requests/reportRequest";
+import ReportRequest from "../requests/ReportRequest";
 
 export const reportPost = (data) =>{
     const reportRequest = new ReportRequest()

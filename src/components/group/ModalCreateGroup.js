@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {Form, Input, Modal, Select} from "antd";
 import {connect} from "react-redux";
+import groupAction from "../../redux/actions/groupAction";
 const { TextArea } = Input;
 const { Option } = Select;
 function ModalCreateGroup(props) {
@@ -29,7 +30,18 @@ function ModalCreateGroup(props) {
             description:description,
             privacy:privacy,
         }
-        console.log(data)
+        props.createGroup(data,(m)=>{
+            if(m === "success"){
+                props.setVisible()
+                props.reload()
+            }else {
+                let elementAlert = document.getElementsByClassName("alertCreateGroupDuplicate")
+                elementAlert[0].classList.add("show")
+                const setTimeOut = setTimeout(()=>{
+                    elementAlert[0].classList.remove("show")
+                },2000)
+            }
+        })
     }
 
     return(
@@ -65,7 +77,7 @@ function ModalCreateGroup(props) {
                             rules={[{ required: true, message: 'Please input Subject!' }]}
                             className="wrap-form-item-1"
                         >
-                            <Input placeholder="Subject" maxLength={100} value={name} onChange={(e)=>{onChangeName(e)}} />
+                            <Input placeholder="Subject" maxLength={50} value={name} onChange={(e)=>{onChangeName(e)}} />
                         </Form.Item>
                         <Form.Item
                             label="description"
@@ -83,8 +95,8 @@ function ModalCreateGroup(props) {
                             className="wrap-form-item-1"
                         >
                             <Select placeholder="select privacy" onChange={(e)=>{onChangePrivacy(e)}}>
-                                <Option value="1">Public(Anyone can see.)</Option>
-                                <Option value="2">Private(Only members can see.)</Option>
+                                <Option value="0">Public(Anyone can see.)</Option>
+                                <Option value="1">Private(Only members can see.)</Option>
                             </Select>
                         </Form.Item>
                         <Form.Item wrapperCol={{ offset: 8, span: 16 }} className="wrap-form-item-2">
@@ -103,6 +115,10 @@ function mapStateToProps(state) {
     return{}
 }
 function mapDispatchToProps(dispatch) {
-    return{}
+    return{
+        createGroup: (data,callback) =>{
+            dispatch(groupAction.action.createGroup(data,callback))
+        }
+    }
 }
 export default connect(mapStateToProps,mapDispatchToProps)(ModalCreateGroup)

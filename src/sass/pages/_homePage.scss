@@ -825,6 +825,14 @@
       justify-content: center;
       cursor: pointer;
       color: #1890ff;
+      .wrap-image-cover-image-group{
+        width: 40px;
+        height: 40px;
+        margin-right: 10px;
+        img{
+          border-radius: 50%;
+        }
+      }
     }
     /* width */
     ::-webkit-scrollbar {
@@ -1321,6 +1329,54 @@
     display: none;
   }
   .alertShareToMessage{
+    background-color: #262626;
+    width: 100%;
+    position: fixed;
+    height: 42px;
+    bottom: 0;
+    z-index: 10000000000000000;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2rem;
+    .alert-text{
+      color: white;
+      font-weight: 400;
+    }
+    display: none;
+  }
+  .alertSendInviteToGroup{
+    background-color: #262626;
+    width: 100%;
+    position: fixed;
+    height: 42px;
+    bottom: 0;
+    z-index: 10000000000000000;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2rem;
+    .alert-text{
+      color: white;
+      font-weight: 400;
+    }
+    display: none;
+  }
+  .alertSendInviteToGroupDuplicate{
+    background-color: #262626;
+    width: 100%;
+    position: fixed;
+    height: 42px;
+    bottom: 0;
+    z-index: 10000000000000000;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2rem;
+    .alert-text{
+      color: white;
+      font-weight: 400;
+    }
+    display: none;
+  }
+  .alertCreateGroupDuplicate{
     background-color: #262626;
     width: 100%;
     position: fixed;

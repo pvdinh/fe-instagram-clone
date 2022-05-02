@@ -3,51 +3,32 @@ import {connect} from "react-redux";
 import PostDetailModal from "../../profile/PostDetailModal";
 import postActions from "../../../redux/actions/postActions";
 import {Link} from "react-router-dom";
+import ModalInviteMember from "../modal/ModaInviteMember";
+import PostPostsInGroupComponent from "./PostPostsInGroupComponent";
 
 function LeftGroupDetailComponent(props) {
-    const [pId,setPId] = useState("");
+    const [pId, setPId] = useState("");
     const [isVisiblePostDetail, setIsVisiblePostDetail] = useState(false)
 
+    const [isVisibleInviteMember, setIsVisibleInviteMember] = useState(false)
 
-    const getTop1Like = () =>{
-        props.getTop1Like((data)=>{
-            setPId(data.id)
-            setIsVisiblePostDetail(true)
-        })
-    }
+    useEffect(() => {
 
-    const getTop1Comment = () =>{
-        props.getTop1Comment((data)=>{
-            setPId(data.id)
-            setIsVisiblePostDetail(true)
-        })
-    }
+    }, [])
 
-    const getTop1Popular = () =>{
-        props.getTop1Popular((data)=>{
-            setPId(data.id)
-            setIsVisiblePostDetail(true)
-        })
-    }
-
-    const getTop1Save = () =>{
-        props.getTop1Save((data)=>{
-            setPId(data.id)
-            setIsVisiblePostDetail(true)
-        })
-    }
-
-    const showModal = () =>{
-        if(pId !== ""){
-            return(
-                <PostDetailModal postId={pId} visible={isVisiblePostDetail} setVisible={()=>{setIsVisiblePostDetail(false)}} />
+    const showModal = () => {
+        if (pId !== "") {
+            return (
+                <PostDetailModal postId={pId} visible={isVisiblePostDetail} setVisible={() => {
+                    setIsVisiblePostDetail(false)
+                }}/>
             )
         }
     }
 
-    const fetchMoreGroup = (e) =>{
+    const fetchMoreGroup = (e) => {
         const bottom = e.target.scrollHeight - Math.floor(e.target.scrollTop) === e.target.clientHeight;
-        if(bottom){
+        if (bottom) {
             console.log("bottom")
         }
     }
@@ -55,47 +36,90 @@ function LeftGroupDetailComponent(props) {
     return (
         <section className="side-menu-left">
 
-            <Link to={`/g/3453e3eww33`} >
-                <div className="label-side-menu-left-group">Group</div>
+            <Link to={`/g/3453e3eww33`}>
+                <div
+                    className="label-side-menu-left-group">{props.groupInformation.name} ( {props.groupInformation.numberMembership} members
+                    )
+                </div>
             </Link>
 
             <div className="image-side-menu-left-group">
-                <img className="image-group" src="https://www.facebook.com/images/groups/groups-default-cover-photo-2x.png" alt="image"/>
+                <img className="image-group"
+                     src="https://www.facebook.com/images/groups/groups-default-cover-photo-2x.png" alt="image"/>
             </div>
 
-
-            <button className="button-create-side-menu-left-group">+ Create a new post in group </button>
-
-            <button className="button-create-side-menu-left-group">+ Add member </button>
-
-            <div id="group-personal" style={{height:"700px", overflowY: "scroll"}} onScroll={(e)=>{fetchMoreGroup(e)}}>
-                <div className="side-menu__suggestions-section">
-                    <div className="side-menu__suggestions-header">
-                        <h2>Administration tools</h2>
-                    </div>
-                </div>
-
-                <div className="side-menu__user-profile">
-                    <Link to={`/g/3453e3eww33/requests`} >
-                    <div className="item-menu-left">
-                        <a href="#" className="" >
-                            <img src="https://res.cloudinary.com/dinhpv/image/upload/v1650987339/instargram-clone/pngwing.com_4_uhvqng.png" alt="Picture"/>
-                        </a>
-                        <div className="">
-                                <a href="#" style={{textTransform:"none",marginLeft:"5px"}}>Request membership</a>
+            {
+                props.userMemberGroup !== null && props.userMemberGroup.status === 1
+                    ?
+                    <>
+                       <PostPostsInGroupComponent idGroup={props.idGroup} />
+                        <button className="button-create-side-menu-left-group" onClick={() => {
+                            setIsVisibleInviteMember(true)
+                        }}>+ Add member
+                        </button>
+                        {
+                            props.userMemberGroup.role !== "ADMIN" && props.userMemberGroup.status === 1 ?
+                                <button className="button-create-side-menu-left-group" onClick={() => {
+                                }}>Left group
+                                </button>
+                                :
+                                null
+                        }
+                    </>
+                    :
+                    props.userMemberGroup !== null && props.userMemberGroup.status === 0 ?
+                        <button className="button-create-side-menu-left-group">Sending request to join group</button>
+                        :
+                        <button className="button-create-side-menu-left-group">Request join into group</button>
+            }
+            <div id="group-personal" style={{height: "700px", overflowY: "scroll"}} onScroll={(e) => {
+                fetchMoreGroup(e)
+            }}>
+                {
+                    props.userMemberGroup !== null && props.userMemberGroup.role === "ADMIN" ?
+                        <div className="side-menu__suggestions-section">
+                            <div className="side-menu__suggestions-header">
+                                <h2>Administration tools</h2>
+                            </div>
                         </div>
-                    </div>
-                    </Link>
-                </div>
+                        :
+                        <div className="side-menu__suggestions-section">
+                            <div className="side-menu__suggestions-header">
+                                <h2>Group member</h2>
+                            </div>
+                        </div>
+                }
+
+                {
+                    props.userMemberGroup !== null && props.userMemberGroup.role === "ADMIN" ?
+                        <div className="side-menu__user-profile">
+                            <Link to={`/g/3453e3eww33/requests`}>
+                                <div className="item-menu-left">
+                                    <a href="#" className="">
+                                        <img
+                                            src="https://res.cloudinary.com/dinhpv/image/upload/v1650987339/instargram-clone/pngwing.com_4_uhvqng.png"
+                                            alt="Picture"/>
+                                    </a>
+                                    <div className="">
+                                        <a href="#" style={{textTransform: "none", marginLeft: "5px"}}>Request
+                                            membership</a>
+                                    </div>
+                                </div>
+                            </Link>
+                        </div>
+                        :
+                        null
+                }
 
                 <div className="side-menu__user-profile">
-                    <Link to={`/g/3453e3eww33/members`} >
-                        <div className="item-menu-left" style={{marginLeft:"7px",marginRight:"7px"}}>
+                    <Link to={`/g/3453e3eww33/members`}>
+                        <div className="item-menu-left" style={{marginLeft: "7px", marginRight: "7px"}}>
                             <a href="#" className="">
-                                <img src="https://static.xx.fbcdn.net/rsrc.php/v3/y5/r/PrjLkDYpYbH.png" alt="Picture"/>
+                                <img src="https://static.xx.fbcdn.net/rsrc.php/v3/y5/r/PrjLkDYpYbH.png"
+                                     alt="Picture"/>
                             </a>
                             <div className="">
-                                <a href="#" style={{textTransform:"none",marginLeft:"10px"}}>Membership</a>
+                                <a href="#" style={{textTransform: "none", marginLeft: "10px"}}>Membership</a>
                             </div>
                         </div>
                     </Link>
@@ -107,29 +131,22 @@ function LeftGroupDetailComponent(props) {
             {
                 showModal()
             }
+            <ModalInviteMember idGroup={props.idGroup} isVisible={isVisibleInviteMember} setIsVisible={() => {
+                setIsVisibleInviteMember(!isVisibleInviteMember)
+            }}/>
         </section>
     )
 }
 
 function mapStateToProps(state) {
-    return {}
+    return {
+        groupInformation: state.group.groupInformation,
+        userMemberGroup: state.group.userMemberGroup,
+    }
 }
 
 function mapDispatchToProps(dispatch) {
-    return {
-        getTop1Like: (callback) => {
-            dispatch(postActions.action.getTop1Like(callback))
-        },
-        getTop1Comment: (callback) => {
-            dispatch(postActions.action.getTop1Comment(callback))
-        },
-        getTop1Popular: (callback) => {
-            dispatch(postActions.action.getTop1Popular(callback))
-        },
-        getTop1Save: (callback) => {
-            dispatch(postActions.action.getTop1Save(callback))
-        },
-    }
+    return {}
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(LeftGroupDetailComponent)

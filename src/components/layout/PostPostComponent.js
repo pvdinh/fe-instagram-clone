@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {Modal} from "antd";
+import {Modal, Select} from "antd";
 import {Avatar, Image} from 'antd';
 import {AiOutlineClose, BiArrowBack} from "react-icons/all";
 import postActions from "../../redux/actions/postActions";
@@ -8,6 +8,7 @@ import {connect} from "react-redux";
 import { Spin } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 import ModalEditVideoBeforeUpload from "./modal-post-video/ModalEditVideoBeforeUpload";
+const { Option } = Select;
 
 const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
@@ -24,6 +25,7 @@ function PostPostComponent(props) {
     const [isModalVisibleVideo, setIsModalVisibleVideo] = useState(false);
     const [isModalShareVisible, setIsModalShareVisible] = useState(false);
     const [isModalSelectFromComputer,setIsModalSelectFromComputer] = useState(false)
+    const [privacy,setPrivacy] = useState("")
 
     const showModal = () => {
         setIsModalVisible(true);
@@ -71,6 +73,7 @@ function PostPostComponent(props) {
                 type:"image",
                 tags: '',
                 dateCreated: new Date().getTime(),
+                privacy:privacy,
             }
             props.postNewPost(post)
             setIsModalShareVisible(false);
@@ -102,6 +105,10 @@ function PostPostComponent(props) {
             setIsModalSelectFromComputer(true)
         }
 
+    }
+
+    const onChangePrivacy = (e) =>{
+        setPrivacy(e)
     }
 
     return (
@@ -148,7 +155,7 @@ function PostPostComponent(props) {
             }} onCancel={() => {
                 handleCancel()
             }} title={(<div className="wrap-header-new-post">
-                <div className="icon-close">
+                <div className="icon-close" onClick={()=>{setIsModalVisible(false)}}>
                     <AiOutlineClose/>
                 </div>
                 <div className="title-div">New Post</div>
@@ -169,7 +176,17 @@ function PostPostComponent(props) {
                 </div>
                 <div className="title-div">New Post</div>
                 {
-                    loadingUpload ? <div className="next-div"><Spin indicator={antIcon} /></div> : <div className="next-div" onClick={()=>{doSharePost()}}>Share</div>
+                    loadingUpload ? <div className="next-div"><Spin indicator={antIcon}/></div> :
+                        <>
+                            {
+                                privacy !== "" ?
+                                    <div className="next-div" onClick={() => {
+                                        doSharePost()
+                                    }}>Share</div>
+                                    :
+                                    <div className="next-div" style={{opacity:".6"}}>Share</div>
+                            }
+                        </>
                 }
             </div>)}
                    closable={false}>
@@ -179,8 +196,13 @@ function PostPostComponent(props) {
                     <div className="description-post">
                         <textarea className="description-text" placeholder="Write a caption ..." onChange={(e)=>{onChangeCaption(e)}}></textarea>
                     </div>
-                    <div className="image-post"><img src={pathUrl} style={{width: "100%"}}/>
-                    </div>
+                    <div className="image-post"><img src={pathUrl} style={{width: "100%"}}/></div>
+                </div>
+                <div>
+                    <Select placeholder="select privacy" onChange={(e)=>{onChangePrivacy(e)}} style={{width:"100%",marginTop:"15px"}}>
+                        <Option value="1">Public(Anyone can see.)</Option>
+                        <Option value="2">Private(Only members can see.)</Option>
+                    </Select>
                 </div>
             </Modal>
             <Modal className="wrap-select-from-computer" visible={isModalSelectFromComputer} footer={null} onClick={(event) => {
@@ -188,7 +210,7 @@ function PostPostComponent(props) {
             }} onCancel={() => {
                 handleSelectFromComputerCancel()
             }} title={(<div className="wrap-header">
-                <div className="icon-close">
+                <div className="icon-close" onClick={()=>{setIsModalSelectFromComputer(false)}}>
                     <AiOutlineClose style={{height: "20px",width: "20px"}} />
                 </div>
                 <div className="title-div">Create new Post</div>

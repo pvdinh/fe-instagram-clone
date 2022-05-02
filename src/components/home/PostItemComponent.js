@@ -15,6 +15,7 @@ import {f, fData, fNumber, fShortenNumber} from "../../utils/formatNumber";
 import ReactCommentComponent from "./ReactCommentComponent";
 import ModalSelectReceiverComponent from "../message/ModalSelectReceiverComponent";
 import ModalShareMessengerComponent from "../modal/ModalShareMessengerComponent";
+import {MdPlayArrow} from "react-icons/all";
 
 function PostItemComponent(props) {
     const [like, setLike] = useState(true)
@@ -160,7 +161,7 @@ function PostItemComponent(props) {
     const showModalDetailPost = () =>{
         if(isVisiblePostDetail !== false ){
             return(
-                <PostDetailComponent currentPage={props.currentPage} reload={()=>{setReLoad(!reLoad)}} post={props.post} likes={props.likes} listComment={listComment} userAccountSetting={props.userAccountSetting} visible={isVisiblePostDetail} setVisible={()=>{setIsVisiblePostDetail(!isVisiblePostDetail)}} />
+                <PostDetailComponent currentPage={props.currentPage} reload={()=>{setReLoad(!reLoad)}} post={props.post} group={props.group} likes={props.likes} listComment={listComment} userAccountSetting={props.userAccountSetting} visible={isVisiblePostDetail} setVisible={()=>{setIsVisiblePostDetail(!isVisiblePostDetail)}} />
             )
         }
     }
@@ -193,6 +194,16 @@ function PostItemComponent(props) {
                                 </a>
                                 <a href={`/${props.userAccountSetting.username}`}
                                    className="post__user">{props.userAccountSetting.username}</a>
+                                {
+                                    props.group !== null ?
+                                        <>
+                                            <MdPlayArrow />
+                                            <a href={`/g/${props.group.id}`}
+                                               className="post__user">{props.group.name}</a>
+                                        </>
+                                    :
+                                    null
+                                }
                             </div>
 
                             <MoreActionInPost post={props.post} userAccountFollowing={props.userAccountSetting}/>

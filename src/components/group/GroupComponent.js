@@ -1,20 +1,8 @@
 import React, {useEffect, useState} from "react";
-import ModalFeedback from "../modal/feedback/ModalFeedback";
 import PostComponent from "../home/PostComponent";
-import SideMenuLeftComponent from "../home/SideMenuLeftComponent";
 import StoryComponent from "../home/story/StoryComponent";
-import UserProfileComponent from "../home/UserProfileComponent";
-import SuggestionsToFollow from "../home/SuggestionsToFollow";
 import LeftGroupComponent from "./LeftGroupComponent";
 function GroupComponent() {
-
-    const [isModalFeedbackVisible,setIsModalFeedbackVisible] = useState(false)
-
-
-    useEffect(()=>{
-        localStorage.setItem("currentPage","Home")
-    },[])
-
 
     useEffect(()=>{
         // Getting the scrollbar width to adjust the header alignment

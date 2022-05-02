@@ -9,6 +9,7 @@ import {BASE_URL_WEBSOCKET} from "../../url";
 import Stomp from "stompjs";
 import NotHavePostInGroup from "../not-have-post/NotHavePostInGroup";
 import NotHavePostInHome from "../not-have-post/NotHavePostInHome";
+import groupAction from "../../redux/actions/groupAction";
 
 let stompClient=null
 function PostComponent(props) {
@@ -33,18 +34,36 @@ function PostComponent(props) {
 
 
     useEffect(() => {
-        props.getAllPostOfFollowing({page:0,size:size})
+        if(props.type === "group-child"){
+            props.getAllPostInGroup(props.idGroup,{page:0,size:size})
+        }else if(props.type === "group"){
+            props.getAllPostInAllGroupSelf({page:0,size:size})
+        } else props.getAllPostOfFollowing({page:0,size:size})
     }, [])
 
     useEffect(() => {
-        props.fetchAllPostOfFollowing(page)
+        if(props.type === "group-child"){
+            props.fetchAllPostInGroup(props.idGroup,page)
+        }else if(props.type === "group"){
+            props.fetchAllPostInAllGroupSelf(page)
+        } else props.fetchAllPostOfFollowing(page)
     }, [reload])
 
 
     const fetchMoreData = () => {
         // a fake async api call like which sends
         // 20 more records in 1.5 secs
-        setTimeout(() => {
+        if(props.type === "group-child"){
+            setTimeout(() => {
+                setPage(page + 1)
+                props.getAllPostInGroup(props.idGroup,{page:page+1,size:size})
+            }, 1500);
+        }else if(props.type === "group"){
+            setTimeout(() => {
+                setPage(page + 1)
+                props.getAllPostInAllGroupSelf({page:page+1,size:size})
+            }, 1500);
+        } else setTimeout(() => {
             setPage(page + 1)
             props.getAllPostOfFollowing({page:page+1,size:size})
         }, 1500);
@@ -76,30 +95,71 @@ function PostComponent(props) {
     return (
         <div>
             {
-                props.listPostOfFollowing.length > 0
-                    ?
+                props.type === "group-child" && props.listPostOfGroup.length > 0 ?
                     <InfiniteScroll
-                        dataLength={props.listPostOfFollowing.length}
+                        dataLength={props.listPostOfGroup.length}
                         next={() => {
                             fetchMoreData()
                         }}
                         hasMore={true}
                     >
                         {
-                            props.listPostOfFollowing.map((item, key) => (
+                            props.listPostOfGroup.map((item, key) => (
                                 <PostItemComponent deleteCmt={(comment) => {
                                     deleteCmt(comment)
                                 }} postCmt={(comment) => {
                                     postCmt(comment)
-                                }} currentPage={page} key={key} post={item.post} likes={item.likes}
+                                }} currentPage={page} key={key} post={item.post} group={item.group} likes={item.likes}
                                                    userAccountSetting={item.userAccountSetting}/>
                             ))
                         }
                     </InfiniteScroll>
-                    : props.type === "group"
-                    ?
-                    <NotHavePostInGroup/>
-                    : <NotHavePostInHome/>
+                    :
+                    props.type === "group-child" ?
+                        <NotHavePostInGroup/>
+                        :
+                        props.type === "group" && props.listPostOfAllGroup.length > 0 ?
+                            <InfiniteScroll
+                                dataLength={props.listPostOfAllGroup.length}
+                                next={() => {
+                                    fetchMoreData()
+                                }}
+                                hasMore={true}
+                            >
+                                {
+                                    props.listPostOfAllGroup.map((item, key) => (
+                                        <PostItemComponent deleteCmt={(comment) => {
+                                            deleteCmt(comment)
+                                        }} postCmt={(comment) => {
+                                            postCmt(comment)
+                                        }} currentPage={page} key={key} post={item.post} group={item.group} likes={item.likes}
+                                                           userAccountSetting={item.userAccountSetting}/>
+                                    ))
+                                }
+                            </InfiniteScroll>
+                            :
+                            props.type === "group" ?
+                                <NotHavePostInGroup/>
+                                :
+                        props.listPostOfFollowing.length > 0 ?
+                            <InfiniteScroll
+                                dataLength={props.listPostOfFollowing.length}
+                                next={() => {
+                                    fetchMoreData()
+                                }}
+                                hasMore={true}
+                            >
+                                {
+                                    props.listPostOfFollowing.map((item, key) => (
+                                        <PostItemComponent deleteCmt={(comment) => {
+                                            deleteCmt(comment)
+                                        }} postCmt={(comment) => {
+                                            postCmt(comment)
+                                        }} currentPage={page} key={key} post={item.post} group={item.group} likes={item.likes}
+                                                           userAccountSetting={item.userAccountSetting}/>
+                                    ))
+                                }
+                            </InfiniteScroll> : <NotHavePostInHome/>
             }
         </div>
     )
@@ -108,6 +168,9 @@ function PostComponent(props) {
 function mapStateToProps(state) {
     return {
         listPostOfFollowing: state.post.listPostOfFollowing,
+        groupInformation: state.group.groupInformation,
+        listPostOfGroup: state.group.listPostOfGroup,
+        listPostOfAllGroup: state.group.listPostOfAllGroup,
     }
 }
 
@@ -118,6 +181,18 @@ function mapDispatchToProps(dispatch) {
         },
         fetchAllPostOfFollowing: (currentPage) => {
             dispatch(postActions.action.fetchAllPostOfFollowing(currentPage))
+        },
+        getAllPostInGroup: (idGroup,payload) => {
+            dispatch(groupAction.action.getAllPostInGroup(idGroup,payload))
+        },
+        fetchAllPostInGroup: (idGroup,currentPage) => {
+            dispatch(groupAction.action.fetchAllPostInGroup(idGroup,currentPage))
+        },
+        getAllPostInAllGroupSelf: (payload) => {
+            dispatch(groupAction.action.getAllPostInAllGroupSelf(payload))
+        },
+        fetchAllPostInAllGroupSelf: (currentPage) => {
+            dispatch(groupAction.action.fetchAllPostInAllGroupSelf(currentPage))
         },
     }
 }

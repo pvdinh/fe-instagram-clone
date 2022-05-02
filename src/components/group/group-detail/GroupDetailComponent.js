@@ -1,19 +1,21 @@
 import React, {useEffect, useState} from "react";
 import ModalFeedback from "../../modal/feedback/ModalFeedback";
-import PostComponent from "../../home/PostComponent";
 import StoryComponent from "../../home/story/StoryComponent";
 import LeftGroupDetailComponent from "./LeftGroupDetailComponent";
-import {AiFillEyeInvisible, AiOutlineHistory, FaLock} from "react-icons/all";
+import {AiFillEyeInvisible, AiOutlineHistory, FaLock,MdPublic} from "react-icons/all";
 import RouteTypeMember from "../RouteTypeMember";
+import {connect} from "react-redux";
+import groupAction from "../../../redux/actions/groupAction";
+import {convertTimeStampToDateDMY} from "../../../utils/formatNumber";
 
 
-function GroupDetailComponent() {
+function GroupDetailComponent(props) {
 
     const [isModalFeedbackVisible, setIsModalFeedbackVisible] = useState(false)
 
 
     useEffect(() => {
-        localStorage.setItem("currentPage", "Home")
+        props.getGroupByIdGroupAndIdUser(props.match.params.gId,()=>{})
     }, [])
 
 
@@ -35,16 +37,15 @@ function GroupDetailComponent() {
                 <section className="content-container">
 
 
-                    <LeftGroupDetailComponent/>
+                    <LeftGroupDetailComponent idGroup={props.match.params.gId}/>
 
                     <div className="content">
                         <StoryComponent/>
-                        <RouteTypeMember />
+                        <RouteTypeMember idGroup={props.match.params.gId} />
                     </div>
 
 
                     <section className="side-menu">
-
                         <div className="side-menu__suggestions-section" style={{
                             background: "var(--primary)",
                             padding: "20px",
@@ -60,15 +61,28 @@ function GroupDetailComponent() {
                                 {/*<button>See All</button>*/}
                             </div>
                             <div className="side-menu__suggestions-content">
-                                <div>Description</div>
-                                <div>
-                                    <div className="privacy-group-detail"><FaLock/>
-                                        <div className="item-lock">Private</div>
-                                    </div>
-                                    <div style={{marginLeft:"25px"}}>
-                                        Only members can see everyone in the group and what they post.
-                                    </div>
-                                </div>
+                                <div>{props.groupInformation.description}</div>
+                                {
+                                    props.groupInformation.privacy === 0 ?
+                                        <div>
+                                            <div className="privacy-group-detail"><MdPublic />
+                                                <div className="item-lock">Public</div>
+                                            </div>
+                                            <div style={{marginLeft:"25px"}}>
+                                                Anyone can see who's in the group and what they post.
+                                            </div>
+                                        </div>
+                                        :
+                                        <div>
+                                            <div className="privacy-group-detail"><FaLock/>
+                                                <div className="item-lock">Private</div>
+                                            </div>
+                                            <div style={{marginLeft:"25px"}}>
+                                                Only members can see everyone in the group and what they post.
+                                            </div>
+                                        </div>
+                                }
+
                                 <div>
                                     <div className="privacy-group-detail"><AiFillEyeInvisible />
                                         <div className="item-lock">Visible</div>
@@ -82,7 +96,7 @@ function GroupDetailComponent() {
                                         <div className="item-lock">Group creation date</div>
                                     </div>
                                     <div style={{marginLeft:"25px"}}>
-                                        day-month-year
+                                        {convertTimeStampToDateDMY(props.groupInformation.dateCreated)}
                                     </div>
                                 </div>
                             </div>
@@ -202,5 +216,18 @@ function GroupDetailComponent() {
         </div>
     )
 }
+function mapStateToProps(state) {
+    return {
+        groupInformation: state.group.groupInformation,
+    }
+}
 
-export default GroupDetailComponent
+function mapDispatchToProps(dispatch) {
+    return {
+        getGroupByIdGroupAndIdUser: (idGroup,callback) =>{
+            dispatch(groupAction.action.getGroupByIdGroupAndIdUser(idGroup,callback))
+        },
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(GroupDetailComponent)
