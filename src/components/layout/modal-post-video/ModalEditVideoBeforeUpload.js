@@ -1,16 +1,18 @@
 import postActions from "../../../redux/actions/postActions";
 import {connect} from "react-redux";
 import {AiOutlineClose} from "react-icons/all";
-import {Modal} from "antd";
+import {Modal, Select} from "antd";
 import React, {useEffect, useState} from "react";
 import ReactPlayer from "react-player";
 import ModalCreatNewPostVideo from "./ModalCreatNewPostVideo";
+const { Option } = Select;
 
 function ModalEditVideoBeforeUpload(props) {
 
     const [urlCoverImage,setUrlCoverImage] = useState("")
     const [urlCoverImageUpload,setUrlCoverImageUpload] = useState("")
     const [isModalVisibleVideo, setIsModalVisibleVideo] = useState(false);
+    const [privacy,setPrivacy] = useState("")
 
 
     const refVideoPlayer = React.createRef()
@@ -30,6 +32,10 @@ function ModalEditVideoBeforeUpload(props) {
         setUrlCoverImageUpload(e.target.files[0])
     }
 
+    const onChangePrivacy = (e) =>{
+        setPrivacy(e)
+    }
+
     return(
         <>
             <Modal className="wrap-modal-new-post-video" visible={props.visible} footer={null} onClick={(event) => {
@@ -47,7 +53,20 @@ function ModalEditVideoBeforeUpload(props) {
                     </svg>
                 </div>
                 <div className="title-div">Edit</div>
-                <div className="next-div" onClick={() => handleNextBnt()}>Next</div>
+                {
+                    props.type === "group" ?
+                        <div className="next-div" onClick={() => handleNextBnt()}>Next</div>
+                        :
+                        <>
+                            {
+                                privacy !== "" ?
+                                    <div className="next-div" onClick={() => handleNextBnt()}>Next</div>
+                                    :
+                                    <div className="next-div" style={{opacity:"0.6"}}>Next</div>
+                            }
+                        </>
+
+                }
             </div>)}
                    closable={false}>
                 <div className="wrap-content-edit-video">
@@ -69,13 +88,24 @@ function ModalEditVideoBeforeUpload(props) {
                             <div className="t1">Cover photo</div>
                             <label className="t2" htmlFor="file-upload-cover-image">Select from computer</label>
                         </div>
+                        {
+                            props.type !== "group" ?
+                                <div>
+                                    <Select placeholder="select privacy" onChange={(e)=>{onChangePrivacy(e)}} style={{width:"100%",marginTop:"15px"}}>
+                                        <Option value="0">Public(Anyone can see.)</Option>
+                                        <Option value="1">Private(Only members can see.)</Option>
+                                    </Select>
+                                </div>
+                                :
+                                null
+                        }
                         <input id="file-upload-cover-image" type="file" accept="image/*" onClick={(event) => {
                             event.target.value = null
                         }} style={{display: "none"}} onChange={(e) => {onChangeCoverImage(e)}}/>
                     </div>
                 </div>
             </Modal>
-            <ModalCreatNewPostVideo light={urlCoverImage} videoUrl={props.videoUrl} videoUpload={props.videoUpload} urlCoverImageUpload={urlCoverImageUpload} visible={isModalVisibleVideo} setVisible={()=>{props.setVisible();setIsModalVisibleVideo(false)}} />
+            <ModalCreatNewPostVideo privacy={props.type === "group" ? 0 : privacy} idGroup={props.type === "group" ? props.idGroup : ""} light={urlCoverImage} videoUrl={props.videoUrl} videoUpload={props.videoUpload} urlCoverImageUpload={urlCoverImageUpload} visible={isModalVisibleVideo} setVisible={()=>{props.setVisible();setIsModalVisibleVideo(false)}} />
         </>
     )
 }

@@ -36,15 +36,27 @@ function RouteTypeOfPost(props) {
                             next={()=>{props.fetchMorePostVideo()}}
                             hasMore={true}
                         >
-                            <HavePostsComponents listPostDetails={props.listPostVideos} currentPage={props.currentPage} size={props.size}
+                            <HavePostsComponents type="video" listPostDetails={props.listPostVideos} currentPage={props.currentPage} size={props.size}
                                                  currentUserAccountSetting={props.currentUserAccountSetting}/>
                         </InfiniteScroll>
                         :
                         <HaveNotPostsComponents/>
                 }
             </Route>
-            <Route exact path={"/:username/tagged"}>
-                <div>tagged</div>
+            <Route exact path={"/:username/private"}>
+                {
+                    props.listPostPrivates.length > 0 ?
+                        <InfiniteScroll
+                            dataLength={props.listPostPrivates.length}
+                            next={()=>{props.fetchMorePostPrivate()}}
+                            hasMore={true}
+                        >
+                            <HavePostsComponents type="private" listPostDetails={props.listPostPrivates} currentPage={props.currentPage} size={props.size}
+                                                 currentUserAccountSetting={props.currentUserAccountSetting}/>
+                        </InfiniteScroll>
+                        :
+                        <HaveNotPostsComponents/>
+                }
             </Route>
 
         </Switch>
@@ -58,6 +70,7 @@ function mapStateToProps(state) {
         listPostDetails: state.profile.listPostDetails,
         listSavedPostDetails: state.profile.listSavedPostDetails,
         listPostVideos: state.profile.listPostVideos,
+        listPostPrivates: state.profile.listPostPrivates,
     }
 }
 

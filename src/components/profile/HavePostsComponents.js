@@ -28,8 +28,16 @@ function HavePostsComponents(props) {
             props.fetchPostVideo(props.currentUserAccountSetting.username, () => {
             }, history, {page:0,size:10})
         }
-        console.log(props.size)
-        console.log(props.currentPage)
+    },[isVisiblePostDetail])
+
+    useEffect(()=>{
+        if(props.currentPage !== undefined){
+            props.fetchPostPrivate(props.currentUserAccountSetting.username, () => {
+            }, history, {page:0,size:props.size+(props.currentPage*props.size)})
+        }else {
+            props.fetchPostPrivate(props.currentUserAccountSetting.username, () => {
+            }, history, {page:0,size:10})
+        }
     },[isVisiblePostDetail])
 
     const onClickPost = (p) =>{
@@ -104,6 +112,12 @@ function mapDispatchToProps(dispatch) {
         },
         fetchPostVideo: (username, callback, history, payload) => {
             dispatch(profileAction.action.fetchPostVideo(username, callback, history,payload))
+        },
+        getPostPrivate: (username, callback, history, payload) => {
+            dispatch(profileAction.action.getPostPrivate(username, callback, history,payload))
+        },
+        fetchPostPrivate: (username, callback, history, payload) => {
+            dispatch(profileAction.action.fetchPostPrivate(username, callback, history,payload))
         },
     }
 }

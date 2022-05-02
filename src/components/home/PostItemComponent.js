@@ -74,7 +74,11 @@ function PostItemComponent(props) {
     }
 
     const onDoubleClick = () => {
-        if(!like) props.likePost(props.post.id,props.currentPage)
+        if(!like)
+        {
+            props.likePost(props.post.id,props.currentPage)
+            props.postCmt({})
+        }
         setClassdbClick(classdbClick + " dbClick")
         setTimeout(() => {
             setClassdbClick("pop")

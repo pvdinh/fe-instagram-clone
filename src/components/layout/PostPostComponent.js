@@ -200,8 +200,8 @@ function PostPostComponent(props) {
                 </div>
                 <div>
                     <Select placeholder="select privacy" onChange={(e)=>{onChangePrivacy(e)}} style={{width:"100%",marginTop:"15px"}}>
-                        <Option value="1">Public(Anyone can see.)</Option>
-                        <Option value="2">Private(Only members can see.)</Option>
+                        <Option value="0">Public(Anyone can see.)</Option>
+                        <Option value="1">Private(Only members can see.)</Option>
                     </Select>
                 </div>
             </Modal>
@@ -244,7 +244,7 @@ function PostPostComponent(props) {
                     </div>
                 </div>
             </Modal>
-            <ModalEditVideoBeforeUpload videoUrl={videoUrl} videoUpload={videoUpload} visible={isModalVisibleVideo} setVisible={()=>{setIsModalVisibleVideo(false)}} />
+            <ModalEditVideoBeforeUpload type="home" videoUrl={videoUrl} videoUpload={videoUpload} visible={isModalVisibleVideo} setVisible={()=>{setIsModalVisibleVideo(false)}} />
         </div>
     )
 }

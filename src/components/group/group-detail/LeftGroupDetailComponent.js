@@ -53,6 +53,7 @@ function LeftGroupDetailComponent(props) {
                     ?
                     <>
                        <PostPostsInGroupComponent idGroup={props.idGroup} />
+
                         <button className="button-create-side-menu-left-group" onClick={() => {
                             setIsVisibleInviteMember(true)
                         }}>+ Add member

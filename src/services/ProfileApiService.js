@@ -28,6 +28,10 @@ export const getPostVideo = (payload) => {
     let profileRequest = new ProfileRequest()
     return profileRequest.getPostVideo(payload)
 }
+export const getPostPrivate = (payload) => {
+    let profileRequest = new ProfileRequest()
+    return profileRequest.getPostPrivate(payload)
+}
 export const checkFollowingUser = (id) => {
     let profileRequest = new ProfileRequest()
     return profileRequest.checkFollowingUser(id)

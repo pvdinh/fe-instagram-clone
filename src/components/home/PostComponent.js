@@ -43,8 +43,10 @@ function PostComponent(props) {
 
     useEffect(() => {
         if(props.type === "group-child"){
+            console.log("XXX")
             props.fetchAllPostInGroup(props.idGroup,page)
         }else if(props.type === "group"){
+            console.log("YYY")
             props.fetchAllPostInAllGroupSelf(page)
         } else props.fetchAllPostOfFollowing(page)
     }, [reload])

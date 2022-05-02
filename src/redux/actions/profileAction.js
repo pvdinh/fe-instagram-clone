@@ -9,8 +9,12 @@ const type = {
     GET_SAVED_POST_SUCCESS:"GET_SAVED_POST_SUCCESS",
     GET_POST_VIDEO:"GET_POST_VIDEO",
     GET_POST_VIDEO_SUCCESS:"GET_POST_VIDEO_SUCCESS",
+    GET_POST_PRIVATE:"GET_POST_PRIVATE",
+    GET_POST_PRIVATE_SUCCESS:"GET_POST_PRIVATE_SUCCESS",
     FETCH_POST_VIDEO:"FETCH_POST_VIDEO",
     FETCH_POST_VIDEO_SUCCESS:"FETCH_POST_VIDEO_SUCCESS",
+    FETCH_POST_PRIVATE:"FETCH_POST_PRIVATE",
+    FETCH_POST_PRIVATE_SUCCESS:"FETCH_POST_PRIVATE_SUCCESS",
     CHECK_FOLLOWING_USER:"CHECK_FOLLOWING_USER",
     CHECK_FOLLOWING_USER_SUCCESS:"CHECK_FOLLOWING_USER_SUCCESS",
     CHECK_USER_HAVING_STORY:"CHECK_USER_HAVING_STORY",
@@ -74,9 +78,27 @@ const action = {
             payload:payload,
         }
     },
+    getPostPrivate:(username,callback,history,payload)=>{
+        return{
+            type:type.GET_POST_PRIVATE,
+            username:username,
+            callback,
+            history,
+            payload:payload,
+        }
+    },
     fetchPostVideo:(username,callback,history,payload)=>{
         return{
             type:type.FETCH_POST_VIDEO,
+            username:username,
+            callback,
+            history,
+            payload:payload,
+        }
+    },
+    fetchPostPrivate:(username,callback,history,payload)=>{
+        return{
+            type:type.FETCH_POST_PRIVATE,
             username:username,
             callback,
             history,

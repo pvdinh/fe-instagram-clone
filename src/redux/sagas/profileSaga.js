@@ -1,7 +1,7 @@
 import {all, takeEvery, call, put} from "@redux-saga/core/effects";
 import {
     changePassword, changeProfilePhoto, checkFollowingUser, checkUserHavingStory,
-    editUserAccountSetting, findFollowersByCurrentUser, findFollowingByCurrentUser, getPostVideo,
+    editUserAccountSetting, findFollowersByCurrentUser, findFollowingByCurrentUser, getPostPrivate, getPostVideo,
     getPrivateInformation, getSavedPost,
     getUserProfile
 } from "../../services/ProfileApiService";
@@ -85,11 +85,35 @@ function *getPostVideo_saga(action) {
         console.log("err",e)
     }
 }
+function *getPostPrivate_saga(action) {
+    try{
+        const response= yield call(getPostPrivate,{username:action.username,...action.payload})
+        if(response.statusCode === 200){
+            yield put({type:profileAction.type.GET_POST_PRIVATE_SUCCESS,data:response.data})
+        }else {
+            action.history.replace("/error")
+        }
+    }catch (e) {
+        console.log("err",e)
+    }
+}
 function *fetchPostVideo_saga(action) {
     try{
         const response= yield call(getPostVideo,{username:action.username,...action.payload})
         if(response.statusCode === 200){
             yield put({type:profileAction.type.FETCH_POST_VIDEO_SUCCESS,data:response.data})
+        }else {
+            action.history.replace("/error")
+        }
+    }catch (e) {
+        console.log("err",e)
+    }
+}
+function *fetchPostPrivate_saga(action) {
+    try{
+        const response= yield call(getPostPrivate,{username:action.username,...action.payload})
+        if(response.statusCode === 200){
+            yield put({type:profileAction.type.FETCH_POST_PRIVATE_SUCCESS,data:response.data})
         }else {
             action.history.replace("/error")
         }
@@ -145,7 +169,9 @@ function *listen() {
     yield takeEvery(profileAction.type.CHANGE_PROFILE_PHOTO,changeProfilePhoto_saga)
     yield takeEvery(profileAction.type.GET_SAVED_POST,getSavedPost_saga)
     yield takeEvery(profileAction.type.GET_POST_VIDEO,getPostVideo_saga)
+    yield takeEvery(profileAction.type.GET_POST_PRIVATE,getPostPrivate_saga)
     yield takeEvery(profileAction.type.FETCH_POST_VIDEO,fetchPostVideo_saga)
+    yield takeEvery(profileAction.type.FETCH_POST_PRIVATE,fetchPostPrivate_saga)
     yield takeEvery(profileAction.type.CHECK_FOLLOWING_USER,checkFollowingUser_saga)
     yield takeEvery(profileAction.type.CHECK_USER_HAVING_STORY,checkUserHavingStory_saga)
     yield takeEvery(profileAction.type.FIND_FOLLOWING_BY_CURRENT_USER,findFollowingByCurrentUser_saga)

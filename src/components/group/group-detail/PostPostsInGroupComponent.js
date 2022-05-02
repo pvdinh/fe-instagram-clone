@@ -230,7 +230,7 @@ function PostPostsInGroupComponent(props) {
                 showModalSharePost()
             }
 
-            <ModalEditVideoBeforeUpload videoUrl={videoUrl} videoUpload={videoUpload} visible={isModalVisibleVideo}
+            <ModalEditVideoBeforeUpload type="group" idGroup={props.idGroup} videoUrl={videoUrl} videoUpload={videoUpload} visible={isModalVisibleVideo}
                                         setVisible={() => {
                                             setIsModalVisibleVideo(false)
                                         }}/>

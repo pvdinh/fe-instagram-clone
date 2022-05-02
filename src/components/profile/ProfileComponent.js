@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {GoVerified} from "react-icons/all";
+import {FaLock, GoVerified} from "react-icons/all";
 import {useHistory} from "react-router";
 import {Link} from "react-router-dom";
 import RouteTypeOfPost from "./RouteTypeOfPost";
@@ -34,7 +34,13 @@ function ProfileComponent(props) {
                 }, history)
             }
             if (props.match.url.includes("video")) {
+                console.log("VIDEO")
                 props.getPostVideo(props.match.params.username, () => {
+                }, history, {page:page,size:size})
+            }
+            if (props.match.url.includes("private")) {
+                console.log("PRIVATE")
+                props.getPostPrivate(props.match.params.username, () => {
                 }, history, {page:page,size:size})
             }
             props.checkFollowingUser(data.userAccountSetting.id,(dt)=>{
@@ -58,6 +64,9 @@ function ProfileComponent(props) {
                 break;
             case props.match.url.includes("tagged"):
                 setCurrentTypeOfPost("li tagged selected")
+                break;
+            case props.match.url.includes("private"):
+                setCurrentTypeOfPost("li private selected")
                 break;
             default:
                 break;
@@ -133,6 +142,13 @@ function ProfileComponent(props) {
         setPage(page+1)
         setTimeout(()=>{
             props.getPostVideo(props.match.params.username, () => {
+            }, history, {page:page+1,size:size})
+        },1500)
+    }
+    const fetchMorePostPrivate = () =>{
+        setPage(page+1)
+        setTimeout(()=>{
+            props.getPostPrivate(props.match.params.username, () => {
             }, history, {page:page+1,size:size})
         },1500)
     }
@@ -277,6 +293,16 @@ function ProfileComponent(props) {
                                                 </div>
                                             </Link>
                                         </li>
+                                        <li className={currentTypeOfPost.includes("private") ? currentTypeOfPost : "li private"}>
+                                            <Link to={`/${props.match.params.username}/private`} onClick={() => {
+                                                setTypePost("li private")
+                                            }} className="tab-link">
+                                                <div className="wrap-type-post">
+                                                    <FaLock />
+                                                    <span className="tab-link-text"> Private</span>
+                                                </div>
+                                            </Link>
+                                        </li>
                                         {/*<li className={currentTypeOfPost.includes("tagged") ? currentTypeOfPost : "li tagged"}>*/}
                                         {/*    <Link to={`/${props.match.params.username}/tagged`} onClick={() => {*/}
                                         {/*        setTypePost("li tagged")*/}
@@ -332,7 +358,7 @@ function ProfileComponent(props) {
 
                         </nav>
 
-                        <RouteTypeOfPost fetchMorePostVideo={()=>{fetchMorePostVideo()}} currentPage={page} size={size}/>
+                        <RouteTypeOfPost fetchMorePostVideo={()=>{fetchMorePostVideo()}} fetchMorePostPrivate={()=>{fetchMorePostPrivate()}} currentPage={page} size={size}/>
 
                     </section>
                 </main>

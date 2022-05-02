@@ -46,6 +46,7 @@ function AppRouter() {
                             <ProtectedRoute path={"/:username/saved"} exact render={(props)=>{return <ProfilePage {...props} />}}></ProtectedRoute>
                             <ProtectedRoute path={"/:username/video"} exact render={(props)=>{return <ProfilePage {...props} />}}></ProtectedRoute>
                             <ProtectedRoute path={"/:username/tagged"} exact render={(props)=>{return <ProfilePage {...props} />}}></ProtectedRoute>
+                            <ProtectedRoute path={"/:username/private"} exact render={(props)=>{return <ProfilePage {...props} />}}></ProtectedRoute>
                             <ProtectedRoute path={"/accounts/edit"} exact render={()=>{return <SettingAccountPage />}}></ProtectedRoute>
                             <Route> <ErrorPage/> </Route>
                         </Switch>

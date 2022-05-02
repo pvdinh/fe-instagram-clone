@@ -68,6 +68,8 @@ function ModalCreatNewPostVideo(props) {
                     type:"video",
                     tags: '',
                     dateCreated: new Date().getTime(),
+                    privacy:props.privacy,
+                    idGroup: props.idGroup,
                 }
                 props.postNewPost(post)
                 props.setVisible()

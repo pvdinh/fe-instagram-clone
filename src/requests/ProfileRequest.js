@@ -29,6 +29,10 @@ export class ProfileRequest extends BaseRequest{
         let url=`user-account-setting/${payload.username}/get-video?page=${payload.page}&size=${payload.size}`
         return this.get(url)
     }
+    getPostPrivate(payload){
+        let url=`user-account-setting/${payload.username}/get-post-private?page=${payload.page}&size=${payload.size}`
+        return this.get(url)
+    }
     checkFollowingUser(id){
         let url=`user-account-setting/${id}/checkFollow`
         return this.get(url)
