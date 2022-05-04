@@ -5,6 +5,7 @@ import postActions from "../../../redux/actions/postActions";
 import {Link} from "react-router-dom";
 import ModalInviteMember from "../modal/ModaInviteMember";
 import PostPostsInGroupComponent from "./PostPostsInGroupComponent";
+import groupAction from "../../../redux/actions/groupAction";
 
 function LeftGroupDetailComponent(props) {
     const [pId, setPId] = useState("");
@@ -33,13 +34,27 @@ function LeftGroupDetailComponent(props) {
         }
     }
 
+    const requestJoinGroup = () =>{
+        props.requestToJoinGroup(props.idGroup,(m)=>{
+            props.getGroupByIdGroupAndIdUser(props.idGroup,()=>{})
+        })
+    }
+
+    const cancelRequestJoinGroup = () =>{
+        props.cancelRequestToJoinGroup(props.idGroup,(m)=>{
+            props.getGroupByIdGroupAndIdUser(props.idGroup,()=>{})
+        })
+    }
+
     return (
         <section className="side-menu-left">
 
-            <Link to={`/g/3453e3eww33`}>
+            <Link to={`/g/${props.idGroup}`}>
                 <div
-                    className="label-side-menu-left-group">{props.groupInformation.name} ( {props.groupInformation.numberMembership} members
-                    )
+                    className="label-side-menu-left-group">{props.groupInformation.name} ( {props.groupInformation.numberMembership} members )
+                    {
+                        props.userMemberGroup ? ` - ${props.userMemberGroup.role}` : null
+                    }
                 </div>
             </Link>
 
@@ -60,8 +75,7 @@ function LeftGroupDetailComponent(props) {
                         </button>
                         {
                             props.userMemberGroup.role !== "ADMIN" && props.userMemberGroup.status === 1 ?
-                                <button className="button-create-side-menu-left-group" onClick={() => {
-                                }}>Left group
+                                <button className="button-create-side-menu-left-group" onClick={() => {cancelRequestJoinGroup()}}>Left group
                                 </button>
                                 :
                                 null
@@ -69,9 +83,9 @@ function LeftGroupDetailComponent(props) {
                     </>
                     :
                     props.userMemberGroup !== null && props.userMemberGroup.status === 0 ?
-                        <button className="button-create-side-menu-left-group">Sending request to join group</button>
+                        <button className="button-create-side-menu-left-group" onClick={()=>{cancelRequestJoinGroup()}} >Sending request to join group</button>
                         :
-                        <button className="button-create-side-menu-left-group">Request join into group</button>
+                        <button className="button-create-side-menu-left-group" onClick={()=>{requestJoinGroup()}} >Request join into group</button>
             }
             <div id="group-personal" style={{height: "700px", overflowY: "scroll"}} onScroll={(e) => {
                 fetchMoreGroup(e)
@@ -94,7 +108,7 @@ function LeftGroupDetailComponent(props) {
                 {
                     props.userMemberGroup !== null && props.userMemberGroup.role === "ADMIN" ?
                         <div className="side-menu__user-profile">
-                            <Link to={`/g/3453e3eww33/requests`}>
+                            <Link to={`/g/${props.idGroup}/requests`}>
                                 <div className="item-menu-left">
                                     <a href="#" className="">
                                         <img
@@ -113,7 +127,7 @@ function LeftGroupDetailComponent(props) {
                 }
 
                 <div className="side-menu__user-profile">
-                    <Link to={`/g/3453e3eww33/members`}>
+                    <Link to={`/g/${props.idGroup}/members`}>
                         <div className="item-menu-left" style={{marginLeft: "7px", marginRight: "7px"}}>
                             <a href="#" className="">
                                 <img src="https://static.xx.fbcdn.net/rsrc.php/v3/y5/r/PrjLkDYpYbH.png"
@@ -147,7 +161,20 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-    return {}
+    return {
+        requestToJoinGroup:(idGroup,callback)=>{
+          dispatch(groupAction.action.requestToJoinGroup(idGroup,callback))
+        },
+        cancelRequestToJoinGroup:(idGroup,callback)=>{
+          dispatch(groupAction.action.cancelRequestToJoinGroup(idGroup,callback))
+        },
+        getGroupByIdGroupAndIdUser: (idGroup,callback) =>{
+            dispatch(groupAction.action.getGroupByIdGroupAndIdUser(idGroup,callback))
+        },
+        rejectRequestToJoinGroup:(idGroup,idUser,callback) =>{
+            dispatch(groupAction.action.rejectRequestToJoinGroup(idGroup,idUser,callback))
+        },
+    }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(LeftGroupDetailComponent)

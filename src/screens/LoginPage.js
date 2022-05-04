@@ -8,8 +8,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        login:(username,password) =>{
-            dispatch(loginActions.action.login(username,password))
+        login:(username,password,callback) =>{
+            dispatch(loginActions.action.login(username,password,callback))
         }
     }
 }

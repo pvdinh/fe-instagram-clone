@@ -33,5 +33,37 @@ class GroupRequest extends BaseRequest {
         let url = `group/posts?page=${payload.page}&size=${payload.size}`
         return this.get(url)
     }
+    getMemberInGroup(payload){
+        let url = `group/${payload.idGroup}/get-member?page=${payload.page}&size=${payload.size}`
+        return this.get(url)
+    }
+    getMemberRequestInGroup(payload){
+        let url = `group/${payload.idGroup}/get-member-request?page=${payload.page}&size=${payload.size}`
+        return this.get(url)
+    }
+    requestToJoinGroup(idGroup){
+        let url = `group/${idGroup}/request-join-group`
+        return this.post(url)
+    }
+    cancelRequestToJoinGroup(idGroup){
+        let url = `group/${idGroup}/cancel-request-join-group`
+        return this.delete(url)
+    }
+    rejectRequestToJoinGroup(payload){
+        let url = `group/${payload.idGroup}/reject-request-join-group?idUser=${payload.idUser}`
+        return this.delete(url)
+    }
+    confirmMemberRequest(payload){
+        let url = `group/${payload.idGroup}/confirm-member-request`
+        return this.put(url,payload)
+    }
+    cancelMemberRequest(payload){
+        let url = `group/${payload.idGroup}/cancel-member-request`
+        return this.delete(url,payload)
+    }
+    searchGroupByName(name){
+        let url = `group/${name}/search`
+        return this.get(url)
+    }
 }
 export default GroupRequest

@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Modal} from "antd";
 import homeActions from "../../redux/actions/homeActions";
 import {connect} from "react-redux";
@@ -6,13 +6,16 @@ import postActions from "../../redux/actions/postActions";
 import StoryAction from "../../redux/actions/StoryAction";
 import ModalConfirmUnFollow from "../modal/ModalConfirmUnFollow";
 import ModalReport from "../modal/report/ModalReport";
+import groupAction from "../../redux/actions/groupAction";
 
 function MoreActionInPost(props) {
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [isModalUnfollowVisible,setIsModalUnfollowVisible] = useState(false)
     const [isModalReportVisible, setIsModalReportVisible] = useState(false);
 
-
+    useEffect(() => {
+        props.getGroupByIdGroupAndIdUser(props.post.idGroup,()=>{})
+    }, [isModalVisible])
 
     const showModal = () => {
         setIsModalVisible(true);
@@ -66,7 +69,7 @@ function MoreActionInPost(props) {
             </button>
             <Modal centered visible={isModalVisible} className='instagram-home-page-wrap' onCancel={()=>{handleCancel()}} footer={null} closable={false}>
                 {
-                    props.userAccountFollowing.id === props.userAccountProfile.id ?
+                    props.userAccountFollowing.id === props.userAccountProfile.id ||( props.userMemberGroup && props.userMemberGroup.role === "ADMIN" )?
                         <>
                             <button className='options-dialog__button' style={{borderBottom:"1px solid var(--border)"}} onClick={()=>{goToPost(props.post.id)}} >Go to post</button>
                             <button className='options-dialog__button' style={{borderBottom:"1px solid var(--border)",color:"#ed4956",fontWeight: "700"}} onClick={()=>{onClickDeletePost(props.post.id)}}>Delete post</button>
@@ -92,6 +95,7 @@ function MoreActionInPost(props) {
 function mapStateToProps(state) {
     return {
         userAccountProfile:state.home.userAccountProfile,
+        userMemberGroup: state.group.userMemberGroup,
     }
 }
 
@@ -105,6 +109,9 @@ function mapDispatchToProps(dispatch) {
         },
         beginStory: (story) =>{
             dispatch(StoryAction.action.beginStory(story))
+        },
+        getGroupByIdGroupAndIdUser: (idGroup,callback) =>{
+            dispatch(groupAction.action.getGroupByIdGroupAndIdUser(idGroup,callback))
         },
     }
 }

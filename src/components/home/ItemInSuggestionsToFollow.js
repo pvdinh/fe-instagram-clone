@@ -23,7 +23,7 @@ function ItemInSuggestionsToFollow(props) {
             </a>
             <div className="side-menu__suggestion-info">
                 <a href={`/${props.item.displayName}`}>{props.item.displayName}</a>
-                <span>Joined meta on {convertTimeStampToDateDMY(props.item.dateCreated)}</span>
+                <span style={{maxWidth:"none"}}>Joined meta on {convertTimeStampToDateDMY(props.item.dateCreated)}</span>
             </div>
             {
                 !statusFollow ?

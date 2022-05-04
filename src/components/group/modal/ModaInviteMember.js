@@ -53,6 +53,9 @@ function ModalInviteMember(props) {
         }
         props.addMemberIntoGroup(data,(m)=>{
             if(m === 'success'){
+                //reload laij group info
+                props.getGroupByIdGroupAndIdUser(props.idGroup,()=>{})
+                // ----------------------
                 let elementAlert = document.getElementsByClassName("alertSendInviteToGroup")
                 elementAlert[0].classList.add("show")
                 const setTimeOut = setTimeout(()=>{
@@ -159,6 +162,9 @@ function mapDispatchToProps(dispatch) {
         },
         addMemberIntoGroup: (payload,callback) =>{
             dispatch(groupAction.action.addMemberIntoGroup(payload,callback))
+        },
+        getGroupByIdGroupAndIdUser: (idGroup,callback) =>{
+            dispatch(groupAction.action.getGroupByIdGroupAndIdUser(idGroup,callback))
         },
     }
 }

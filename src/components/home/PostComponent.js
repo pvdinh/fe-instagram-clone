@@ -10,6 +10,7 @@ import Stomp from "stompjs";
 import NotHavePostInGroup from "../not-have-post/NotHavePostInGroup";
 import NotHavePostInHome from "../not-have-post/NotHavePostInHome";
 import groupAction from "../../redux/actions/groupAction";
+import JoinGroupToViewPosts from "../not-have-post/JoinGroupToViewPosts";
 
 let stompClient=null
 function PostComponent(props) {
@@ -97,16 +98,16 @@ function PostComponent(props) {
     return (
         <div>
             {
-                props.type === "group-child" && props.listPostOfGroup.length > 0 ?
+                props.type === "group" && props.listPostOfAllGroup.length > 0 ?
                     <InfiniteScroll
-                        dataLength={props.listPostOfGroup.length}
+                        dataLength={props.listPostOfAllGroup.length}
                         next={() => {
                             fetchMoreData()
                         }}
                         hasMore={true}
                     >
                         {
-                            props.listPostOfGroup.map((item, key) => (
+                            props.listPostOfAllGroup.map((item, key) => (
                                 <PostItemComponent deleteCmt={(comment) => {
                                     deleteCmt(comment)
                                 }} postCmt={(comment) => {
@@ -117,19 +118,19 @@ function PostComponent(props) {
                         }
                     </InfiniteScroll>
                     :
-                    props.type === "group-child" ?
+                    props.type === "group" ?
                         <NotHavePostInGroup/>
                         :
-                        props.type === "group" && props.listPostOfAllGroup.length > 0 ?
+                        props.type === "group-child" && props.listPostOfGroup.length > 0 && props.groupInformation.privacy === 0 ?
                             <InfiniteScroll
-                                dataLength={props.listPostOfAllGroup.length}
+                                dataLength={props.listPostOfGroup.length}
                                 next={() => {
                                     fetchMoreData()
                                 }}
                                 hasMore={true}
                             >
                                 {
-                                    props.listPostOfAllGroup.map((item, key) => (
+                                    props.listPostOfGroup.map((item, key) => (
                                         <PostItemComponent deleteCmt={(comment) => {
                                             deleteCmt(comment)
                                         }} postCmt={(comment) => {
@@ -140,7 +141,36 @@ function PostComponent(props) {
                                 }
                             </InfiniteScroll>
                             :
-                            props.type === "group" ?
+                            props.type === "group-child" && props.listPostOfGroup.length > 0 ?
+                                <>
+                                    {
+                                        props.userMemberGroup && props.userMemberGroup.status === 1 ?
+                                            <InfiniteScroll
+                                                dataLength={props.listPostOfGroup.length}
+                                                next={() => {
+                                                    fetchMoreData()
+                                                }}
+                                                hasMore={true}
+                                            >
+                                                {
+                                                    props.listPostOfGroup.map((item, key) => (
+                                                        <PostItemComponent deleteCmt={(comment) => {
+                                                            deleteCmt(comment)
+                                                        }} postCmt={(comment) => {
+                                                            postCmt(comment)
+                                                        }} currentPage={page} key={key} post={item.post} group={item.group} likes={item.likes}
+                                                                           userAccountSetting={item.userAccountSetting}/>
+                                                    ))
+                                                }
+                                            </InfiniteScroll>
+                                            :
+                                            <JoinGroupToViewPosts />
+
+                                    }
+                                </>
+                                :
+                                props.type === "group-child"
+                                ?
                                 <NotHavePostInGroup/>
                                 :
                         props.listPostOfFollowing.length > 0 ?
@@ -171,6 +201,7 @@ function mapStateToProps(state) {
     return {
         listPostOfFollowing: state.post.listPostOfFollowing,
         groupInformation: state.group.groupInformation,
+        userMemberGroup: state.group.userMemberGroup,
         listPostOfGroup: state.group.listPostOfGroup,
         listPostOfAllGroup: state.group.listPostOfAllGroup,
     }

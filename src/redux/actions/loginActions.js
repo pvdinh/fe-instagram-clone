@@ -11,13 +11,14 @@ const type = {
     VALIDATE_USERNAME_SUCCESS: 'VALIDATE_USERNAME_SUCCESS',
 }
 const action = {
-    login: (username, password) => {
+    login: (username, password, callback) => {
         return {
             type: type.LOGIN,
             payload:{
                 username:username,
                 password:password,
-            }
+            },
+            callback,
         }
     },
     loginFacebook:(token)=>{

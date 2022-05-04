@@ -20,7 +20,6 @@ function LeftGroupComponent(props) {
     const [reload,setReload] = useState(false)
 
     useEffect(()=>{
-        console.log("XX")
         props.getGroupByRole({role:"ADMIN",page:page,size:size},(data)=>{
             setListGroupManager([...data])
         })
@@ -33,9 +32,16 @@ function LeftGroupComponent(props) {
     },[isVisibleModalAddGroup])
 
     const handleSearch = (value) => {
-        let res = [1,11,22,33,11];
-        setResult([...res])
+        props.searchGroupByName(value,(data)=>{
+            setResult([...data])
+        })
     };
+
+    const onSelectGroupSearch = (i,v) => {
+        window.location.href = "/g/" + v.key;
+    };
+
+
 
     const showModal = () =>{
         if(pId !== ""){
@@ -57,10 +63,10 @@ function LeftGroupComponent(props) {
 
             <div className="label-side-menu-left-group">Group</div>
 
-            <AutoComplete style={{ width: "100%",marginTop:"10px" }} onSearch={handleSearch} placeholder="Search by name group">
-                {result.map((email) => (
-                    <Option key={email} value={email}>
-                        {email}
+            <AutoComplete style={{ width: "100%",marginTop:"10px" }} onSelect={(i,v)=>{onSelectGroupSearch(i,v)}} onSearch={handleSearch} placeholder="Search by name group">
+                {result.map((s) => (
+                    <Option key={s.id} value={s.name}>
+                        {s.name}
                     </Option>
                 ))}
             </AutoComplete>
@@ -127,6 +133,9 @@ function mapDispatchToProps(dispatch) {
     return {
         getGroupByRole:(payload,callback) =>{
           dispatch(groupAction.action.getGroupByRole(payload,callback))
+        },
+        searchGroupByName:(payload,callback) =>{
+          dispatch(groupAction.action.searchGroupByName(payload,callback))
         },
     }
 }

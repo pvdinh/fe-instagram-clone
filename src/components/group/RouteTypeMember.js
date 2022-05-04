@@ -17,12 +17,12 @@ function RouteTypeMember(props) {
             </Route>
             <Route exact path={"/g/:gId/requests"}>
                 {
-                    <RequestsJoinComponent />
+                    <RequestsJoinComponent idGroup={props.idGroup} />
                 }
             </Route>
             <Route exact path={"/g/:gId/members"}>
                 {
-                    <MembershipComponent />
+                    <MembershipComponent idGroup={props.idGroup} />
                 }
             </Route>
         </Switch>

@@ -7,6 +7,7 @@ function LoginComponent(props) {
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
     const [checkLogin, setCheckLogin] = useState(false)
+    const [loginFail, setLoginFail] = useState(false)
 
     useEffect(() => {
         if (username !== "" && username !== "" && username.split(" ").join("") !== "" && password.split(" ").join("") !== "") {
@@ -15,7 +16,9 @@ function LoginComponent(props) {
     }, [username, password])
 
     const onSubmit = () => {
-        props.login(username,password)
+        props.login(username,password,(m)=>{
+            setLoginFail(true)
+        })
     }
 
     const onChangeUsername = (e) => {
@@ -65,6 +68,14 @@ function LoginComponent(props) {
                                                        aria-required="true" autoCapitalize="off" autoCorrect="off"
                                                        required/>
                                             </div>
+                                            {
+                                                loginFail ?
+                                                    <div className="input-box" style={{color:"red"}}>
+                                                        wrong username or password
+                                                    </div>
+                                                    :
+                                                    null
+                                            }
                                             <span className="button-box">
                           {
                               checkLogin ?

@@ -39,3 +39,40 @@ export const fetchAllPostInAllGroupSelf = (payload) =>{
     const groupRequest = new GroupRequest()
     return groupRequest.fetchAllPostInAllGroupSelf(payload)
 }
+
+export const getMemberInGroup = (payload) =>{
+    const groupRequest = new GroupRequest()
+    return groupRequest.getMemberInGroup(payload)
+}
+
+export const getMemberRequestInGroup = (payload) =>{
+    const groupRequest = new GroupRequest()
+    return groupRequest.getMemberRequestInGroup(payload)
+}
+
+export const requestToJoinGroup = (idGroup) =>{
+    const groupRequest = new GroupRequest()
+    return groupRequest.requestToJoinGroup(idGroup)
+}
+
+export const cancelRequestToJoinGroup = (idGroup) =>{
+    const groupRequest = new GroupRequest()
+    return groupRequest.cancelRequestToJoinGroup(idGroup)
+}
+
+export const rejectRequestToJoinGroup = (payload) =>{
+    const groupRequest = new GroupRequest()
+    return groupRequest.rejectRequestToJoinGroup(payload)
+}
+export const confirmMemberRequest = (payload) =>{
+    const groupRequest = new GroupRequest()
+    return groupRequest.confirmMemberRequest(payload)
+}
+export const cancelMemberRequest = (payload) =>{
+    const groupRequest = new GroupRequest()
+    return groupRequest.cancelMemberRequest(payload)
+}
+export const searchGroupByName = (name) =>{
+    const groupRequest = new GroupRequest()
+    return groupRequest.searchGroupByName(name)
+}

@@ -15,7 +15,7 @@ function* saga_login(action) {
             localStorage.setItem("sessionToken", response.data.authorization)
             window.location.href = "/"
         } else {
-            window.location.href = "/login"
+            yield action.callback(response)
         }
     } catch (e) {
         console.log('err', e)

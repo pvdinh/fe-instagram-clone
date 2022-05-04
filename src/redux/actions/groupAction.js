@@ -18,6 +18,27 @@ const type ={
     GET_ALL_POST_IN_ALL_GROUP_SELF_SUCCESS: "GET_ALL_POST_IN_ALL_GROUP_SELF_SUCCESS",
     FETCH_ALL_POST_IN_ALL_GROUP_SELF: "FETCH_ALL_POST_IN_ALL_GROUP_SELF",
     FETCH_ALL_POST_IN_ALL_GROUP_SELF_SUCCESS: "FETCH_ALL_POST_IN_ALL_GROUP_SELF_SUCCESS",
+    //
+    GET_MEMBER_IN_GROUP:"GET_MEMBER_IN_GROUP",
+    GET_MEMBER_IN_GROUP_SUCCESS:"GET_MEMBER_IN_GROUP_SUCCESS",
+    //
+    GET_MEMBER_REQUEST_IN_GROUP:"GET_MEMBER_REQUEST_IN_GROUP",
+    GET_MEMBER_REQUEST_IN_GROUP_SUCCESS:"GET_MEMBER_REQUEST_IN_GROUP_SUCCESS",
+    //
+    REQUEST_TO_JOIN_GROUP:"REQUEST_TO_JOIN_GROUP",
+    REQUEST_TO_JOIN_GROUP_SUCCESS:"REQUEST_TO_JOIN_GROUP_SUCCESS",
+    CANCEL_REQUEST_TO_JOIN_GROUP:"CANCEL_REQUEST_TO_JOIN_GROUP",
+    CANCEL_REQUEST_TO_JOIN_GROUP_SUCCESS:"CANCEL_REQUEST_TO_JOIN_GROUP_SUCCESS",
+    REJECT_REQUEST_TO_JOIN_GROUP:"REJECT_REQUEST_TO_JOIN_GROUP",
+    REJECT_REQUEST_TO_JOIN_GROUP_SUCCESS:"REJECT_REQUEST_TO_JOIN_GROUP_SUCCESS",
+    //
+    CONFIRM_MEMBER_REQUEST:"CONFIRM_MEMBER_REQUEST",
+    CONFIRM_MEMBER_REQUEST_SUCCESS:"CONFIRM_MEMBER_REQUEST_SUCCESS",
+    CANCEL_MEMBER_REQUEST:"CANCEL_MEMBER_REQUEST",
+    CANCEL_MEMBER_REQUEST_SUCCESS:"CANCEL_MEMBER_REQUEST_SUCCESS",
+    //
+    SEARCH_GROUP_BY_NAME:"SEARCH_GROUP_BY_NAME",
+
 }
 const action = {
     getGroupByRole: (payload,callback) =>{
@@ -55,6 +76,20 @@ const action = {
             id:idGroup,
         }
     },
+    getMemberInGroup: (idGroup,payload) => {
+        return {
+            type: type.GET_MEMBER_IN_GROUP,
+            payload:payload,
+            id:idGroup,
+        }
+    },
+    getMemberRequestInGroup: (idGroup,payload) => {
+        return {
+            type: type.GET_MEMBER_REQUEST_IN_GROUP,
+            payload:payload,
+            id:idGroup,
+        }
+    },
     fetchAllPostInGroup:(idGroup,currentPage) =>{
         return{
             type:type.FETCH_ALL_POST_IN_GROUP,
@@ -72,6 +107,51 @@ const action = {
         return{
             type:type.FETCH_ALL_POST_IN_ALL_GROUP_SELF,
             currentPage:currentPage
+        }
+    },
+    requestToJoinGroup:(idGroup,callback) =>{
+        return{
+            type:type.REQUEST_TO_JOIN_GROUP,
+            id:idGroup,
+            callback,
+        }
+    },
+    cancelRequestToJoinGroup:(idGroup,callback) =>{
+        return{
+            type:type.CANCEL_REQUEST_TO_JOIN_GROUP,
+            id:idGroup,
+            callback,
+        }
+    },
+    rejectRequestToJoinGroup:(idGroup,idUser,callback) =>{
+        return{
+            type:type.REJECT_REQUEST_TO_JOIN_GROUP,
+            payload:{
+              idGroup:idGroup,
+              idUser:idUser,
+            },
+            callback,
+        }
+    },
+    confirmMemberRequest:(payload,callback) =>{
+        return{
+            type:type.CONFIRM_MEMBER_REQUEST,
+            payload,
+            callback,
+        }
+    },
+    cancelMemberRequest:(payload,callback) =>{
+        return{
+            type:type.CANCEL_MEMBER_REQUEST,
+            payload,
+            callback,
+        }
+    },
+    searchGroupByName:(search,callback) =>{
+        return{
+            type:type.SEARCH_GROUP_BY_NAME,
+            search:search,
+            callback,
         }
     },
 }

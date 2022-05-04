@@ -5,11 +5,17 @@ const inItState={
     listPostOfAllGroup: [],
     groupInformation: {},
     userMemberGroup: {},
+    listMemberInGroup: [],
+    listMemberRequestInGroup: [],
 }
 const groupReducer = (state = inItState,action) =>{
     switch (action.type) {
         case groupAction.type.GET_ALL_POST_IN_GROUP_SUCCESS:
             return {...state,listPostOfGroup: [...state.listPostOfGroup,...action.data]}
+        case groupAction.type.GET_MEMBER_IN_GROUP_SUCCESS:
+            return {...state,listMemberInGroup: [...action.data]}
+        case groupAction.type.GET_MEMBER_REQUEST_IN_GROUP_SUCCESS:
+            return {...state,listMemberRequestInGroup: [...action.data]}
         case groupAction.type.FETCH_ALL_POST_IN_GROUP_SUCCESS:
             return {...state,listPostOfGroup: action.data}
         case groupAction.type.GET_ALL_POST_IN_ALL_GROUP_SELF_SUCCESS:
