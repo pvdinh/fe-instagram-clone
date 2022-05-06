@@ -7,6 +7,8 @@ const inItState={
     userMemberGroup: {},
     listMemberInGroup: [],
     listMemberRequestInGroup: [],
+    listMemberRequestSearchInGroup: [],
+    listMemberSearchInGroup: [],
 }
 const groupReducer = (state = inItState,action) =>{
     switch (action.type) {
@@ -24,6 +26,10 @@ const groupReducer = (state = inItState,action) =>{
             return {...state,listPostOfAllGroup: action.data}
         case groupAction.type.GET_GROUP_BY_ID_GROUP_AND_ID_USER_SUCCESS:
             return {...state,groupInformation: action.data.group, userMemberGroup: action.data.groupMember}
+        case groupAction.type.SEARCH_MEMBER_IN_GROUP_SUCCESS:
+            return {...state,listMemberSearchInGroup: action.data}
+        case groupAction.type.SEARCH_MEMBER_REQUEST_IN_GROUP_SUCCESS:
+            return {...state,listMemberRequestSearchInGroup: action.data}
         default:
             return {...state}
     }

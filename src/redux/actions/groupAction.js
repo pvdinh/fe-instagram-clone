@@ -38,6 +38,11 @@ const type ={
     CANCEL_MEMBER_REQUEST_SUCCESS:"CANCEL_MEMBER_REQUEST_SUCCESS",
     //
     SEARCH_GROUP_BY_NAME:"SEARCH_GROUP_BY_NAME",
+    //
+    SEARCH_MEMBER_IN_GROUP:"SEARCH_MEMBER_IN_GROUP",
+    SEARCH_MEMBER_IN_GROUP_SUCCESS:"SEARCH_MEMBER_IN_GROUP_SUCCESS",
+    SEARCH_MEMBER_REQUEST_IN_GROUP:"SEARCH_MEMBER_REQUEST_IN_GROUP",
+    SEARCH_MEMBER_REQUEST_IN_GROUP_SUCCESS:"SEARCH_MEMBER_REQUEST_IN_GROUP_SUCCESS",
 
 }
 const action = {
@@ -151,6 +156,24 @@ const action = {
         return{
             type:type.SEARCH_GROUP_BY_NAME,
             search:search,
+            callback,
+        }
+    },
+    searchMemberInGroup:(idGroup,payload,search,callback) =>{
+        return{
+            type:type.SEARCH_MEMBER_IN_GROUP,
+            search:search,
+            id:idGroup,
+            payload:payload,
+            callback,
+        }
+    },
+    searchMemberRequestInGroup:(idGroup,payload,search,callback) =>{
+        return{
+            type:type.SEARCH_MEMBER_REQUEST_IN_GROUP,
+            search:search,
+            id:idGroup,
+            payload:payload,
             callback,
         }
     },

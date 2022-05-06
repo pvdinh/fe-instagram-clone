@@ -41,6 +41,14 @@ class GroupRequest extends BaseRequest {
         let url = `group/${payload.idGroup}/get-member-request?page=${payload.page}&size=${payload.size}`
         return this.get(url)
     }
+    searchMemberInGroup(payload){
+        let url = `group/${payload.idGroup}/search-member?search=${payload.search}&page=${payload.page}&size=${payload.size}`
+        return this.get(url)
+    }
+    searchMemberRequestInGroup(payload){
+        let url = `group/${payload.idGroup}/search-member-request?search=${payload.search}&page=${payload.page}&size=${payload.size}`
+        return this.get(url)
+    }
     requestToJoinGroup(idGroup){
         let url = `group/${idGroup}/request-join-group`
         return this.post(url)

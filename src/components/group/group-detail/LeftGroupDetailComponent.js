@@ -87,6 +87,7 @@ function LeftGroupDetailComponent(props) {
                         :
                         <button className="button-create-side-menu-left-group" onClick={()=>{requestJoinGroup()}} >Request join into group</button>
             }
+            <button className="button-create-side-menu-left-group" onClick={()=>{window.location.href="/g/group"}} >My groups</button>
             <div id="group-personal" style={{height: "700px", overflowY: "scroll"}} onScroll={(e) => {
                 fetchMoreGroup(e)
             }}>

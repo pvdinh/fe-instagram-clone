@@ -50,6 +50,16 @@ export const getMemberRequestInGroup = (payload) =>{
     return groupRequest.getMemberRequestInGroup(payload)
 }
 
+export const searchMemberInGroup = (payload) =>{
+    const groupRequest = new GroupRequest()
+    return groupRequest.searchMemberInGroup(payload)
+}
+
+export const searchMemberRequestInGroup = (payload) =>{
+    const groupRequest = new GroupRequest()
+    return groupRequest.searchMemberRequestInGroup(payload)
+}
+
 export const requestToJoinGroup = (idGroup) =>{
     const groupRequest = new GroupRequest()
     return groupRequest.requestToJoinGroup(idGroup)

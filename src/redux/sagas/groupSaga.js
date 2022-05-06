@@ -16,7 +16,7 @@ import {
     getMemberRequestInGroup,
     rejectRequestToJoinGroup,
     requestToJoinGroup,
-    searchGroupByName
+    searchGroupByName, searchMemberInGroup, searchMemberRequestInGroup
 } from "../../services/GroupApiService";
 
 function *getGroupByRole_saga(action) {
@@ -88,6 +88,24 @@ function* getMemberRequestInGroup_saga(action) {
         const response = yield call(getMemberRequestInGroup,{idGroup:action.id,...action.payload})
         console.log(response)
         yield put({type:groupAction.type.GET_MEMBER_REQUEST_IN_GROUP_SUCCESS,data:response.data})
+    } catch (e) {
+        console.log("err", e)
+    }
+}
+
+function* searchMemberInGroup_saga(action) {
+    try {
+        const response = yield call(searchMemberInGroup,{idGroup:action.id,...action.payload,search:action.search})
+        yield put({type:groupAction.type.SEARCH_MEMBER_IN_GROUP_SUCCESS,data:response.data})
+    } catch (e) {
+        console.log("err", e)
+    }
+}
+
+function* searchMemberRequestInGroup_saga(action) {
+    try {
+        const response = yield call(searchMemberRequestInGroup,{idGroup:action.id,...action.payload,search:action.search})
+        yield put({type:groupAction.type.SEARCH_MEMBER_REQUEST_IN_GROUP_SUCCESS,data:response.data})
     } catch (e) {
         console.log("err", e)
     }
@@ -176,6 +194,8 @@ function *listen() {
     yield takeEvery(groupAction.type.GET_ALL_POST_IN_GROUP, getAllPostInGroup_saga)
     yield takeEvery(groupAction.type.GET_MEMBER_IN_GROUP, getMemberInGroup_saga)
     yield takeEvery(groupAction.type.GET_MEMBER_REQUEST_IN_GROUP, getMemberRequestInGroup_saga)
+    yield takeEvery(groupAction.type.SEARCH_MEMBER_IN_GROUP, searchMemberInGroup_saga)
+    yield takeEvery(groupAction.type.SEARCH_MEMBER_REQUEST_IN_GROUP, searchMemberRequestInGroup_saga)
     yield takeEvery(groupAction.type.FETCH_ALL_POST_IN_GROUP, fetchAllPostInGroup_saga)
     yield takeEvery(groupAction.type.GET_ALL_POST_IN_ALL_GROUP_SELF, getAllPostInAllGroupSelf_saga)
     yield takeEvery(groupAction.type.FETCH_ALL_POST_IN_ALL_GROUP_SELF, fetchAllPostInAllGroupSelf_saga)

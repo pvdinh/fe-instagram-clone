@@ -73,6 +73,14 @@ function MoreActionInPost(props) {
                         <>
                             <button className='options-dialog__button' style={{borderBottom:"1px solid var(--border)"}} onClick={()=>{goToPost(props.post.id)}} >Go to post</button>
                             <button className='options-dialog__button' style={{borderBottom:"1px solid var(--border)",color:"#ed4956",fontWeight: "700"}} onClick={()=>{onClickDeletePost(props.post.id)}}>Delete post</button>
+                            <button className='options-dialog__button' style={{borderBottom:"1px solid var(--border)"}} onClick={()=>{onCopyLink(props.post.id)}}>Copy link</button>
+                            <button className='options-dialog__button' onClick={()=>{handleCancel()}}>Cancel</button>
+                        </>
+                        :
+                        props.userAccountFollowing.id === props.userAccountProfile.id ?
+                        <>
+                            <button className='options-dialog__button' style={{borderBottom:"1px solid var(--border)"}} onClick={()=>{goToPost(props.post.id)}} >Go to post</button>
+                            <button className='options-dialog__button' style={{borderBottom:"1px solid var(--border)",color:"#ed4956",fontWeight: "700"}} onClick={()=>{onClickDeletePost(props.post.id)}}>Delete post</button>
                             <button className='options-dialog__button' style={{borderBottom:"1px solid var(--border)",fontWeight: "700"}} onClick={()=>{addToStory(props.post.id)}}>Add to story</button>
                             <button className='options-dialog__button' style={{borderBottom:"1px solid var(--border)"}} onClick={()=>{onCopyLink(props.post.id)}}>Copy link</button>
                             <button className='options-dialog__button' onClick={()=>{handleCancel()}}>Cancel</button>

@@ -68,8 +68,7 @@ function ItemUserRequest(props) {
 
                             {
                                 props.userMemberGroup && props.userMemberGroup.role === "ADMIN" ?
-                                    <button className="btn-cancel-request following" onClick={() => {
-                                    }}>Remove
+                                    <button className="btn-cancel-request following" onClick={() => {onCancel()}}>Remove
                                     </button>
                                     :
                                     null
