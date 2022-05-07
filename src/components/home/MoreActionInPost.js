@@ -14,7 +14,9 @@ function MoreActionInPost(props) {
     const [isModalReportVisible, setIsModalReportVisible] = useState(false);
 
     useEffect(() => {
-        props.getGroupByIdGroupAndIdUser(props.post.idGroup,()=>{})
+        if(props.post.idGroup){
+            props.getGroupByIdGroupAndIdUser(props.post.idGroup,()=>{})
+        }
     }, [isModalVisible])
 
     const showModal = () => {
@@ -69,7 +71,7 @@ function MoreActionInPost(props) {
             </button>
             <Modal centered visible={isModalVisible} className='instagram-home-page-wrap' onCancel={()=>{handleCancel()}} footer={null} closable={false}>
                 {
-                    props.userAccountFollowing.id === props.userAccountProfile.id ||( props.userMemberGroup && props.userMemberGroup.role === "ADMIN" )?
+                     props.userMemberGroup && props.userMemberGroup.role === "ADMIN" ?
                         <>
                             <button className='options-dialog__button' style={{borderBottom:"1px solid var(--border)"}} onClick={()=>{goToPost(props.post.id)}} >Go to post</button>
                             <button className='options-dialog__button' style={{borderBottom:"1px solid var(--border)",color:"#ed4956",fontWeight: "700"}} onClick={()=>{onClickDeletePost(props.post.id)}}>Delete post</button>

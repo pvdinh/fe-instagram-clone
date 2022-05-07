@@ -8,7 +8,7 @@ import profileAction from "../../../redux/actions/profileAction";
 function ModalDisplayFollowers(props) {
 
     const [page,setPage] = useState(0)
-    const [size,setSize] = useState(20)
+    const [size,setSize] = useState(2147483647)
 
 
     useEffect(()=>{
