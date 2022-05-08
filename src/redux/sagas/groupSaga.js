@@ -57,6 +57,7 @@ function *getGroupByIdGroupAndIdUser_saga(action) {
         const response = yield call(getGroupByIdGroupAndIdUser,action.id)
         if(response.statusCode === 200){
             yield put({type:groupAction.type.GET_GROUP_BY_ID_GROUP_AND_ID_USER_SUCCESS,data:response.data})
+            yield action.callback(response.data)
         }
     }catch (e) {
         console.log("err",e)

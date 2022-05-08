@@ -7,15 +7,20 @@ import StoryAction from "../../redux/actions/StoryAction";
 import ModalConfirmUnFollow from "../modal/ModalConfirmUnFollow";
 import ModalReport from "../modal/report/ModalReport";
 import groupAction from "../../redux/actions/groupAction";
+import ModalConfirmDeletePost from "../modal/ModalConfirmDeletePost";
 
 function MoreActionInPost(props) {
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [isModalUnfollowVisible,setIsModalUnfollowVisible] = useState(false)
     const [isModalReportVisible, setIsModalReportVisible] = useState(false);
+    const [isModalDeletePost, setIsModalDeletePost] = useState(false);
+    const [groupMember, setGroupMember] = useState(null);
 
     useEffect(() => {
         if(props.post.idGroup){
-            props.getGroupByIdGroupAndIdUser(props.post.idGroup,()=>{})
+            props.getGroupByIdGroupAndIdUser(props.post.idGroup,(d)=>{
+                setGroupMember(d.groupMember)
+            })
         }
     }, [isModalVisible])
 
@@ -71,10 +76,10 @@ function MoreActionInPost(props) {
             </button>
             <Modal centered visible={isModalVisible} className='instagram-home-page-wrap' onCancel={()=>{handleCancel()}} footer={null} closable={false}>
                 {
-                     props.userMemberGroup && props.userMemberGroup.role === "ADMIN" ?
+                     groupMember && groupMember.role === "ADMIN" && props.userAccountFollowing.id !== props.userAccountProfile.id ?
                         <>
                             <button className='options-dialog__button' style={{borderBottom:"1px solid var(--border)"}} onClick={()=>{goToPost(props.post.id)}} >Go to post</button>
-                            <button className='options-dialog__button' style={{borderBottom:"1px solid var(--border)",color:"#ed4956",fontWeight: "700"}} onClick={()=>{onClickDeletePost(props.post.id)}}>Delete post</button>
+                            <button className='options-dialog__button' style={{borderBottom:"1px solid var(--border)",color:"#ed4956",fontWeight: "700"}} onClick={()=>{setIsModalDeletePost(true)}}>Delete post</button>
                             <button className='options-dialog__button' style={{borderBottom:"1px solid var(--border)"}} onClick={()=>{onCopyLink(props.post.id)}}>Copy link</button>
                             <button className='options-dialog__button' onClick={()=>{handleCancel()}}>Cancel</button>
                         </>
@@ -82,7 +87,7 @@ function MoreActionInPost(props) {
                         props.userAccountFollowing.id === props.userAccountProfile.id ?
                         <>
                             <button className='options-dialog__button' style={{borderBottom:"1px solid var(--border)"}} onClick={()=>{goToPost(props.post.id)}} >Go to post</button>
-                            <button className='options-dialog__button' style={{borderBottom:"1px solid var(--border)",color:"#ed4956",fontWeight: "700"}} onClick={()=>{onClickDeletePost(props.post.id)}}>Delete post</button>
+                            <button className='options-dialog__button' style={{borderBottom:"1px solid var(--border)",color:"#ed4956",fontWeight: "700"}} onClick={()=>{setIsModalDeletePost(true)}}>Delete post</button>
                             <button className='options-dialog__button' style={{borderBottom:"1px solid var(--border)",fontWeight: "700"}} onClick={()=>{addToStory(props.post.id)}}>Add to story</button>
                             <button className='options-dialog__button' style={{borderBottom:"1px solid var(--border)"}} onClick={()=>{onCopyLink(props.post.id)}}>Copy link</button>
                             <button className='options-dialog__button' onClick={()=>{handleCancel()}}>Cancel</button>
@@ -97,6 +102,7 @@ function MoreActionInPost(props) {
                         </>
                 }
             </Modal>
+            <ModalConfirmDeletePost visible={isModalDeletePost} setVisible={()=>{setIsModalDeletePost(false)}} delete={()=>{onClickDeletePost(props.post.id)}} />
             <ModalConfirmUnFollow userAccountFollowing={props.userAccountFollowing} visible={isModalUnfollowVisible} setVisible={()=>{setIsModalUnfollowVisible(false)}} />
             <ModalReport idPost={props.post.id} userAccountFollowing={props.userAccountFollowing} visible={isModalReportVisible} setVisible={()=>{setIsModalReportVisible(false)}} />
         </>
@@ -104,9 +110,7 @@ function MoreActionInPost(props) {
 }
 function mapStateToProps(state) {
     return {
-        userAccountProfile:state.home.userAccountProfile,
-        userMemberGroup: state.group.userMemberGroup,
-    }
+        userAccountProfile:state.home.userAccountProfile,}
 }
 
 function mapDispatchToProps(dispatch) {
