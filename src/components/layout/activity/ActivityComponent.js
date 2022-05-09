@@ -7,7 +7,7 @@ import activityActions from "../../../redux/actions/activityActions";
 function ActivityComponent(props) {
 
     const [page,setPage] = useState(0)
-    const [size,setSize] = useState(10)
+    const [size,setSize] = useState(100)
     const [noti,setNoti] = useState(false)
 
     useEffect(()=>{
@@ -145,9 +145,9 @@ function ActivityComponent(props) {
                                             {
                                                 value.post.type === "video"
                                                     ?
-                                                    <div className="wrap-content-activity">{displayLikes(value.comments,value.activity)} commented your video.</div>
+                                                    <div className="wrap-content-activity">{displayLikes(value.comments,value.activity)} commented in video.</div>
                                                     :
-                                                    <div className="wrap-content-activity">{displayLikes(value.comments,value.activity)} commented your photo.</div>
+                                                    <div className="wrap-content-activity">{displayLikes(value.comments,value.activity)} commented in photo.</div>
                                             }
 
                                             <div className="wrap-date-activity">{calculatorDayActivity(value.activity.dateActivity)}</div>
@@ -165,9 +165,9 @@ function ActivityComponent(props) {
                                                 {
                                                     value.post.type === "video"
                                                         ?
-                                                        <div className="wrap-content-activity">{displayLikes(value.comments,value.activity)} liked comment your video.</div>
+                                                        <div className="wrap-content-activity">{displayLikes(value.likeComments,value.activity)} liked comment in video.</div>
                                                         :
-                                                        <div className="wrap-content-activity">{displayLikes(value.comments,value.activity)} liked comment your photo.</div>
+                                                        <div className="wrap-content-activity">{displayLikes(value.likeComments,value.activity)} liked comment in photo.</div>
                                                 }
 
                                                 <div className="wrap-date-activity">{calculatorDayActivity(value.activity.dateActivity)}</div>
@@ -185,9 +185,9 @@ function ActivityComponent(props) {
                                                     {
                                                         value.post.type === "video"
                                                             ?
-                                                            <div className="wrap-content-activity">{displayLikes(value.comments,value.activity)} reply comment your video.</div>
+                                                            <div className="wrap-content-activity">{displayLikes(value.replyComments,value.activity)} reply comment in video.</div>
                                                             :
-                                                            <div className="wrap-content-activity">{displayLikes(value.comments,value.activity)} reply comment your photo.</div>
+                                                            <div className="wrap-content-activity">{displayLikes(value.replyComments,value.activity)} reply comment in photo.</div>
                                                     }
 
                                                     <div className="wrap-date-activity">{calculatorDayActivity(value.activity.dateActivity)}</div>
@@ -205,9 +205,9 @@ function ActivityComponent(props) {
                                                         {
                                                             value.post.type === "video"
                                                                 ?
-                                                                <div className="wrap-content-activity">{displayLikes(value.comments,value.activity)} liked reply comment your video.</div>
+                                                                <div className="wrap-content-activity">{displayLikes(value.comments,value.activity)} liked reply comment in video.</div>
                                                                 :
-                                                                <div className="wrap-content-activity">{displayLikes(value.comments,value.activity)} liked reply comment your photo.</div>
+                                                                <div className="wrap-content-activity">{displayLikes(value.comments,value.activity)} liked reply comment in photo.</div>
                                                         }
 
                                                         <div className="wrap-date-activity">{calculatorDayActivity(value.activity.dateActivity)}</div>

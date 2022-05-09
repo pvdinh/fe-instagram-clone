@@ -67,10 +67,13 @@ function ItemUserRequest(props) {
                             </button>
 
                             {
-                                props.userMemberGroup && props.userMemberGroup.role === "ADMIN" ?
-                                    <button className="btn-cancel-request following" onClick={() => {onCancel()}}>Remove
-                                    </button>
+                                props.userMemberGroup && props.userMemberGroup.role === "ADMIN" && props.item.userAccountSetting.id === props.userMemberGroup.idUser ?
+                                    null
                                     :
+                                    props.userMemberGroup && props.userMemberGroup.role === "ADMIN" ?
+                                        <button className="btn-cancel-request following" onClick={() => {onCancel()}}>Remove
+                                        </button>
+                                        :
                                     null
                             }
                         </>
@@ -83,6 +86,7 @@ function ItemUserRequest(props) {
 function mapStateToProps(state) {
     return {
         userMemberGroup: state.group.userMemberGroup,
+        userAccountProfile: state.home.userAccountProfile,
     }
 }
 
