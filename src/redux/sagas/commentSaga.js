@@ -54,6 +54,7 @@ function* saga_unLikeReplyComment(action) {
 }
 function* saga_likeReplyComment(action) {
     try {
+        console.log(action,"XXXXXXXXXXXXXXXXXXXXXXX")
         const res = yield call(likeReplyComment,action.id)
         yield action.callback(res)
     } catch (e) {

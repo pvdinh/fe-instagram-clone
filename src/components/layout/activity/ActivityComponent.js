@@ -196,7 +196,7 @@ function ActivityComponent(props) {
                                                     }
                                                 </div>
                                                 :
-                                                value.activity.typeActivity === "likeReplyComment"
+                                                value.activity.typeActivity === "likeReplyComment" && value.likeReplyComments.length > 0
                                                     ?
                                                     <div className="wrap-item-activity" onClick={()=>{redirectToPost(value.post.id);readActivity(value.activity)}}>
                                                         <div className="wrap-image-activity" onClick={()=>{}}>
@@ -205,9 +205,9 @@ function ActivityComponent(props) {
                                                         {
                                                             value.post.type === "video"
                                                                 ?
-                                                                <div className="wrap-content-activity">{displayLikes(value.comments,value.activity)} liked reply comment in video.</div>
+                                                                <div className="wrap-content-activity">{displayLikes(value.likeReplyComments,value.activity)} liked reply comment in video.</div>
                                                                 :
-                                                                <div className="wrap-content-activity">{displayLikes(value.comments,value.activity)} liked reply comment in photo.</div>
+                                                                <div className="wrap-content-activity">{displayLikes(value.likeReplyComments,value.activity)} liked reply comment in photo.</div>
                                                         }
 
                                                         <div className="wrap-date-activity">{calculatorDayActivity(value.activity.dateActivity)}</div>

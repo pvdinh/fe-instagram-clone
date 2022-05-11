@@ -3,6 +3,7 @@ import React, {useEffect} from "react";
 import {Avatar} from "antd";
 import ReactCommentComponent from "../home/ReactCommentComponent";
 import {calculatorDayCommented} from "../../utils/formatNumber";
+import ReactReplyCommentComponent from "./ReactReplyCommentComponent";
 
 
 function ReplyCommentComponent(props) {
@@ -43,7 +44,7 @@ function ReplyCommentComponent(props) {
                     </div>
                 </div>
             </div>
-            <ReactCommentComponent reload={props.reload} onClickLikeComment={()=>{props.onClickLikeComment()}} comment={props.replyComment}/>
+            <ReactReplyCommentComponent reload={props.reload} onClickLikeComment={()=>{props.onClickLikeComment()}} comment={props.replyComment}/>
         </div>
     )
 }
