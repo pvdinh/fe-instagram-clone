@@ -116,7 +116,7 @@ function ActivityComponent(props) {
                                     }
                                 </div>
                                 :
-                                value.activity.typeActivity === "like"
+                                value.activity.typeActivity === "like" && value.likes.length > 0
                                     ?
                                     <div className="wrap-item-activity" onClick={()=>{redirectToPost(value.post.id);readActivity(value.activity)}}>
                                         <div className="wrap-image-activity" onClick={()=>{}}>
@@ -136,7 +136,7 @@ function ActivityComponent(props) {
                                         }
                                     </div>
                                     :
-                                    value.activity.typeActivity === "comment"
+                                    value.activity.typeActivity === "comment" && value.comments.length > 0
                                         ?
                                         <div className="wrap-item-activity" onClick={()=>{redirectToPost(value.post.id);readActivity(value.activity)}}>
                                             <div className="wrap-image-activity" onClick={()=>{}}>
@@ -156,7 +156,7 @@ function ActivityComponent(props) {
                                             }
                                         </div>
                                         :
-                                        value.activity.typeActivity === "likeComment"
+                                        value.activity.typeActivity === "likeComment" && value.likeComments.length > 0
                                             ?
                                             <div className="wrap-item-activity" onClick={()=>{redirectToPost(value.post.id);readActivity(value.activity)}}>
                                                 <div className="wrap-image-activity" onClick={()=>{}}>
@@ -176,7 +176,7 @@ function ActivityComponent(props) {
                                                 }
                                             </div>
                                             :
-                                            value.activity.typeActivity === "replyComment"
+                                            value.activity.typeActivity === "replyComment" && value.replyComments.length > 0
                                                 ?
                                                 <div className="wrap-item-activity" onClick={()=>{redirectToPost(value.post.id);readActivity(value.activity)}}>
                                                     <div className="wrap-image-activity" onClick={()=>{}}>
