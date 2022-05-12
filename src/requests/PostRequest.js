@@ -70,5 +70,9 @@ class PostRequest extends BaseRequest{
         let url = `post/top-1-popular`
         return this.get(url)
     }
+    changePrivacyPost(post){
+        let url = `post`
+        return this.put(url,post)
+    }
 }
 export default PostRequest

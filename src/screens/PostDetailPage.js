@@ -20,6 +20,9 @@ function mapDispatchToProps(dispatch) {
         commentPost: (data, callback) => {
             dispatch(postActions.action.commentPost(data, callback))
         },
+        changePrivacyPost: (data, callback) => {
+            dispatch(postActions.action.changePrivacyPost(data, callback))
+        },
         getPostInformationFromPId:(pId,callback)=>{
             dispatch(postActions.action.getPostInformationFromPId(pId,callback))
         },

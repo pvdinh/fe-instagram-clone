@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {Avatar, Modal} from "antd";
+import {Avatar, Modal, Tooltip} from "antd";
 import MoreActionInPost from ".././home/MoreActionInPost";
 import CommentComponent from ".././home/CommentComponent";
 import postActions from "../../redux/actions/postActions";
@@ -15,7 +15,7 @@ import ModalDisplayLikedPost from "../modal/ModalDisplayLikedPost";
 import {calculatorDayCommented} from "../../utils/formatNumber";
 import ListReplyCommentComponent from "../detail-post/ListReplyCommentComponent";
 import ModalShareMessengerComponent from "../modal/ModalShareMessengerComponent";
-import {MdPlayArrow} from "react-icons/all";
+import {FaLock, MdPlayArrow, MdPublic} from "react-icons/all";
 
 
 let stompClientModal=null
@@ -31,6 +31,7 @@ function PostDetailModal(props) {
     const [commentClick,setCommentClick] = useState({})
     const [isVisibleLiked, setIsVisibleLiked] = useState(false)
     const [group, setGroup] = useState(false)
+    const [statusPrivacy, setStatusPrivacy] = useState(false)
 
     const [isVisibleSendMessage,setIsVisibleSendMessage] = useState(false)
 
@@ -57,6 +58,7 @@ function PostDetailModal(props) {
             setListLike(data.likes)
             setOwnerPost(data.userAccountSetting)
             setPost(data.post)
+            setStatusPrivacy(data.post.privacy)
             setGroup(data.group)
         })
     },[props.postId,props])
@@ -239,6 +241,11 @@ function PostDetailModal(props) {
         setIsVisibleModalDeleteComment(b)
     }
 
+    const onChangePrivacyPost = (p) =>{
+        post.privacy = p;
+        props.changePrivacyPost(post,()=>{})
+    }
+
     return(
         <Modal className="wrap-home-post-detail" closable={false} footer={null} visible={props.visible} onCancel={()=>{props.setVisible()}} centered >
             <div className="wrap-post-detail">
@@ -273,6 +280,18 @@ function PostDetailModal(props) {
                                     </>
                                     :
                                     null
+                            }
+                            {
+                                props.userAccountProfile.id === ownerPost.id && group === null && statusPrivacy === 0
+                                    ?
+                                    <Tooltip placement="bottom" title="Click to swap privacy post to private">
+                                        <MdPublic style={{cursor:"pointer"}} onClick={()=>{onChangePrivacyPost(1);setStatusPrivacy(1)}} />
+                                    </Tooltip>
+                                    :
+
+                                    <Tooltip placement="bottom" title="Click to swap privacy post to public">
+                                        <FaLock style={{cursor:"pointer"}} onClick={()=>{onChangePrivacyPost(0);setStatusPrivacy(0)}} />
+                                    </Tooltip>
                             }
                         </div>
 
@@ -410,6 +429,9 @@ function mapDispatchToProps(dispatch) {
         },
         endSavePost: (pId, callback) => {
             dispatch(postActions.action.endSavePost(pId, callback))
+        },
+        changePrivacyPost: (data, callback) => {
+            dispatch(postActions.action.changePrivacyPost(data, callback))
         },
     }
 }

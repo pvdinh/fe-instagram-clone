@@ -28,6 +28,7 @@ const type = {
     GET_TOP_1_COMMENT:"GET_TOP_1_COMMENT",
     GET_TOP_1_POPULAR:"GET_TOP_1_POPULAR",
     GET_TOP_1_SAVE:"GET_TOP_1_SAVE",
+    CHANGE_PRIVACY_POST:"CHANGE_PRIVACY_POST",
 }
 const action = {
     getAllPostOfFollowing: (payload) => {
@@ -89,6 +90,15 @@ const action = {
     commentPost:(data,callback) =>{
         return{
             type:type.COMMENT_POST,
+            payload:{
+                data:data,
+            },
+            callback,
+        }
+    },
+    changePrivacyPost:(data,callback) =>{
+        return{
+            type:type.CHANGE_PRIVACY_POST,
             payload:{
                 data:data,
             },

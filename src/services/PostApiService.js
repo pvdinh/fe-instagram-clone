@@ -68,3 +68,7 @@ export const getTop1Popular = () =>{
     const postRequest = new PostRequest()
     return postRequest.getTop1Popular()
 }
+export const changePrivacyPost = (post) =>{
+    const postRequest = new PostRequest()
+    return postRequest.changePrivacyPost(post)
+}

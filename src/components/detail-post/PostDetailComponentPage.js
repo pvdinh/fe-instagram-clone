@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {Avatar, Modal} from "antd";
+import {Avatar, Modal, Tooltip} from "antd";
 import MoreActionInPost from "../home/MoreActionInPost";
 import CommentComponent from "../home/CommentComponent";
 import SockJS from "sockjs-client"
@@ -12,7 +12,7 @@ import ModalDeleteComment from "../modal/ModalDeleteComment";
 import ModalDisplayLikedPost from "../modal/ModalDisplayLikedPost";
 import ListReplyCommentComponent from "./ListReplyCommentComponent";
 import ModalShareMessengerComponent from "../modal/ModalShareMessengerComponent";
-import {MdPlayArrow} from "react-icons/all";
+import {FaLock, MdPlayArrow, MdPublic} from "react-icons/all";
 
 let stompClient=null
 function PostDetailComponentPage(props) {
@@ -25,11 +25,12 @@ function PostDetailComponentPage(props) {
     const [listLike, setListLike] = useState([])
     const [ownerPost, setOwnerPost] = useState([])
     const [group, setGroup] = useState(null)
+    const [statusPrivacy, setStatusPrivacy] = useState(false)
 
     const [isModalFeedbackVisible,setIsModalFeedbackVisible] = useState(false)
     const [isVisibleModalDeleteComment,setIsVisibleModalDeleteComment] = useState(false)
     const [commentClick,setCommentClick] = useState({})
-    const [isVisibleLiked, setIsVisibleLiked] = useState(false)
+    const [isVisibleLiked, setIsVisibleLiked] = useState(0)
 
     const [isVisibleSendMessage,setIsVisibleSendMessage] = useState(false)
 
@@ -56,6 +57,7 @@ function PostDetailComponentPage(props) {
                 setListLike(data.likes)
                 setOwnerPost(data.userAccountSetting)
                 setPost(data.post)
+                setStatusPrivacy(data.post.privacy)
                 setGroup(data.group)
             })
         })
@@ -239,6 +241,11 @@ function PostDetailComponentPage(props) {
         }
     }
 
+    const onChangePrivacyPost = (p) =>{
+        post.privacy = p;
+        props.changePrivacyPost(post,()=>{})
+    }
+
     return(
         <div className="wrap-body-page-post-detail">
             <div className="body-page-post-detail">
@@ -270,6 +277,19 @@ function PostDetailComponentPage(props) {
                                         </>
                                         :
                                         null
+                                }
+
+                                {
+                                    props.userAccountProfile.id === ownerPost.id && group === null && statusPrivacy === 0
+                                    ?
+                                        <Tooltip placement="bottom" title="Click to swap privacy post to private">
+                                            <MdPublic style={{cursor:"pointer"}} onClick={()=>{onChangePrivacyPost(1);setStatusPrivacy(1)}} />
+                                        </Tooltip>
+                                        :
+
+                                        <Tooltip placement="bottom" title="Click to swap privacy post to public">
+                                            <FaLock style={{cursor:"pointer"}} onClick={()=>{onChangePrivacyPost(0);setStatusPrivacy(0)}} />
+                                        </Tooltip>
                                 }
                             </div>
 

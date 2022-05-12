@@ -1,7 +1,7 @@
 import {all, takeEvery, call, put} from "@redux-saga/core/effects";
 import postActions from "../actions/postActions";
 import {
-    beginSavePost,
+    beginSavePost, changePrivacyPost,
     checkSavedPost,
     commentPost,
     deletePost,
@@ -202,6 +202,17 @@ function *saga_getTop1Popular(action) {
     }
 }
 
+function *saga_changePrivacyPost(action) {
+    try{
+        const res= yield call(changePrivacyPost,action.payload.data)
+        if(res.statusCode === 200) {
+            yield action.callback(res.data)
+        }
+    }catch (e) {
+        console.log("err",e)
+    }
+}
+
 function* listen() {
     yield takeEvery(postActions.type.GET_ALL_POST_OF_FOLLOWING, saga_getAllPostOfFollowing)
     yield takeEvery(postActions.type.FETCH_ALL_POST_OF_FOLLOWING, saga_fetchAllPostOfFollowing)
@@ -223,6 +234,7 @@ function* listen() {
     yield takeEvery(postActions.type.GET_TOP_1_COMMENT, saga_getTop1Comment)
     yield takeEvery(postActions.type.GET_TOP_1_POPULAR, saga_getTop1Popular)
     yield takeEvery(postActions.type.GET_TOP_1_SAVE, saga_getTop1Save)
+    yield takeEvery(postActions.type.CHANGE_PRIVACY_POST, saga_changePrivacyPost)
 }
 
 function* postSaga() {
