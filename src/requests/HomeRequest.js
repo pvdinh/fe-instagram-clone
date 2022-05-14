@@ -29,4 +29,8 @@ export default class HomeRequest extends BaseRequest{
         let url=`history-search-user`
         return this.post(url,data)
     }
+    deleteUserHistory(id){
+        let url=`history-search-user/${id}`
+        return this.delete(url)
+    }
 }

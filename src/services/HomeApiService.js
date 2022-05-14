@@ -28,3 +28,7 @@ export const saveUserHistory = (data) => {
     const homeRequest = new HomeRequest()
     return homeRequest.saveUserHistory(data)
 }
+export const deleteUserHistory = (id) => {
+    const homeRequest = new HomeRequest()
+    return homeRequest.deleteUserHistory(id)
+}

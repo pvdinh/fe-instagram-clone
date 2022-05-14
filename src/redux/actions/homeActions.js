@@ -10,6 +10,7 @@ const type = {
     GET_HISTORY_SEARCH_USER:"GET_HISTORY_SEARCH_USER",
     GET_HISTORY_SEARCH_USER_SUCCESS:"GET_HISTORY_SEARCH_USER_SUCCESS",
     SAVE_USER_HISTORY:"SAVE_USER_HISTORY",
+    DELETE_USER_HISTORY:"DELETE_USER_HISTORY",
     SAVE_USER_HISTORY_SUCCESS:"END_FOLLOWING_SUCCESS",
 }
 const action = {
@@ -53,6 +54,13 @@ const action = {
             payload:{
                 data:data,
             }
+        }
+    },
+    deleteUserHistory: (id,callback) => {
+        return {
+            type: type.DELETE_USER_HISTORY,
+            id:id,
+            callback,
         }
     },
 }

@@ -1943,9 +1943,15 @@
     cursor: pointer;
     .wrap-dateSearch{
       position: absolute;
-      left: 80%;
+      left: 70%;
       color: #8e8e8e;
       font-size: 14px;
+    }
+    .wrap-btn-deleteSearch{
+      position: absolute;
+      left: 90%;
+      color: #8e8e8e;
+      font-size: 20px;
     }
     .image{
       margin-right: 10px;

@@ -1,7 +1,7 @@
 import {all, takeEvery, call, put} from "@redux-saga/core/effects";
 import homeActions from "../actions/homeActions";
 import {
-    beginFollowing,
+    beginFollowing, deleteUserHistory,
     endFollowing, getHistorySearchUser,
     getSuggestionsToFollow,
     getUserAccountProfile, removeFollowing, saveUserHistory
@@ -65,6 +65,18 @@ function* saga_saveUserHistory(action) {
     }
 }
 
+function* saga_deleteUserHistory(action) {
+    try {
+        const response = yield call(deleteUserHistory,action.id)
+        if(response.statusCode === 200){
+            const response = yield call(getHistorySearchUser)
+            yield put({type: homeActions.type.GET_HISTORY_SEARCH_USER_SUCCESS, data: response.data})
+        }
+    } catch (e) {
+        console.log('err', e)
+    }
+}
+
 function* listen() {
     yield takeEvery(homeActions.type.GET_USER_ACCOUNT_PROFILE, saga_getUserAccountProfile)
     yield takeEvery(homeActions.type.GET_SUGGESTIONS_TO_FOLLOW, saga_getSuggestionsToFollow)
@@ -73,6 +85,7 @@ function* listen() {
     yield takeEvery(homeActions.type.REMOVE_FOLLOWING, saga_removeFollowing)
     yield takeEvery(homeActions.type.GET_HISTORY_SEARCH_USER, saga_getHistorySearchUser)
     yield takeEvery(homeActions.type.SAVE_USER_HISTORY, saga_saveUserHistory)
+    yield takeEvery(homeActions.type.DELETE_USER_HISTORY, saga_deleteUserHistory)
 }
 
 export default function* homeSaga() {

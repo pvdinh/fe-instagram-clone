@@ -5,6 +5,7 @@ import {connect} from "react-redux";
 import messageActions from "../../redux/actions/messageActions";
 import profileAction from "../../redux/actions/profileAction";
 import homeActions from "../../redux/actions/homeActions";
+import {AiOutlineClose} from "react-icons/all";
 
 
 function HeaderSearchComponent(props) {
@@ -30,6 +31,13 @@ function HeaderSearchComponent(props) {
         }
     }
 
+    const onDeleteHistorySearch = (e,id) =>{
+        props.deleteUserHistory(id,()=>{})
+        if (!e) var e = window.event;
+        e.cancelBubble = true;
+        if (e.stopPropagation) e.stopPropagation();
+    }
+
     const menuEmpty = (
         <Menu className="wrap-page-home-in-header wrap-search-in-header">
             <div className="recent-">Recent search</div>
@@ -47,7 +55,9 @@ function HeaderSearchComponent(props) {
                                 <div className="info-username">{value.userAccountSetting.username}</div>
                                 <div className="info-displayname">{value.userAccountSetting.displayName}</div>
                             </div>
-                            <div className="wrap-dateSearch">{calculatorDateSearch(value.dateSearch)} ago</div>
+                            <div className="wrap-dateSearch">{calculatorDateSearch(value.historySearchUser.dateSearch)} ago
+                            </div>
+                            <div className="wrap-btn-deleteSearch" onClick={(e)=>{onDeleteHistorySearch(e,value.historySearchUser.id)}}><AiOutlineClose /></div>
                         </div>
                     ))
                     :
@@ -139,6 +149,9 @@ function mapDispatchToProps(dispatch) {
         },
         saveUserHistory:(data)=>{
             dispatch(homeActions.action.saveUserHistory(data))
+        },
+        deleteUserHistory:(id,callback)=>{
+            dispatch(homeActions.action.deleteUserHistory(id,callback))
         },
     }
 }
