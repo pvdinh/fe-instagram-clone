@@ -2,7 +2,9 @@ const type ={
     GET_GROUP_BY_ROLE:"GET_GROUP_BY_ROLE",
     GET_GROUP_BY_ROLE_SUCCESS:"GET_GROUP_BY_ROLE_SUCCESS",
     CREATE_GROUP:"CREATE_GROUP",
+    UPDATE_GROUP:"UPDATE_GROUP",
     CREATE_GROUP_SUCCESS:"CREATE_GROUP_SUCCESS",
+    UPDATE_GROUP_SUCCESS:"UPDATE_GROUP_SUCCESS",
     ADD_MEMBER_INTO_GROUP:"ADD_MEMBER_INTO_GROUP",
     ADD_MEMBER_INTO_GROUP_SUCCESS:"ADD_MEMBER_INTO_GROUP_SUCCESS",
     GET_GROUP_BY_ID_GROUP_AND_ID_USER:"GET_GROUP_BY_ID_GROUP_AND_ID_USER",
@@ -56,6 +58,13 @@ const action = {
     createGroup: (data,callback) => {
         return {
             type: type.CREATE_GROUP,
+            payload: data,
+            callback,
+        }
+    },
+    updateGroup: (data,callback) => {
+        return {
+            type: type.UPDATE_GROUP,
             payload: data,
             callback,
         }

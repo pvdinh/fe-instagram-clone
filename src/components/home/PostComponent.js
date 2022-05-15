@@ -11,6 +11,7 @@ import NotHavePostInGroup from "../not-have-post/NotHavePostInGroup";
 import NotHavePostInHome from "../not-have-post/NotHavePostInHome";
 import groupAction from "../../redux/actions/groupAction";
 import JoinGroupToViewPosts from "../not-have-post/JoinGroupToViewPosts";
+import NotHavePostInGroupChild from "../not-have-post/NotHavePostInGroupChild";
 
 let stompClient=null
 function PostComponent(props) {
@@ -171,7 +172,7 @@ function PostComponent(props) {
                                 :
                                 props.type === "group-child"
                                 ?
-                                <NotHavePostInGroup/>
+                                <NotHavePostInGroupChild />
                                 :
                         props.listPostOfFollowing.length > 0 ?
                             <InfiniteScroll

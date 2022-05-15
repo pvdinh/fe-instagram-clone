@@ -9,6 +9,10 @@ class GroupRequest extends BaseRequest {
         let url = `group`
         return this.post(url,payload)
     }
+    updateGroup(payload){
+        let url = `group`
+        return this.put(url,payload)
+    }
     addMemberIntoGroup(payload){
         let url = `group/add-member`
         return this.post(url,payload)

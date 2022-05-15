@@ -16,7 +16,7 @@ import {
     getMemberRequestInGroup,
     rejectRequestToJoinGroup,
     requestToJoinGroup,
-    searchGroupByName, searchMemberInGroup, searchMemberRequestInGroup
+    searchGroupByName, searchMemberInGroup, searchMemberRequestInGroup, updateGroup
 } from "../../services/GroupApiService";
 
 function *getGroupByRole_saga(action) {
@@ -33,6 +33,17 @@ function *getGroupByRole_saga(action) {
 function *createGroup_saga(action) {
     try {
         const response = yield call(createGroup,action.payload)
+        if(response.statusCode === 200){
+            yield action.callback(response.data)
+        }
+    }catch (e) {
+        console.log("err",e)
+    }
+}
+
+function *updateGroup_saga(action) {
+    try {
+        const response = yield call(updateGroup,action.payload)
         if(response.statusCode === 200){
             yield action.callback(response.data)
         }
@@ -190,6 +201,7 @@ function* searchGroupByName_saga(action) {
 function *listen() {
     yield takeEvery(groupAction.type.GET_GROUP_BY_ROLE, getGroupByRole_saga)
     yield takeEvery(groupAction.type.CREATE_GROUP, createGroup_saga)
+    yield takeEvery(groupAction.type.UPDATE_GROUP, updateGroup_saga)
     yield takeEvery(groupAction.type.ADD_MEMBER_INTO_GROUP, addMemberIntoGroup_saga)
     yield takeEvery(groupAction.type.GET_GROUP_BY_ID_GROUP_AND_ID_USER, getGroupByIdGroupAndIdUser_saga)
     yield takeEvery(groupAction.type.GET_ALL_POST_IN_GROUP, getAllPostInGroup_saga)

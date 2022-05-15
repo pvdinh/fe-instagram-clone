@@ -3,18 +3,6 @@ import PostComponent from "../home/PostComponent";
 import StoryComponent from "../home/story/StoryComponent";
 import LeftGroupComponent from "./LeftGroupComponent";
 function GroupComponent() {
-
-    useEffect(()=>{
-        // Getting the scrollbar width to adjust the header alignment
-        const content = document.querySelector('.main-container');
-        const scrollbarWidth = content.offsetWidth - content.clientWidth;
-// Setting the property when the page load
-        document.onload = setScrollbarWidth(scrollbarWidth);
-        function setScrollbarWidth(width) {
-            document.documentElement.style.setProperty('--scrollbar-width', `${width}px`);
-        }
-    })
-
     return(
         <div className="wrap-home-page-body">
             <main className="main-container">

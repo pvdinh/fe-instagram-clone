@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {Form, Input, Modal, Select} from "antd";
 import {connect} from "react-redux";
-import groupAction from "../../redux/actions/groupAction";
+import groupAction from "../../../redux/actions/groupAction";
 const { TextArea } = Input;
 const { Option } = Select;
 function ModalCreateGroup(props) {
@@ -74,10 +74,10 @@ function ModalCreateGroup(props) {
                         <Form.Item
                             name="Name group"
                             label="name group"
-                            rules={[{ required: true, message: 'Please input Subject!' }]}
+                            rules={[{ required: true, message: 'Please input Name group!' }]}
                             className="wrap-form-item-1"
                         >
-                            <Input placeholder="Subject" maxLength={50} value={name} onChange={(e)=>{onChangeName(e)}} />
+                            <Input placeholder="Name group" maxLength={50} value={name} onChange={(e)=>{onChangeName(e)}} />
                         </Form.Item>
                         <Form.Item
                             label="description"
@@ -85,7 +85,7 @@ function ModalCreateGroup(props) {
                             className="wrap-form-item-1"
                         >
                             <div className="wrap-subject">
-                                <TextArea showCount style={{height:"100px"}} maxLength={500} value={description} placeholder="Content" onChange={(e)=>{onChangeDescription(e)}} />
+                                <TextArea showCount style={{height:"100px"}} maxLength={500} value={description} placeholder="Description" onChange={(e)=>{onChangeDescription(e)}} />
                             </div>
                         </Form.Item>
                         <Form.Item

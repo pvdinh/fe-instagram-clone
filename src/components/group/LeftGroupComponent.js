@@ -3,7 +3,7 @@ import {connect} from "react-redux";
 import PostDetailModal from "../profile/PostDetailModal";
 
 import { AutoComplete } from 'antd';
-import ModalCreateGroup from "./ModalCreateGroup";
+import ModalCreateGroup from "./modal/ModalCreateGroup";
 import groupAction from "../../redux/actions/groupAction";
 
 const { Option } = AutoComplete;

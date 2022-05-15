@@ -10,6 +10,11 @@ export const createGroup = (payload) =>{
     return groupRequest.createGroup(payload)
 }
 
+export const updateGroup = (payload) =>{
+    const groupRequest = new GroupRequest()
+    return groupRequest.updateGroup(payload)
+}
+
 export const addMemberIntoGroup = (payload) =>{
     const groupRequest = new GroupRequest()
     return groupRequest.addMemberIntoGroup(payload)

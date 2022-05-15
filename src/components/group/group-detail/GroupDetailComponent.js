@@ -2,34 +2,25 @@ import React, {useEffect, useState} from "react";
 import ModalFeedback from "../../modal/feedback/ModalFeedback";
 import StoryComponent from "../../home/story/StoryComponent";
 import LeftGroupDetailComponent from "./LeftGroupDetailComponent";
-import {AiFillEyeInvisible, AiOutlineHistory, FaLock,MdPublic} from "react-icons/all";
+import {AiFillEyeInvisible, AiOutlineHistory, BsPencilSquare, FaLock, MdPublic} from "react-icons/all";
 import RouteTypeMember from "../RouteTypeMember";
 import {connect} from "react-redux";
 import groupAction from "../../../redux/actions/groupAction";
 import {convertTimeStampToDateDMY} from "../../../utils/formatNumber";
+import ModalCreateGroup from "../modal/ModalCreateGroup";
+import ModalUpdateGroup from "../modal/ModalUpdateGroup";
 
 
 function GroupDetailComponent(props) {
 
     const [isModalFeedbackVisible, setIsModalFeedbackVisible] = useState(false)
+    const [isVisibleModalUpdateGroup, setIsVisibleModalUpdateGroup] = useState(false)
 
 
     useEffect(() => {
         props.getGroupByIdGroupAndIdUser(props.match.params.gId,()=>{})
     }, [])
 
-
-    useEffect(() => {
-        // Getting the scrollbar width to adjust the header alignment
-        const content = document.querySelector('.main-container');
-        const scrollbarWidth = content.offsetWidth - content.clientWidth;
-// Setting the property when the page load
-        document.onload = setScrollbarWidth(scrollbarWidth);
-
-        function setScrollbarWidth(width) {
-            document.documentElement.style.setProperty('--scrollbar-width', `${width}px`);
-        }
-    })
 
     return (
         <div className="wrap-home-page-body">
@@ -58,6 +49,12 @@ function GroupDetailComponent(props) {
                                     color: "var(--text-dark)",
                                     fontSize: "16x"
                                 }}>Introduce</h2>
+                                {
+                                    props.userMemberGroup !== null && props.userMemberGroup.status === 1 && "ADMIN" === props.userMemberGroup.role ?
+                                        <BsPencilSquare onClick={()=>{setIsVisibleModalUpdateGroup(true)}} style={{fontSize:"25px",cursor:"pointer"}} />
+                                        :
+                                        null
+                                }
                                 {/*<button>See All</button>*/}
                             </div>
                             <div className="side-menu__suggestions-content">
@@ -212,13 +209,15 @@ function GroupDetailComponent(props) {
             {/*<div className="alertCopyLink">*/}
             {/*    <div className="alert-text">Link copied to clipboard</div>*/}
             {/*</div>*/}
-
+            <ModalUpdateGroup visible={isVisibleModalUpdateGroup} setVisible={()=>{setIsVisibleModalUpdateGroup(false)}} />
         </div>
     )
 }
 function mapStateToProps(state) {
     return {
         groupInformation: state.group.groupInformation,
+        userAccountProfile:state.home.userAccountProfile,
+        userMemberGroup:state.group.userMemberGroup,
     }
 }
 
