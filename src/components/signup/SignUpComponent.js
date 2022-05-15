@@ -14,6 +14,7 @@ function SignUpComponent(props) {
     const [phone, setPhone] = useState("")
     const [email, setEmail] = useState("")
     const [fullname, setFullname] = useState("")
+    const [regexEmail, setRegexEmail] = useState("")
     const [validateFullname, setValidateFullname] = useState("")
     const [checkLogin, setCheckLogin] = useState(false)
 
@@ -61,10 +62,22 @@ function SignUpComponent(props) {
 
     }
     const checkEmail = ()=>{
-        if(email.split(" ").join("") !== ""){
-            props.validateEmail(email)
+        console.log(validateEmail(email))
+        console.log()
+        if(validateEmail(email)){
+            if(email.split(" ").join("") !== ""){
+                props.validateEmail(email)
+            }
+        }else {
+            setRegexEmail("error")
         }
     }
+
+    const validateEmail = (email) => {
+        var re = /\S+@\S+\.\S+/;
+        return re.test(email);
+    };
+
     const checkFullname = () => {
         fullname.split(" ").join("") !== "" ?
             setValidateFullname("success") : setValidateFullname("error")
@@ -142,7 +155,7 @@ function SignUpComponent(props) {
                                     <div className="form-wrap">
                                         <form className="form">
                                             <div className="input-box">
-                                                <Form.Item hasFeedback validateStatus={props.checkEmail}>
+                                                <Form.Item hasFeedback validateStatus={props.checkEmail !== "" ? props.checkEmail : regexEmail}>
                                                     <input type="text" id="phoneOrEmail" value={email} aria-describedby
                                                            onChange={(e) => {
                                                                onChangeEmail(e)

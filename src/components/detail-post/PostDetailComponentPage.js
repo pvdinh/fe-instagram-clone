@@ -289,10 +289,13 @@ function PostDetailComponentPage(props) {
                                                         <MdPublic style={{cursor:"pointer"}} onClick={()=>{onChangePrivacyPost(1);setStatusPrivacy(1)}} />
                                                     </Tooltip>
                                                     :
-
-                                                    <Tooltip placement="bottom" title="Click to swap privacy post to public">
-                                                        <FaLock style={{cursor:"pointer"}} onClick={()=>{onChangePrivacyPost(0);setStatusPrivacy(0)}} />
-                                                    </Tooltip>
+                                                    props.userAccountProfile.id === ownerPost.id && statusPrivacy === 1
+                                                        ?
+                                                        <Tooltip placement="bottom" title="Click to swap privacy post to public">
+                                                            <FaLock style={{cursor:"pointer"}} onClick={()=>{onChangePrivacyPost(0);setStatusPrivacy(0)}} />
+                                                        </Tooltip>
+                                                        :
+                                                        null
                                             }
                                         </>
                                         :
