@@ -280,17 +280,25 @@ function PostDetailComponentPage(props) {
                                 }
 
                                 {
-                                    props.userAccountProfile.id === ownerPost.id && group === null && statusPrivacy === 0
-                                    ?
-                                        <Tooltip placement="bottom" title="Click to swap privacy post to private">
-                                            <MdPublic style={{cursor:"pointer"}} onClick={()=>{onChangePrivacyPost(1);setStatusPrivacy(1)}} />
-                                        </Tooltip>
-                                        :
+                                    group === null ?
+                                        <>
+                                            {
+                                                props.userAccountProfile.id === ownerPost.id && statusPrivacy === 0
+                                                    ?
+                                                    <Tooltip placement="bottom" title="Click to swap privacy post to private">
+                                                        <MdPublic style={{cursor:"pointer"}} onClick={()=>{onChangePrivacyPost(1);setStatusPrivacy(1)}} />
+                                                    </Tooltip>
+                                                    :
 
-                                        <Tooltip placement="bottom" title="Click to swap privacy post to public">
-                                            <FaLock style={{cursor:"pointer"}} onClick={()=>{onChangePrivacyPost(0);setStatusPrivacy(0)}} />
-                                        </Tooltip>
+                                                    <Tooltip placement="bottom" title="Click to swap privacy post to public">
+                                                        <FaLock style={{cursor:"pointer"}} onClick={()=>{onChangePrivacyPost(0);setStatusPrivacy(0)}} />
+                                                    </Tooltip>
+                                            }
+                                        </>
+                                        :
+                                        null
                                 }
+
                             </div>
 
                             <MoreActionInPost post={post} userAccountFollowing={ownerPost}/>
