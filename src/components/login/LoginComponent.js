@@ -83,7 +83,7 @@ function LoginComponent(props) {
                                   <button className="btn-disabled" disabled type="button" name="submit">Log in</button>
                           }
                         </span>
-                                            <a className="forgot" href>Forgot password?</a>
+                                            {/*<a className="forgot" href>Forgot password?</a>*/}
                                         </form>
                                     </div>
                                     {/* Form-wrap end */}

@@ -86,7 +86,7 @@ function ChangePasswordComponent(props) {
                 <div className="form-group">
                     <div className="wrap-label"></div>
                     <div className="wrap-input">
-                        <a className="link">Forgot Password?</a>
+                        {/*<a className="link">Forgot Password?</a>*/}
                     </div>
                 </div>
             </div>
