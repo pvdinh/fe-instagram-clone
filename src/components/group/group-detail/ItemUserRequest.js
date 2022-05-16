@@ -2,9 +2,12 @@ import React, {useEffect, useState} from "react";
 import {connect} from "react-redux";
 import {convertTimeStampToDateDMY} from "../../../utils/formatNumber";
 import groupAction from "../../../redux/actions/groupAction";
+import ModalDeleteComment from "../../modal/ModalDeleteComment";
+import ModalConfirmRemoveMembership from "../../modal/ModalConfirmRemoveMembership";
 
 
 function ItemUserRequest(props) {
+    const [isVisibleModalRemoveMembership,setIsVisibleModalRemoveMembership] = useState(false)
 
     const onConfirm = () => {
         props.confirmMemberRequest(props.item.groupMember, (m) => {
@@ -23,6 +26,14 @@ function ItemUserRequest(props) {
 
     const goToProfile = () =>{
         window.location.href = "/" + props.item.userAccountSetting.username;
+    }
+
+    const showModalRemoveMembership = () =>{
+        if(isVisibleModalRemoveMembership){
+            return(
+                <ModalConfirmRemoveMembership onRemove={()=>{onCancel()}} visible={isVisibleModalRemoveMembership} setVisible={()=>{setIsVisibleModalRemoveMembership(false)}} />
+            )
+        }
     }
 
     return (
@@ -71,7 +82,7 @@ function ItemUserRequest(props) {
                                     null
                                     :
                                     props.userMemberGroup && props.userMemberGroup.role === "ADMIN" ?
-                                        <button className="btn-cancel-request following" onClick={() => {onCancel()}}>Remove
+                                        <button className="btn-cancel-request following" onClick={() => {setIsVisibleModalRemoveMembership(true)}}>Remove
                                         </button>
                                         :
                                     null
@@ -79,6 +90,9 @@ function ItemUserRequest(props) {
                         </>
                 }
             </div>
+            {
+                showModalRemoveMembership()
+            }
         </div>
     )
 }
